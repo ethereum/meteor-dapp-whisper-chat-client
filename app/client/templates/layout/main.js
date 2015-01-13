@@ -2,21 +2,21 @@
 Template Controllers
 
 @module Templates
-**/
+*/
 
 /**
 The layout template
 
 @class [template] layout_main
 @constructor
-**/
+*/
 
 
 Template['layout_main'].helpers({
     /**
     Determines whether the sidebar is visible or not
 
-    @method ((sideBarVisible))
+    @method (sideBarVisible)
     */
     'sideBarVisible': function(){
         return TemplateVar.get('sideBarVisible');
