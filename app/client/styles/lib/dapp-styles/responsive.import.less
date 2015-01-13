@@ -1,33 +1,29 @@
 /* #### All small screens #### */
-@media screen and (min-width: 640px){
-    .dapp-flex-content {
-        .flex-direction(row);
-        .flex(1);
-    }
+// @media screen and (min-width: 640px){
+//     .dapp-flex-content {
+//         .flex-direction(row);
+//         .flex(1);
+//     }
 
-    main.dapp-content {
-        .flex(1);
-    }
+//     main.dapp-content {
+//         .flex(1);
+//     }
 
-    aside.dapp-main {
-        .flex(0 0 200px);
-    }
-}
+//     aside.dapp-main {
+//         .flex(0 0 200px);
+//     }
+// }
 
 /* #### All small tablets screens #### */
 @media screen and (max-width: 768px){
-    // .HolyGrail-content {
-    // flex: 1;
-    // }
-    // .HolyGrail-nav, .HolyGrail-ads {
-    // /* 12em is the width of the columns */
-    // flex: 0 0 12em;
-    // }
+
 }
 
 /* #### All small phone screens landscape #### */
 @media screen and (max-width: 568px){
-
+    aside.dapp-main {
+        .flex(0 0 @widthSidebarSmall);
+    }
 }
 
 /* #### All small phone screens porttrait #### */

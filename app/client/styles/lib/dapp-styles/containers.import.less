@@ -14,8 +14,8 @@ body {
 
 .dapp-flex-content {
     .display(flex);
-    .flex-direction(column);
-    // .flex(1);
+    // .flex-direction(column);
+    .flex(1);
 }
 
 // containers
@@ -40,8 +40,11 @@ header.dapp-main {
 }
 
 aside.dapp-main {
-    // .flex(0 0 200px);
+    .flex(0 0 @widthSidebar);
     background-color: @colorLightGray;
+
+    // ANIMATION
+    .transition(flex @animationSpeed);
 
     nav {
         ul {
@@ -51,7 +54,7 @@ aside.dapp-main {
 }
 
 main.dapp-content {
-    // .flex(1);
+    .flex(1);
 }
 
 nav {
