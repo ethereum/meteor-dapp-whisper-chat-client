@@ -1,0 +1,16 @@
+button.block-button {
+	.button-reset;
+	padding: @defaultPadding @defaultPadding*2;
+	margin: @defaultMargin/2 0;
+	background-color: @colorBrand2;
+	color: @colorWhite;
+	font-weight: 300;
+
+	&:hover,
+	&:focus {
+		background-color: darken(@colorBrand2, 10%);
+	}
+	&:active {
+		.scale(0.98);
+	}
+}

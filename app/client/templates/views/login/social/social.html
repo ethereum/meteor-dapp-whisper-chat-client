@@ -1,0 +1,9 @@
+<template name="views_loginSocial">
+    <button class="btn" id="login-{{this}}" name="{{this}}">
+        {{#if unconfigured}}
+          <i class="icon-{{icon}}"></i> {{i18n "accounts.configure"}} {{capitalize this}}
+        {{else}}
+          <i class="icon-{{icon}}"></i> {{buttonText}} {{i18n "commonWords.with"}} {{capitalize this}}
+        {{/if}}
+    </button>
+</template>

@@ -1,0 +1,39 @@
+<template name='views_loginSignUp_updateProfile'>
+    <a href="{{pathFor 'loginSignUp'}}" class="back icon-arrow-left7"></a>
+
+    <h1>{{i18n "accounts.updateProfile"}}</h1>
+
+    {{#with currentUser}}
+        <form class="login-form" id="save-profile" action="about:blank" target="form-helper-iframe" autocomplete="on">
+            
+            {{#if isService}}
+            <fieldset>
+                <input type="email"  name="email" value="{{emailAddress}}" placeholder="{{i18n 'accounts.emailAddress'}}" {{disabledEmail}}>
+            </fieldset>
+
+            <br>
+            {{/if}}
+
+            <fieldset>
+                <label>{{i18n "accounts.name"}}</label>
+                <input autofocus name="firstName" type="text" placeholder="{{i18n 'accounts.firstName'}}" value="{{profile.firstName}}">
+                <input name="lastName" type="text" placeholder="{{i18n 'accounts.lastName'}}" value="{{profile.lastName}}">
+            </fieldset>
+
+            <fieldset>
+                <label>{{i18n "accounts.birthday"}}</label>
+                <input name="birthday" type="date" placeholder="DD-MM-YYYY" value="{{formatTime profile.birthday 'YYYY-MM-DD'}}">
+            </fieldset>
+
+            <br>
+
+            {{#if isService}}
+            <p>{{i18n "accounts.addPasswordDescription"}}</p>
+
+            <br>
+            {{/if}}
+
+            <button type="submit" class="submit block-button">{{i18n "buttons.save"}}</button>
+        </form>
+    {{/with}}
+</template>

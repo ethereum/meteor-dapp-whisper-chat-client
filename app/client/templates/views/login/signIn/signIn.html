@@ -1,0 +1,31 @@
+<template name="views_loginSignIn">
+
+    <h1>{{i18n "accounts.signIn"}}</h1>
+
+    <div class="login-social">
+        {{#each loginServices}}
+            {{> views_loginSocial}}
+        {{/each}}
+
+        <div class="email-option">
+            <strong class="line-thru or-sign-in">{{i18n "commonWords.or"}}</strong>
+        </div>
+    </div>
+    
+    <form class="login-form" id="signIn" action="about:blank" target="form-helper-iframe" autocomplete="on">
+        <fieldset>
+            <input name="email" type="email" value="{{emailAddress}}" placeholder="{{i18n 'accounts.emailAddress'}}" autofocus required>
+        </fieldset>
+        <fieldset>
+            <input name="password" type="password" value='{{password}}' placeholder="{{i18n 'accounts.password'}}" required>
+        </fieldset>
+        
+        <p class="forgot-password">
+            <a href="{{pathFor 'loginForgotPassword'}}">{{i18n "accounts.forgotPassword"}}</a>
+        </p>
+
+        <button type="submit" class="submit block-button">{{i18n "accounts.signIn"}}</button>
+    </form>
+
+    <p class="login-signup-cta">{{i18n "accounts.dontHaveAnAccount"}} <a href="{{pathFor 'loginSignUp'}}">{{i18n "accounts.signUp"}}</a></p>
+</template>

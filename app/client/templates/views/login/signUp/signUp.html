@@ -1,0 +1,42 @@
+<template name='views_loginSignUp'>
+    <a href="{{pathFor 'loginSignIn'}}" class="back icon-arrow-left7"></a>
+
+    <h1>{{i18n "accounts.createAccount"}}</h1>
+
+    <p class="login-signin-cta">{{i18n "accounts.ifYouAlreadyHaveAnAccount"}} <a href="{{pathFor 'loginSignIn'}}">{{i18n "accounts.signin"}}</a>.</p>
+    
+    <div class="login-social">
+        {{#each loginServices}}
+            {{> views_loginSocial}}
+        {{/each}}
+
+        <div class="email-option">
+            <strong class="line-thru">{{i18n "commonWords.or"}}</strong>
+            
+            <h2>{{i18n "accounts.signUpWithYourEmailAddress"}}</h2>
+        </div>
+    </div>
+
+    <form class="login-form" id="signUp" action="about:blank" target="form-helper-iframe" autocomplete="on">
+        
+        <fieldset>
+            <input type="email"  name="email" value="{{emailAddress}}" placeholder="{{i18n 'accounts.emailAddress'}}" required>
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+            <input type="password" name="password" value="" placeholder="{{i18n 'accounts.password'}}" required>
+        </fieldset>
+        <fieldset>
+            <input type="password" name="passwordConfirm" value="" placeholder="{{i18n 'accounts.passwordConfirm'}}" required>
+        </fieldset>
+
+        <button type="submit" class="submit block-button">{{i18n "accounts.signUp"}}</button>
+    </form>
+
+    <p class="login-agreement">{{i18n "accounts.clickAgree"}}
+        <a href="{{privacyUrl}}">{{i18n "accounts.privacyPolicy"}}</a> {{i18n "commonWords.and"}}
+        <a href="{{termsUrl}}">{{i18n "accounts.terms"}}</a>.
+    </p>
+</template>
