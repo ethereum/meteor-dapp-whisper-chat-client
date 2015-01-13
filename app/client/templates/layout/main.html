@@ -1,16 +1,25 @@
 <template name="layout_main">
 	<!-- header -->
-	<header class="main">
+	<header class="dapp-main">
 		
 	</header>
 
-	<!-- content -->
-	<main class="content">
-		{{> yield}}
-	</main>
+	<div class="dapp-flex-content">
+
+		<!-- aside -->
+		<aside class="dapp-main">
+			{{> yield region="aside"}}
+		</aside>
+
+		<!-- content -->
+		<main class="dapp-content">
+			{{> yield}}
+		</main>
+
+	</div>
 	
 	<!-- footer -->
-	<footer class="main">
+	<footer class="dapp-main">
 		
 	</footer>
 </template>

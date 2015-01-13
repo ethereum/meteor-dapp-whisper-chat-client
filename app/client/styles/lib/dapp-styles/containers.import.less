@@ -2,15 +2,64 @@ body {
     padding: 0;
     margin: 0;
     background-color: @colorWhite;
-    font: 16px solid 'Neue Helvetica', verdana, sans-serif;
+    font: 200 16px 'Helvetica Neue', verdana, sans-serif;
     color: @colorTextPrimary;
-    overflow: hidden;
-}
-html, body {
-    height: 100%;
+
+    min-height: 100vh;
+
+    .display(flex);
+    .flex-direction(column);
 }
 
 
-#dapp-form-helper-iframe {
-    display: none;
+.dapp-flex-content {
+    .display(flex);
+    .flex-direction(column);
+    // .flex(1);
 }
+
+// containers
+header.dapp-main,
+aside.dapp-main,
+main.dapp-content,
+footer.dapp-main {
+    .box-sizing(border-box);
+    padding: @defaultPadding;
+}
+
+header.dapp-main {
+    height: @heightHeader;
+    .background-image(linear-gradient(to bottom, @colorBlue 0%, lighten(@colorBlue, 15%) 100%));
+
+    nav {
+        ul {
+            .horizontal-menu;
+        }
+    }
+
+}
+
+aside.dapp-main {
+    // .flex(0 0 200px);
+    background-color: @colorLightGray;
+
+    nav {
+        ul {
+            .vertical-menu;
+        }
+    }
+}
+
+main.dapp-content {
+    // .flex(1);
+}
+
+nav {
+
+}
+
+footer.dapp-main {
+    height: 100px;
+    background-color: @colorBlack;
+}
+
