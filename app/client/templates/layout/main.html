@@ -1,8 +1,5 @@
 <template name="layout_main">
-	<!-- header -->
-	<header class="dapp-main">
-		
-	</header>
+
 
 	<div class="dapp-flex-content">
 
@@ -15,6 +12,11 @@
 		<main class="dapp-content">
 			{{> yield}}
 		</main>
+
+		<!-- actions -->
+		<aside class="dapp-actions">
+			{{> yield region="actionbar"}}
+		</aside>
 
 	</div>
 	
