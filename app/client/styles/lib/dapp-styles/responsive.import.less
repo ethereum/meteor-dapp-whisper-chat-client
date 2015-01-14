@@ -20,13 +20,24 @@
 }
 
 /* #### All small phone screens landscape #### */
-@media screen and (max-width: 568px){
+@media screen and (max-width: 576px){
     aside.dapp-main {
         .flex(0 0 @widthSidebarSmall);
     }
+}
 
+@media screen and (max-width: 800px){
     aside.dapp-actions {
         .flex(0 0 @widthToolbarSmall);
+        
+        .action-bar { 
+        	li {
+	        	height: 0;
+			}
+			.icon:before {
+				width: @widthToolbarSmall;
+			}
+        }
     }
     
 }

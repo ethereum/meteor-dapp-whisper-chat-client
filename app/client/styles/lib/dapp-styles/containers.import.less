@@ -1,22 +1,8 @@
-@font-face {
-	font-family: 'Source Sans Pro';
-	src:url('/fonts/SourceSansPro-Extralight.otf');
-	font-weight: 100;
-	font-style: normal;
-}
 
-@font-face {
-	font-family: 'Source Sans Pro';
-	src:url('/fonts/SourceSansPro-ExtralightIt.otf');
-	font-weight: 100;
-	font-style: italic;
-}
 
 @font-face {
 	font-family: 'Source Sans Pro';
 	src:url('/fonts/SourceSansPro-Regular.otf');
-	font-weight: 400;
-	font-style: normal;
 }
 
 body {
@@ -77,6 +63,43 @@ aside.dapp-main {
 
 aside.dapp-actions {
     .flex(0 0 @widthToolbar);
+}
+
+.action-bar {
+	list-style-type: none;
+	font-size: 9pt;
+	text-align: center;
+	padding: 0;
+	
+	li {
+		height: 18.4px;
+		padding: @gridHeight*2 2px 0;
+		color: @colorLink;
+		position: relative;
+		overflow: hidden;
+	    .transition(height @animationSpeed);
+
+	}
+	
+	
+	.icon:before {
+		display: block;
+		color: @colorLink;
+		height: @gridHeight;
+		width: @widthToolbar;
+		position: absolute;
+		top: 6px;
+		left: 0;
+		font-family: "fonticons", "icomoon", dingbats, wingdings;
+		font-size: 24px;
+	}	
+	
+	.invite-action:before {
+		content: "";
+	}
+	.connect-action:before {
+		content: "";
+	}
 }
 
 main.dapp-content {
