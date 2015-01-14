@@ -65,41 +65,33 @@ aside.dapp-actions {
     .flex(0 0 @widthToolbar);
 }
 
-.action-bar {
+.dapp-action-bar {
 	list-style-type: none;
-	font-size: 9pt;
-	text-align: center;
-	padding: 0;
-	
-	li {
-		height: 18.4px;
-		padding: @gridHeight*2 2px 0;
-		color: @colorLink;
-		position: relative;
-		overflow: hidden;
-	    .transition(height @animationSpeed);
+    text-align: center;
+    padding: 0;
+    
+    li {
+        margin: @defaultMargin 0;// thats what i always use, so we can better control the the sapcing, without comming back here. @gridHeight*2 2px 0;
+        color: @colorLink;
+        position: relative;
+        overflow: hidden;
 
+        // ANIMATION
+        .transition(height @animationSpeed);
+
+        // give every button the icon style
+        button {
+            .dapp-icon-button;
+            color: @colorBlue;
+        	font-size: 0.8em;
+
+            i {
+                font-size: 2em;
+                display: block; // makes sure the text is below
+            }
+        }
 	}
-	
-	
-	.icon:before {
-		display: block;
-		color: @colorLink;
-		height: @gridHeight;
-		width: @widthToolbar;
-		position: absolute;
-		top: 6px;
-		left: 0;
-		font-family: "fonticons", "icomoon", dingbats, wingdings;
-		font-size: 24px;
-	}	
-	
-	.invite-action:before {
-		content: "";
-	}
-	.connect-action:before {
-		content: "";
-	}
+
 }
 
 main.dapp-content {

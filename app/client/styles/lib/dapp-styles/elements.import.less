@@ -5,5 +5,18 @@
 a,
 a:visited {
     text-decoration: none;
-    color: #fff | #000;
+    color: @colorBlue;
+}
+
+
+// TODO we could add a circle on hover
+.dapp-icon-button {
+    .button-reset;
+    display: inline-block;
+    color: @colorBlack;
+
+    // make smaller on click
+    &:active {
+        .scale(0.95);
+    }
 }
