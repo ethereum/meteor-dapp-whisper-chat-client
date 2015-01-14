@@ -1,3 +1,81 @@
+//Fonts
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-ExtraLight.otf');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-ExtraLightIt.otf');
+    font-weight: 100;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-Light.otf');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-LightIt.otf');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-Regular.otf');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-RegularIt.otf');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-Semibold.otf');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-SemiboldIt.otf');
+    font-weight: 500;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-Bold.otf');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-BoldIt.otf');
+    font-weight: 700;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-Black.otf');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    src:url('/fonts/SourceSansPro-BlackIt.otf');
+    font-weight: 900;
+    font-style: italic;
+}
+
+
 // thirdparty
 @import 'lib/entypoicons.import.less';
 @import 'lib/normalize.import.less';
@@ -13,3 +91,76 @@
 
 // responsive
 @import 'responsive.import.less';
+
+
+.light-text {
+    color: #FFF;
+
+    a {
+        color: #FFF;
+    }
+}
+
+
+aside.dapp-main nav ul { 
+    
+    padding-top: @gridHeight*1;
+
+    li {
+        height: @gridHeight*3;
+        .display(flex);
+        .align-items(center);
+
+        border-top: @darkColor solid 1px;
+
+        a {
+            padding-left: @gridWidth / 4;
+            max-height: @gridHeight*2;
+            overflow: hidden;
+            line-height: @gridHeight;
+            text-overflow: ellipsis;
+            font-weight: 300;
+        }
+    }
+    li:first-child, li.main-button, li.active + li, li.main-button + li  {
+        border-top: none;
+    }
+    li.active {
+        background: #FFF;
+        border-radius: 3px 0 0 3px;
+        border-top: none;        
+        a {
+            color: @darkColor; 
+            font-weight: 500;       
+        }
+    }
+
+    li.main-button {
+        background: @darkColor;
+        border-radius: 3px 0 0 3px;
+        position: relative;
+        
+        i {
+            position: absolute;
+            right: @gridWidth / 4;
+            top:20px;
+        }
+    }
+}
+
+.u-photo {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+}
+
+a.p-nickname {
+    font-weight: 500;
+    font-size: 12pt;
+    color: @colorTextSecondary;
+}
+
+
+
+
+

@@ -1,25 +1,28 @@
 <template name="views_chats_aside">
     <nav>
         <ul>
-            <li><a href="">Menu entry</a></li>
-            <li><a href="">Menu entry</a></li>
-            <li><a href="">Menu entry</a></li>
-            <li><a href="">Menu entry</a></li>
+            <li class="main-button"><a href="">New Chat  <i class="icon-pencil"></i></a></li>
+            <li><a href="">Public</a></li>
+            <li><a href="">Chat room #1</a></li>
+            <li class="active"><a href="">Alice Wonderland, Bob Burnsquit and Eve Walliston Marriot</a></li>
         </ul>
     </nav>
 </template>
 
 
 <template name="views_chats">
-    My chats go here.<br>
+
+    <div class="post-message h-card">
+        <img class="u-photo" src="http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60" alt="" />
+        <a class="p-nickname" href="">Random Username</a>
+        <input type="text" placeholder="Topic">
+        <textarea name="" id="" cols="30" rows="4" placeholder="Write your message here"></textarea>
+    </div>
+
+    <div class="message-background">
+        To add people to this chat, click the <a href=""> <i class="icon-add-user"></i> Add People</a> icon or send someone this link:
+        <input type="text" value="whisperchat.eth/9183k1sd/">
+    </div>
     
-    <span style="font-weight:100;"> 100 <span style="font-style:italic"> Italic </span></span><br>
-    <span style="font-weight:200;"> 200 <span style="font-style:italic"> Italic </span></span><br>
-    <span style="font-weight:300;"> 300 <span style="font-style:italic"> Italic </span></span><br>
-    <span style="font-weight:400;"> 400 <span style="font-style:italic"> Italic </span></span><br>
-    <span style="font-weight:500;"> 500 <span style="font-style:italic"> Italic </span></span><br>
-    <span style="font-weight:600;"> 600 <span style="font-style:italic"> Italic </span></span><br>
-    <span style="font-weight:700;"> 700 <span style="font-style:italic"> Italic </span></span><br>
-    <span style="font-weight:800;"> 800 <span style="font-style:italic"> Italic </span></span><br>
-    <span style="font-weight:900;"> 900 <span style="font-style:italic"> Italic </span></span><br>
+   
 </template>

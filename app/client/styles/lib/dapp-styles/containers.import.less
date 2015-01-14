@@ -1,9 +1,6 @@
 
 
-@font-face {
-	font-family: 'Source Sans Pro';
-	src:url('/fonts/SourceSansPro-Regular.otf');
-}
+
 
 body {
     padding: 0;
@@ -14,9 +11,25 @@ body {
     min-height: 100vh;
 
 	font-weight: 100;
-    
+    background: @mainBackground;
+
     .display(flex);
     .flex-direction(column);
+}
+
+#dapp-grid {
+    background: #FFF url(hex-grid-tile.png);
+    background-size: 64px 111px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.1;
+}
+
+body:hover #dapp-grid {
+    display: none;
 }
 
 
@@ -37,9 +50,9 @@ footer.dapp-main {
 
 header.dapp-main {
     height: @heightHeader;
-    .background-image(linear-gradient(to bottom, @colorBlue 0%, lighten(@colorBlue, 15%) 100%));
 
     nav {
+
         ul {
             .horizontal-menu;
         }
@@ -49,12 +62,13 @@ header.dapp-main {
 
 aside.dapp-main {
     .flex(0 0 @widthSidebar);
-    background-color: @colorLightGray;
 
+    padding-right: 0;
     // ANIMATION
     .transition(flex @animationSpeed);
 
     nav {
+
         ul {
             .vertical-menu;
         }
@@ -63,16 +77,18 @@ aside.dapp-main {
 
 aside.dapp-actions {
     .flex(0 0 @widthToolbar);
+    background: #FFF;
 
     nav {
         ul {
         	.vertical-menu;
             
             li {
-                margin: @defaultMargin 0;// thats what i always use, so we can better control the the sapcing, without comming back here. @gridHeight*2 2px 0;
+                margin: @defaultMargin 0;// thats what I always use, so we can better control the the sapcing, without comming back here. @gridHeight*2 2px 0;
                 color: @colorLink;
                 position: relative;
                 overflow: hidden;
+                text-align: center;
 
                 // ANIMATION
                 .transition(height @animationSpeed);
@@ -95,6 +111,7 @@ aside.dapp-actions {
 
 main.dapp-content {
     .flex(1);
+    background: #FFF;
 }
 
 nav {
