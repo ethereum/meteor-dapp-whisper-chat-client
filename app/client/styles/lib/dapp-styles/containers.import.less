@@ -63,35 +63,34 @@ aside.dapp-main {
 
 aside.dapp-actions {
     .flex(0 0 @widthToolbar);
-}
 
-.dapp-action-bar {
-	list-style-type: none;
-    text-align: center;
-    padding: 0;
-    
-    li {
-        margin: @defaultMargin 0;// thats what i always use, so we can better control the the sapcing, without comming back here. @gridHeight*2 2px 0;
-        color: @colorLink;
-        position: relative;
-        overflow: hidden;
+    nav {
+        ul {
+        	.vertical-menu;
+            
+            li {
+                margin: @defaultMargin 0;// thats what i always use, so we can better control the the sapcing, without comming back here. @gridHeight*2 2px 0;
+                color: @colorLink;
+                position: relative;
+                overflow: hidden;
 
-        // ANIMATION
-        .transition(height @animationSpeed);
+                // ANIMATION
+                .transition(height @animationSpeed);
 
-        // give every button the icon style
-        button {
-            .dapp-icon-button;
-            color: @colorBlue;
-        	font-size: 0.8em;
+                // give every button the icon style
+                button {
+                    .dapp-icon-button;
+                    color: @colorBlue;
+                	font-size: 0.8em;
 
-            i {
-                font-size: 2em;
-                display: block; // makes sure the text is below
-            }
+                    i {
+                        font-size: 2em;
+                        display: block; // makes sure the text is below
+                    }
+                }
+        	}
         }
-	}
-
+    }
 }
 
 main.dapp-content {

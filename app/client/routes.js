@@ -11,7 +11,7 @@ Router.route('/', function () {
     
     this.render('views_chats');
     this.render('views_chats_aside', {to: 'aside'});
-    this.render('views_actionbar', {to: 'actionbar'});
+    this.render('elements_actionbar', {to: 'actionbar'});
 });
 
 // Router.route('/items', function () {
