@@ -76,15 +76,18 @@ aside.dapp-main {
 }
 
 aside.dapp-actions {
-    .flex(0 0 @widthToolbar);
+    width: @widthToolbar;
+    position: fixed;
+    top: 0;
+    right: 0;
     background: #FFF;
-
+    z-index: 20;
     nav {
         ul {
         	.vertical-menu;
             
             li {
-                margin: @defaultMargin 0;// thats what I always use, so we can better control the the sapcing, without comming back here. @gridHeight*2 2px 0;
+                margin: @defaultMargin 0;// thats what I always use, so we can better control the the spacing, without comming back here. @gridHeight*2 2px 0;
                 color: @colorLink;
                 position: relative;
                 overflow: hidden;
