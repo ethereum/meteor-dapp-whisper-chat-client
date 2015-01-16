@@ -19,6 +19,33 @@ textarea, input[type="text"] {
     .placeholder(@colorLink);
 }
 
+// animations 
+
+@-webkit-keyframes colorFade{ 
+    0% { background: transparent}  
+    50% {background: transparent; } 
+}
+
+@-webkit-keyframes modalIn{ 
+    0% { 
+        /*-webkit-filter: blur(5px); 
+        -webkit-transform: scale(0.95);*/ 
+        opacity: 0;
+    } 
+    50% { 
+        /*-webkit-filter: blur(5px); 
+        -webkit-transform: scale(0.95); */
+        opacity: 0;
+    }     
+    100% { 
+        -webkit-filter: blur(0px); 
+        opacity: 1;
+    } 
+}
+
+
+// elements
+
 h1 {
     font-weight: 100;
     font-size: 30pt;
@@ -101,6 +128,7 @@ aside.dapp-main nav ul {
         border-radius: 15px;
         position: absolute;
         top: 4px;
+        .transition(transform 0.5s ease-in-out);
     }
     
     a.p-nickname {
@@ -158,7 +186,7 @@ aside.dapp-main nav ul {
         position: absolute;
         background: transparent;
         padding: 0;
-        font-family: "Source Sans Pro", Helvetica Neue, Helvetica, Arial, Sans;
+        font-family: @fontFamily;
         font-weight: 300;
         color: @colorTextSecondary;
     }
@@ -193,16 +221,20 @@ aside.dapp-main nav ul {
     .display(flex);
     .align-items(flex-start);
     .justify-content(center); 
-    
+
     .whisper-profile {
         position: relative;
         z-index: 50;
         width: 14*@gridWidth;
+        height: 16 * @gridHeight;
+        border-radius: 8px 8px 2px 2px;
         margin-top: 6*@gridHeight;
         background: #FFF;
+        box-shadow: rgba(0, 0, 0, 0.2) 0 2px 10px;
         mix-blend-mode:normal;
         text-align: center;
-        
+        .animation(modalIn 1s ease-in-out);
+
         .u-photo {
             position: relative;
             top: -32px;
@@ -213,18 +245,51 @@ aside.dapp-main nav ul {
         }
 
         .p-nickname {
-            position: relative;
-            background: gray;
-            top: -3 * @gridHeight - 13px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
             margin: 0;
             padding: 3* @gridHeight 0 1*@gridHeight;
+            border-radius: 2px 2px 0 0;
+            background: gray;
             color: @colorWhite;
             line-height: 2 * @gridHeight;
             z-index: 50;
         }
+        .p-nickname:after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            .background-image(linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.3)));
+            content: "";
+        }
 
         .dapp-unauthenticated {
             font-style: italic;
+        }
+
+        .dapp-about {
+            padding: 4*@gridHeight + 6px @gridWidth 1.5*@gridHeight;
+            line-height: @gridHeight;
+
+        }
+
+        button {
+            height: 2*@gridHeight;
+            padding: @gridHeight/4 @gridWidth;
+            background: @colorLink;
+            color: @colorWhite;
+            border: none;
+            border-bottom: solid 2px darken(@colorLink, 5%);
+            border-radius: 2px;
+            font-family: @fontFamily;
+            font-size: 16pt;
+            font-weight: 400;
+            text-transform: uppercase;
+            .appearance();
         }
 
     }
@@ -237,13 +302,14 @@ aside.dapp-main nav ul {
         left: 0;
         right: 0;
         bottom: 0;
-        z-index: 40; 
+        z-index: 40;
+        .animation(colorFade 2s ease-in);
     }
 
     &::before {
         mix-blend-mode: multiply;
         background: @darkColor;
-        .opacity(0.4);
+        .opacity(0.9);
     }
     
     &::after {
@@ -251,6 +317,7 @@ aside.dapp-main nav ul {
         .opacity(0.4);
     }
 }
+
 
 
 

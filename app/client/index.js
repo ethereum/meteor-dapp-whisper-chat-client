@@ -1,4 +1,3 @@
-
 Meteor.startup(function() {
 
 
@@ -33,6 +32,7 @@ Meteor.startup(function() {
     Tracker.autorun(function(){
         moment.locale(TAPi18n.getLanguage());
     });
+
 
 
 });

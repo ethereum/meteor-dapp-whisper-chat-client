@@ -1,7 +1,7 @@
 <template name="views_chats_aside">
     <nav>
         <ul>
-            <li class="main-button"><a href="/modal">New Chat  <i class="icon-pencil"></i></a></li>
+            <li class="main-button"><a href="">New Chat  <i class="icon-pencil"></i></a></li>
             <li><a href="">Public</a></li>
             <li><a href="">Chat room #1</a></li>
             <li class="active"><a href="">Alice Wonderland, Bob Burnsquit and Eve Walliston Marriot</a></li>
@@ -14,7 +14,7 @@
 
     <div class="post-message h-card">
         <img class="u-photo" src="http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60" alt="" />
-        <a class="p-nickname" href="">Random Username</a>
+        <a class="p-nickname" href="{{pathFor route='modal'}}">Random Username</a>
         <input type="text" placeholder="Topic" class="message-topic">
         <textarea placeholder="Write your message here"></textarea>
     </div>
