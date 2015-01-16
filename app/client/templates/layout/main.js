@@ -11,7 +11,7 @@ The layout template
 @constructor
 */
 
-
+    
 Template['layout_main'].helpers({
     /**
     Determines whether the sidebar is visible or not
@@ -45,5 +45,6 @@ Template['layout_main'].events({
     */
     'click div.offline': function(){
         Meteor.reconnect();
-    }
+    } 
+
 });

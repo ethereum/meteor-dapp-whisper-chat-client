@@ -19,6 +19,18 @@ textarea, input[type="text"] {
     .placeholder(@colorLink);
 }
 
+h1 {
+    font-weight: 100;
+    font-size: 30pt;
+}
+
+h2 {
+    font-weight: 600;
+    text-transform: uppercase;
+    background: @colorLink;
+    color: @colorWhite;
+}
+
 .light-text {
     color: #FFF;
 
@@ -180,40 +192,63 @@ aside.dapp-main nav ul {
     bottom: 0;
     .display(flex);
     .align-items(flex-start);
-    .justify-content(center);
-    z-index: 30;
-
+    .justify-content(center); 
+    
     .whisper-profile {
-        display: block;
+        position: relative;
+        z-index: 50;
         width: 14*@gridWidth;
-        background: #FFF;
         margin-top: 6*@gridHeight;
+        background: #FFF;
+        mix-blend-mode:normal;
         text-align: center;
-
+        
         .u-photo {
             position: relative;
-            height: 64px;
-            width: 64px;
-            border-radius: 32px;
             top: -32px;
+            z-index: 60;
+            width: 64px;
+            height: 64px;
+            border-radius: 32px;
+        }
+
+        .p-nickname {
+            position: relative;
+            background: gray;
+            top: -3 * @gridHeight - 13px;
+            margin: 0;
+            padding: 3* @gridHeight 0 1*@gridHeight;
+            color: @colorWhite;
+            line-height: 2 * @gridHeight;
+            z-index: 50;
+        }
+
+        .dapp-unauthenticated {
+            font-style: italic;
         }
 
     }
-}
 
-.bg-cover {
-    background: #005090;
-    mix-blend-mode: multiply;  
-    opacity: 0.99;
-    content: " ";
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-mix-blend-mode: multiply;  
+    &::before, &::after {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 40; 
+    }
+
+    &::before {
+        mix-blend-mode: multiply;
+       background: @darkColor;
+    }
     
+    &::after {
+       background: @darkColor;
+       opacity: 0.4;
+    }
 }
 
 

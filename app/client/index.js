@@ -1,6 +1,8 @@
 
 Meteor.startup(function() {
 
+
+
     // remove the loading box
     $('.loading-box').remove();
 
@@ -31,5 +33,6 @@ Meteor.startup(function() {
     Tracker.autorun(function(){
         moment.locale(TAPi18n.getLanguage());
     });
+
 
 });
