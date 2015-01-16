@@ -6,6 +6,16 @@ a,
 a:visited {
     text-decoration: none;
     color: @colorBlue;
+
+    outline: 0;
+
+    &:hover,
+    &:focus {
+        outline: 0;
+    }
+    &:active {
+        .scale(0.95);
+    }
 }
 
 
