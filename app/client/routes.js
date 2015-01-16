@@ -12,11 +12,12 @@ Router.route('/', function () {
     this.render('views_chats');
     this.render('views_chats_aside', {to: 'aside'});
     this.render('views_chats_actionbar', {to: 'actionbar'});
+    this.render(null, {to: 'modal'});
 });
 
-// Router.route('/items', function () {
-//     this.render('Items');
-// });
+Router.route('/modal', function () {
+    this.render('elements_modal', {to: 'modal'});
+});
 
 // Router.route('/items/:_id', function () {
 //     var item = Items.findOne({_id: this.params._id});
