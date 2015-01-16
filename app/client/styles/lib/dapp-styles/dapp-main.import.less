@@ -1,0 +1,178 @@
+// thirdparty
+@import 'lib/entypoicons.import.less';
+@import 'lib/normalize.import.less';
+@import 'lib/lesshat.import.less';
+
+// constants, mixins
+@import 'fonts.import.less';
+@import 'constants.import.less';
+@import 'mixins.import.less';
+
+// containers, elements
+@import 'elements.import.less';
+@import 'containers.import.less';
+
+// responsive
+@import 'responsive.import.less';
+
+textarea, input[type="text"] {
+    .placeholder(@colorLink);
+}
+
+.light-text {
+    color: #FFF;
+
+    a {
+        color: #FFF;
+    }
+}
+
+
+aside.dapp-main nav ul { 
+    
+    padding-top: @gridHeight*1;
+
+    li {
+        height: @gridHeight*3;
+        .display(flex);
+        .align-items(center);
+
+        border-top: @darkColor solid 1px;
+
+        a {
+            padding-left: @gridWidth / 4;
+            max-height: @gridHeight*2;
+            overflow: hidden;
+            line-height: @gridHeight;
+            text-overflow: ellipsis;
+            font-weight: 300;
+        }
+    }
+    li:first-child, li.main-button, li.active + li, li.main-button + li  {
+        border-top: none;
+    }
+    li.active {
+        background: #FFF;
+        border-radius: 3px 0 0 3px;
+        border-top: none;        
+        a {
+            color: @darkColor; 
+            font-weight: 500;       
+        }
+    }
+
+    li.main-button {
+        background: @darkColor;
+        border-radius: 3px 0 0 3px;
+        position: fixed;
+        width: 6 * @gridWidth;
+        
+        i {
+            position: absolute;
+            right: @gridWidth / 4;
+            top:20px;
+        }
+    }
+
+    li.main-button + li {
+        padding-top: 3*@gridHeight;
+    }
+}
+
+
+.h-card {
+    position: relative;
+
+    .u-photo {
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        position: absolute;
+        top: 4px;
+    }
+    
+    a.p-nickname {
+        font-weight: 500;
+        font-size: 12pt;
+        line-height: 12pt;
+        width: 5*@gridWidth;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        color: @colorTextSecondary;
+        position: absolute;
+        top: 0px;
+        left: 45px;
+    }    
+}
+
+.post-message {
+    position: fixed;
+    top: 2*@gridHeight;
+    right: 0;
+    left: 8*@gridWidth;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 10;
+    height: 4*@gridHeight;
+    
+    &::before{
+        content: " ";
+        background: green;
+        position: fixed;
+        top: 0;
+        width: 18*@gridWidth;
+        height: 2*@gridHeight;
+        display: block;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    textarea {
+        height: 2 * @gridHeight;
+        top: 1.5 * @gridHeight;
+        left: 1.5 * @gridWidth;
+        width: 11.5 * @gridWidth;
+    }
+
+    input[type="text"].message-topic {
+        top: 0;
+        left: 6*@gridWidth;
+        border-bottom: @colorLink 1px dashed;
+        width: 3*@gridWidth;
+    }
+
+    textarea, input[type="text"] {
+        border: none;
+        border-radius: 0;
+        position: absolute;
+        background: transparent;
+        padding: 0;
+        font-family: "Source Sans Pro", Helvetica Neue, Helvetica, Arial, Sans;
+        font-weight: 300;
+        color: @colorTextSecondary;
+    }
+}
+
+.helper-message {
+    position: relative;
+    top: 6*@gridHeight;
+    padding-right: 2*@gridWidth;
+    font-size: 18pt;
+    font-weight: 100;
+    line-height: 27pt;
+
+    input[type="text"] {
+        display: block;
+        width: @gridWidth * 10;
+        color: @colorLink;
+        padding-left: 0.5*@gridHeight 0.5*@gridWidth;
+        margin-top: 1*@gridHeight;
+        background: #F8F7F7;
+        border: none;
+        border-bottom: solid 2px #E5E5E5; 
+    }
+}
+
+
+
+
+
