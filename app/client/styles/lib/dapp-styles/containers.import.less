@@ -1,17 +1,12 @@
-
-
-
-
 body {
+    min-height: 100vh;
     padding: 0;
     margin: 0;
     background-color: @colorWhite;
-    font: 200 16px 'Source Sans Pro', 'Helvetica Neue', arial, sans-serif;
+    font: 100 16px 'Source Sans Pro', 'Helvetica Neue', arial, sans-serif;
     color: @colorTextPrimary;
-    min-height: 100vh;
 
-	font-weight: 100;
-    background: @mainBackground;
+    .background-image(linear-gradient(to bottom,  lighten(@colorMainBackground, 15%) 0, @colorMainBackground 100px));
 
     .display(flex);
     .flex-direction(column);
@@ -81,7 +76,7 @@ aside.dapp-actions {
     position: fixed;
     top: 0;
     right: 0;
-    background: #FFF;
+    background: @colorWhite;
     z-index: 20;
     nav {
         ul {
