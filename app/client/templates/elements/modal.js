@@ -19,16 +19,6 @@ Inititate the geo pattern.
 */
 Template['elements_modal'].rendered = function(){ 
 
-    // animate common elements
-    // targetObject =  $(".post-message .u-photo");
-    // startingPosition = $(".whisper-profile .u-photo").offset();
-
-    // diffX = startingPosition.left - targetObject.offset().left + 16;
-    // diffY = startingPosition.top - targetObject.offset().top + 16;
-
-    // targetObject.css({
-    //         "-webkit-transform":"translate("+diffX+"px, "+diffY+"px) scale(2)"});
-
 
     // initiate the geo pattern
     var pattern = GeoPattern.generate(Math.random().toString());
@@ -40,3 +30,10 @@ Template['elements_modal'].rendered = function(){
         $('.p-nickname').text(chance.prefix() + " " +  chance.capitalize(chance.word())); 
     }
 };
+
+
+Template['elements_modal'].events({
+    'click .dapp-modal-overlay': function(){
+        history.back();
+    }
+});

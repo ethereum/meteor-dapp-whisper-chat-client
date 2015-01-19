@@ -15,10 +15,7 @@
 // responsive
 @import 'responsive.import.less';
 
-
-
-
-.dapp-modal-content {
+.dapp-modal-overlay {    
     z-index: 99;
     position: absolute;
     top: 0;
@@ -35,6 +32,10 @@
     &.animate {
         .opacity(0);
     }
+}
+
+
+.dapp-modal-content {
 
     .whisper-profile {
         position: relative;

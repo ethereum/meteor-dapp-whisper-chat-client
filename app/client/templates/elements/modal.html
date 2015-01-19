@@ -1,7 +1,9 @@
 <template name="elements_modal">
     {{#Animate}}
-        <div class="dapp-modal-content animate">
-            {{> yield region="modalContent"}}
+        <div class="dapp-modal-overlay  animate">
+            <div class="dapp-modal-content">
+                {{> yield region="modalContent"}}
+            </div>
         </div>
     {{/Animate}}
 </template>
