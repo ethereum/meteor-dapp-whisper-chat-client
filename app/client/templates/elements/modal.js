@@ -20,7 +20,7 @@ Inititate the geo pattern.
 Template['elements_modal'].rendered = function(){ 
 
     // animate common elements
-    // targetObject = $(".post-message .u-photo");
+    // targetObject =  $(".post-message .u-photo");
     // startingPosition = $(".whisper-profile .u-photo").offset();
 
     // diffX = startingPosition.left - targetObject.offset().left + 16;

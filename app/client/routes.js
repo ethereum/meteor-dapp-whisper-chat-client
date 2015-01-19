@@ -15,9 +15,22 @@ Router.route('/', function () {
     this.render(null, {to: 'modal'});
 });
 
-Router.route('/modal', function () {
+
+Router.route('/user/:userId', function () {
     this.render('elements_modal', {to: 'modal'});
+    this.render('view_modals_userProfile', {to: 'modalContent'});
+},{
+    name: 'userProfile'
 });
+
+
+Router.route('/add-user', function () {
+    this.render('elements_modal', {to: 'modal'});
+    this.render('view_modals_addUser', {to: 'modalContent'});
+},{
+    name: 'addUser'
+});
+
 
 // Router.route('/items/:_id', function () {
 //     var item = Items.findOne({_id: this.params._id});
