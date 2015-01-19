@@ -33,6 +33,82 @@
 @colorMainBackgroundDark: #064A80;
 
 
-.dapp-main {
-    .light-text;
+
+.post-message {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin-left: -@defaultPadding;
+    padding: @defaultPadding;
+    background: fadeout(@colorWhite, 10%);
+    z-index: 10;
+    line-height: 30px;
+    
+    textarea, input[type="text"] {
+        // position: absolute;
+        padding: 0;
+        font-family: @fontFamily;
+        font-weight: 300;
+        color: @colorTextSecondary;
+    }
+
+    textarea {
+        margin-top: 0;
+        padding-top: 1.5 * @gridHeight;
+        width: 80%;
+    }
+    input[type="text"].message-topic {
+        width: 3 * @gridWidth;
+        margin-left: @defaultMargin;
+        border-bottom: @colorLink 1px dashed;
+    }
+
+    .dapp-profile-image {
+        float: left;
+        margin-right: @defaultMargin;
+    }
+
+
+
+
+
+    .h-card {
+        position: relative;
+
+        
+        a.p-nickname {
+            font-weight: 500;
+            font-size: 12pt;
+            line-height: 12pt;
+            width: 5*@gridWidth;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+            color: @colorTextSecondary;
+            position: absolute;
+            top: 0px;
+            left: 45px;
+        }    
+    }
+
+
+    .helper-message {
+        position: relative;
+        top: 6*@gridHeight;
+        padding-right: 2*@gridWidth;
+        font-size: 18pt;
+        font-weight: 100;
+        line-height: 27pt;
+
+        input[type="text"] {
+            display: block;
+            width: @gridWidth * 10;
+            color: @colorLink;
+            padding-left: 0.5*@gridHeight 0.5*@gridWidth;
+            margin-top: 1*@gridHeight;
+            background: #F8F7F7;
+            border: none;
+            border-bottom: solid 2px #E5E5E5; 
+        }
+    }
 }

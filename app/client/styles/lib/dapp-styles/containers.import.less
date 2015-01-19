@@ -40,6 +40,7 @@ header.dapp-main,
 aside.dapp-main,
 main.dapp-content,
 footer.dapp-main {
+    position: relative;
     .box-sizing(border-box);
     padding: @defaultPadding;
 }
@@ -74,10 +75,11 @@ aside.dapp-main {
                 a {
                     display: block;
                     min-height: @gridHeight*2;
-                    padding: @defaultPadding;
+                    padding: @defaultPadding/2 @defaultPadding;
                     padding-left: @gridWidth / 3;
                     overflow: hidden;
                     border-top: @colorMainBackgroundDark solid 1px;
+                    color: @colorWhite;
 
                     text-overflow: ellipsis;
                     // .shorten-text;
@@ -169,9 +171,6 @@ main.dapp-content {
     background: #FFF;
 }
 
-nav {
-
-}
 
 footer.dapp-main {
     height: 100px;

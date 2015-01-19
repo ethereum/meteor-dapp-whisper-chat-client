@@ -15,9 +15,9 @@
 
 <template name="views_chats">
 
-    <div class="post-message h-card">
-        <img class="u-photo" src="http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60" alt="" />
-        <a class="p-nickname" href="{{pathFor route='modal'}}">Random Username</a>
+    <div class="post-message">
+        <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
+        <a href="{{pathFor route='modal'}}">Random Username</a>
         <input type="text" placeholder="Topic" class="message-topic">
         <textarea placeholder="Write your message here"></textarea>
     </div>

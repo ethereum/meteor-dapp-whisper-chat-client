@@ -2,6 +2,19 @@
     display: none;
 }
 
+.dapp-profile-image {
+    width: 30px;
+    height: 30px;
+    .border-radius(50%);
+    .background-size(cover);
+    background-positon: 50% 50%;
+    // .transition(transform 0.5s ease-in-out);
+}
+
+
+
+// default elements
+
 a,
 a:visited {
     text-decoration: none;
@@ -17,6 +30,53 @@ a:visited {
         .scale(0.95);
     }
 }
+
+
+h1 {
+    font-weight: 100;
+    font-size: 2.2em;
+}
+
+h2 {
+    font-weight: 600;
+    text-transform: uppercase;
+    background: @colorLink;
+    color: @colorWhite;
+}
+
+
+// forms
+input,
+select,
+textarea {
+    padding: @defaultPadding;
+    background-color: transparent;
+    border: 0;
+    font-size: 1.3em;
+    font-weight: 300;
+    width: 250px;
+
+    &:focus {
+        outline: 0;
+        // border-color: @colorBrand1;
+    }
+}
+:disabled {
+    color: @colorGrayDark;
+    background-color: @colorGrayLight;
+}
+label {
+    font-weight: 300;
+}
+fieldset {
+    border: 0;
+    padding: 0;
+    margin: @defaultMargin;
+}
+select {
+    height: 45px;
+}
+
 
 
 // TODO we could add a circle on hover
