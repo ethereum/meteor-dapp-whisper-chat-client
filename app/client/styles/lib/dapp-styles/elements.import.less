@@ -3,11 +3,17 @@
 }
 
 .dapp-profile-image {
-    width: 30px;
-    height: 30px;
+    display: inline-block;
+    width: @gridWidth * 2;
+    height: @gridWidth * 2;
     .border-radius(50%);
     .background-size(cover);
     background-positon: 50% 50%;
+
+    &.dapp-small {
+        width: @gridWidth;
+        height: @gridWidth;
+    }
 }
 
 .dapp-message {
@@ -29,11 +35,17 @@
 }
 
 
+.dapp-unauthenticated {
+    font-style: italic;
+}
+
+
 
 // default elements
 
 a,
-a:visited {
+a:visited,
+button {
     text-decoration: none;
     color: @colorBlue;
 
@@ -46,6 +58,9 @@ a:visited {
     &:active {
         .scale(0.95);
     }
+}
+button {
+    .dapp-button-reset;
 }
 
 
@@ -94,21 +109,4 @@ fieldset {
 }
 select {
     height: 45px;
-}
-
-
-
-// TODO we could add a circle on hover
-.dapp-icon-button {
-    .button-reset;
-    display: inline-block;
-    color: @colorBlack;
-
-    // make smaller on click
-    &:active {
-        .scale(0.95);
-    }
-    &:hover {
-        opacity: 0.9;
-    }
 }

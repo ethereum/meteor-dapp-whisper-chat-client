@@ -15,6 +15,11 @@
                 "invitePeople1": "To add people to this chat, click the",
                 "invitePeople2": "icon or send someone this link:"
             }
+        },
+        "users": {
+            "texts": {
+                "anonymous": "This is an anonymous user. No guarantees can be made  about it’s identity, or any links between him and any other user with the same nickname here or any other platform."
+            }
         }
     }
 }

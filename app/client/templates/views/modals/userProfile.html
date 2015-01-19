@@ -1,9 +1,14 @@
 <template name="view_modals_userProfile">
     <!--profile overlay-->
-    <div class="whisper-profile h-card">
-        <img class="u-photo" src="http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=128" alt="" />
-        <h1 class="p-nickname dapp-unauthenticated" href="">Random Username</h1>
-        <div class="dapp-about">This is an anonymous user. No guarantees can be made  about it’s identity, or any links between him and any other user with the same nickname here or any other platform.</div>
-        <button class="dapp-important-button">Follow</button>
-    </div>
+    <header class="dapp-modal-header">
+        <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
+        
+        <h1 class="dapp-unauthenticated">Random Username</h1>
+    </header>
+
+    <p>
+        {{i18n 'whisper.users.texts.anonymous'}}
+    </p>
+
+    <button class="dapp-block-button">Follow</button>
 </template>

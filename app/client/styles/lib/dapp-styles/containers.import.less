@@ -12,6 +12,7 @@ body {
     .flex-direction(column);
 }
 
+// DEBUG GRID
 .dapp-grid {
     z-index: 999;
     background: #FFF url(hex-grid-tile.png);
@@ -23,19 +24,96 @@ body {
     bottom: 0;
     opacity: 0.1;
 }
-
 body:hover .dapp-grid {
     display: none;
 }
 
 
-.dapp-flex-content {
+
+// CONTAINERS
+
+// MODAL
+
+.dapp-modal-overlay {    
+    z-index: 99;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     .display(flex);
-    // .flex-direction(column);
-    .flex(1);
+    .align-items(flex-start);
+    .justify-content(center);
+
+    background: fadeout(@colorMainBackgroundDark, 20%);
+
+
+    // ANIMATION
+    .transition(opacity @animationSpeed);
+    &.animate {
+        .opacity(0);
+
+        .dapp-modal-container {
+            .translateY(-20%);
+        }
+    }
 }
 
-// containers
+
+.dapp-modal-container {
+    position: relative;
+    width: 14*@gridWidth;
+    height: 18 * @gridHeight;
+    margin-top: 6*@gridHeight;
+    padding: @defaultPaddingVertical @defaultPaddingHorizontal;
+    background: @colorWhite;
+    .box-sizing(border-box);
+    .dapp-shadow-medium;
+    .border-radius(3px);
+
+    text-align: center;
+
+    // ANIMATION
+    .transition(transform @animationSpeed);
+
+    .dapp-modal-header {
+        position: relative;
+        padding: @defaultPaddingVertical*2 0;
+        margin: -@defaultPaddingVertical -@defaultPaddingHorizontal;
+        margin-bottom: @defaultPaddingVertical;
+        .border-radius(2px 2px 0 0);
+        color: @colorWhite;
+        line-height: 2 * @gridHeight;
+        text-align: center;
+
+        h1 {
+            margin: 0;
+        }
+
+        .dapp-profile-image {
+            position: absolute;
+            top: -@gridHeight * 2;
+            left: 50%;
+            margin-left: -@gridWidth;
+        }
+    }
+
+    .dapp-modal-scroll-container {
+        margin: -@defaultPaddingVertical -@defaultPaddingHorizontal;
+        padding: @defaultPaddingVertical @defaultPaddingHorizontal;
+        max-height: 10 * @gridHeight;
+        .overflow;
+    }
+
+    p {
+        margin: @defaultPaddingVertical*2 0;
+        line-height: @gridHeight;
+    }
+}
+
+
+// MAIN APP
+
 header.dapp-main,
 aside.dapp-main,
 main.dapp-content,
@@ -43,6 +121,14 @@ footer.dapp-main {
     position: relative;
     .box-sizing(border-box);
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
+    // .blur(10px);
+}
+
+
+.dapp-flex-content {
+    .display(flex);
+    // .flex-direction(column);
+    .flex(1);
 }
 
 header.dapp-main {
@@ -85,7 +171,7 @@ aside.dapp-main {
                     color: @colorWhite;
 
                     text-overflow: ellipsis;
-                    // .shorten-text;
+                    // .dapp-shorten-text;
                     font-weight: 300;
                     line-height: @gridHeight;
 
