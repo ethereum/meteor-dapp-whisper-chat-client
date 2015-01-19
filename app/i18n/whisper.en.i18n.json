@@ -1,0 +1,20 @@
+{
+    "whisper": {
+        "app": {
+            "buttons": {
+                "addUser": "Add People",
+                "newChat": "New Chat"
+            }
+        },
+        "chat": {
+            "placeholder": {
+                "addTopic": "Add a Topic",
+                "writeHere": "Write your message here"
+            },
+            "texts": {
+                "invitePeople1": "To add people to this chat, click the",
+                "invitePeople2": "icon or send someone this link:"
+            }
+        }
+    }
+}

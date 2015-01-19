@@ -1,7 +1,7 @@
 <template name="views_chats_aside">
     <nav>
         <ul>
-            <li><a href="" class="dapp-main-button">New Chat  <i class="icon-pencil"></i></a></li>
+            <li><a href="" class="dapp-main-button">{{i18n 'whisper.app.buttons.newChat'}} <i class="icon-pencil"></i></a></li>
             <li><a href="">Public</a></li>
             <li><a href="">Alice Wonderland, Bob Burnsquit</a></li>
             <li><a href="">Chat room #1</a></li>
@@ -20,12 +20,14 @@
         
         <a href="{{pathFor route='modal'}}">Random Username</a>
         
-        <input type="text" placeholder="Topic" class="message-topic">
-        <textarea placeholder="Write your message here"></textarea>
+        <input type="text" placeholder="{{i18n 'whisper.chat.placeholder.addTopic'}}" class="message-topic">
+        <textarea placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
     </header>
 
     <div class="dapp-message">
-        To add people to this chat, click the <a href=""> <i class="icon-user-add"></i> Add People</a> icon or send someone this link:
+        {{i18n 'whisper.chat.texts.invitePeople1'}}
+        <a href="{{pathFor route='addUser'}}"><i class="icon-user-add"></i> {{i18n 'whisper.app.buttons.addUser'}}</a>
+        {{i18n 'whisper.chat.texts.invitePeople2'}}
         <input type="text" value="whisperchat.eth/9183k1sd/" disabled>
     </div>
     
