@@ -8,7 +8,23 @@
     .border-radius(50%);
     .background-size(cover);
     background-positon: 50% 50%;
-    // .transition(transform 0.5s ease-in-out);
+}
+
+.dapp-message {
+    position: relative;
+    font-size: 1.5em;
+    font-weight: 100;
+    line-height: 27pt;
+
+    input[type="text"] {
+        display: block;
+        width: @gridWidth * 10;
+        color: @colorLink;
+        margin-top: 1*@gridHeight;
+        background: lighten(@colorGrayLight, 4%);
+        border-bottom: solid 2px @colorGrayLight;
+        font-size: 1em;
+    }
 }
 
 
@@ -49,7 +65,7 @@ h2 {
 input,
 select,
 textarea {
-    padding: @defaultPadding;
+    padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
     background-color: transparent;
     border: 0;
     font-size: 1.3em;

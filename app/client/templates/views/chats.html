@@ -15,16 +15,18 @@
 
 <template name="views_chats">
 
-    <div class="post-message">
+    <header class="dapp-content-header">
         <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
+        
         <a href="{{pathFor route='modal'}}">Random Username</a>
+        
         <input type="text" placeholder="Topic" class="message-topic">
         <textarea placeholder="Write your message here"></textarea>
-    </div>
+    </header>
 
-    <div class="helper-message">
+    <div class="dapp-message">
         To add people to this chat, click the <a href=""> <i class="icon-add-user"></i> Add People</a> icon or send someone this link:
-        <input type="text" value="whisperchat.eth/9183k1sd/">
+        <input type="text" value="whisperchat.eth/9183k1sd/" disabled>
     </div>
     
    
