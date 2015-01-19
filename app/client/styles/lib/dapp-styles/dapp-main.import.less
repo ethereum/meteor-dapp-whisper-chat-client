@@ -67,57 +67,6 @@ h2 {
 }
 
 
-aside.dapp-main nav ul { 
-    
-    padding-top: @gridHeight*1;
-
-    li {
-        height: @gridHeight*3;
-        .display(flex);
-        .align-items(center);
-
-        border-top: @darkColor solid 1px;
-
-        a {
-            padding-left: @gridWidth / 4;
-            max-height: @gridHeight*2;
-            overflow: hidden;
-            line-height: @gridHeight;
-            text-overflow: ellipsis;
-            font-weight: 300;
-        }
-    }
-    li:first-child, li.main-button, li.active + li, li.main-button + li  {
-        border-top: none;
-    }
-    li.active {
-        background: #FFF;
-        border-radius: 3px 0 0 3px;
-        border-top: none;        
-        a {
-            color: @darkColor; 
-            font-weight: 500;       
-        }
-    }
-
-    li.main-button {
-        background: @darkColor;
-        border-radius: 3px 0 0 3px;
-        position: fixed;
-        width: 6 * @gridWidth;
-        
-        i {
-            position: absolute;
-            right: @gridWidth / 4;
-            top:20px;
-        }
-    }
-
-    li.main-button + li {
-        padding-top: 3*@gridHeight;
-    }
-}
-
 
 .h-card {
     position: relative;
@@ -308,12 +257,12 @@ aside.dapp-main nav ul {
 
     &::before {
         mix-blend-mode: multiply;
-        background: @darkColor;
+        background: @colorMainBackgroundDark;
         .opacity(0.9);
     }
     
     &::after {
-        background: @darkColor;
+        background: @colorMainBackgroundDark;
         .opacity(0.4);
     }
 }

@@ -60,13 +60,68 @@ aside.dapp-main {
     .flex(0 0 @widthSidebar);
 
     padding-right: 0;
+
     // ANIMATION
     .transition(flex @animationSpeed);
 
     nav {
-
         ul {
             .vertical-menu;
+            padding-top: @gridHeight*1;
+
+            li {
+
+                a {
+                    display: block;
+                    min-height: @gridHeight*2;
+                    padding: @defaultPadding;
+                    padding-left: @gridWidth / 3;
+                    overflow: hidden;
+                    border-top: @colorMainBackgroundDark solid 1px;
+
+                    text-overflow: ellipsis;
+                    // .shorten-text;
+                    font-weight: 300;
+                    line-height: @gridHeight;
+
+                    &:active {
+                        .transform-origin(100% 50%);
+                        .scale(0.98);
+                    }
+
+
+                    &.dapp-main-button {
+                        position: relative;
+                        // position: fixed;
+                        // width: 6 * @gridWidth;
+                        margin-bottom: 3*@gridHeight;
+                        .border-radius(3px 0 0 3px);
+                        background: @colorMainBackgroundDark;
+                        border-top: none;
+                        
+                        i {
+                            position: absolute;
+                            right: @gridWidth / 4;
+                            top:20px;
+                        }
+                    }
+                }
+
+                &.active a {
+                    background: #FFF;
+                    border-top: none;        
+                    .border-radius(3px 0 0 3px);
+                    color: @colorMainBackgroundDark; 
+                    font-weight: 500;       
+                }
+
+                // remove the top border
+                &:first-child a,
+                &.active + li > a,
+                &.dapp-main-button + li  {
+                    border-top: 0;
+                }
+            }
         }
     }
 }
