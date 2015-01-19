@@ -73,7 +73,10 @@ aside.dapp-main {
             li {
 
                 a {
-                    display: block;
+                    // display: block;
+                    .display(flex);
+                    .align-items(center);
+                    min-height: @gridHeight*2;
                     max-height: @gridHeight*6;
                     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
                     padding-left: @gridWidth / 3;
@@ -96,7 +99,7 @@ aside.dapp-main {
                         position: relative;
                         // position: fixed;
                         // width: 6 * @gridWidth;
-                        margin-bottom: 2*@gridHeight;
+                        margin-bottom: 4*@gridHeight;
                         .border-radius(3px 0 0 3px);
                         background: @colorMainBackgroundDark;
                         border-top: none;
