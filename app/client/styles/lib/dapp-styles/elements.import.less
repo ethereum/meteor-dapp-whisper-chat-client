@@ -39,7 +39,26 @@
     font-style: italic;
 }
 
+.dapp-modal-buttons {
+    .display(flex);
+    position: relative;
+    .justify-content(flex-end);    
+    background: @colorWhite;
 
+    button {
+        .flex(1);
+        height: 2*@gridHeight;
+        font-family: @fontFamily;
+        font-size: 1em;
+        text-transform: uppercase;
+        font-weight: 400;
+        
+        &.dapp-primary-button {
+            font-weight: 600;
+        }
+    }
+
+}
 
 // default elements
 

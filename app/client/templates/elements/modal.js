@@ -23,7 +23,7 @@ Template['elements_modal'].rendered = function(){
     // initiate the geo pattern
     var pattern = GeoPattern.generate(Math.random().toString());
     $('.dapp-modal-header').css('background-image', pattern.toDataUrl());
-    $('.dapp-profile-image').css("background-image", "url(http://www.gravatar.com/avatar/" + pattern.hash + '?d=retro&s=128)');
+    $('.dapp-profile-image').each(function(){ $(this).css("background-image", "url(http://www.gravatar.com/avatar/" + chance.hash() + '?d=retro&s=128)')});
 
     if (typeof chance != 'undefined') { 
         var genchance = new Chance(pattern.hash.toString);
