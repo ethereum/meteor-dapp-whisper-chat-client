@@ -89,16 +89,20 @@
     }
 }
 
-.whisper-chat {
+.whisper-chat-item {
     position: relative;
     // .display(flex);
-    padding: @defaultPaddingVertical 0;//@defaultPaddingHorizontal;
-    padding-left: @gridWidth * 1.5;
+    padding: @defaultPaddingVertical @defaultPaddingHorizontal;//@defaultPaddingHorizontal;
+    padding-left: @gridWidth * 2;
     border-top: 1px solid @colorGrayLight;
+
+    &.you {
+        background-color: lighten(@colorLightGray, 3%);
+    }
 
     .whisper-user-info {
         position: absolute;
-        left: 0;
+        left: @gridWidth/2;
         // .flex(0 0 @gridWidth * 1.5);
     } 
 
