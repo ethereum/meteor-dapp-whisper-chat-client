@@ -13,11 +13,21 @@ The modal wrapper template
 
 
 /**
+Look the scrolling of the body
+
+@method rendered
+*/
+Template['elements_modal'].created = function(){
+    $('body').addClass('disable-scroll');
+};
+
+
+/**
 Inititate the geo pattern.
 
 @method rendered
 */
-Template['elements_modal'].rendered = function(){ 
+Template['elements_modal'].rendered = function(){
 
 
     // initiate the geo pattern
@@ -30,6 +40,16 @@ Template['elements_modal'].rendered = function(){
         $('.dapp-unauthenticated').text(chance.prefix() + " " +  chance.capitalize(chance.word())); 
     }
 };
+
+/**
+Remove look of scrolling from the body
+
+@method rendered
+*/
+Template['elements_modal'].destroyed = function(){
+    $('body').removeClass('disable-scroll');
+};
+
 
 
 Template['elements_modal'].events({

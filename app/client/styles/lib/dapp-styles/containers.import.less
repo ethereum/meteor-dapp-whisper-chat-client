@@ -1,4 +1,6 @@
 body {
+    .display(flex);
+    .flex-direction(column);
     min-height: 100vh;
     padding: 0;
     margin: 0;
@@ -8,8 +10,16 @@ body {
 
     .background-image(linear-gradient(to bottom,  lighten(@colorMainBackground, 15%) 0, @colorMainBackground 100px));
 
-    .display(flex);
-    .flex-direction(column);
+    &.disable-scroll {
+        overflow: hidden;
+
+
+        .dapp-flex-content,
+        footer.dapp-main {
+            .blur(8px);
+        }
+    }
+
 }
 
 // DEBUG GRID
@@ -46,7 +56,7 @@ body:hover .dapp-grid {
     .justify-content(center);
     .overflow;
 
-    background: fadeout(@colorMainBackgroundDark, 20%);
+    background: fadeout(@colorMainBackgroundDark, 50%);
 
 
     // ANIMATION
@@ -266,7 +276,9 @@ aside.dapp-actions {
 
 main.dapp-content {
     .flex(1);
-    background: #FFF;
+    background: @colorWhite;
+    padding-left: @gridWidth * 2;
+    padding-right: @gridWidth * 2;
 
     &.dapp-has-header {
         padding-top: 150px + 3 * @defaultPaddingVertical;
@@ -278,7 +290,7 @@ main.dapp-content {
         top: 0;
         width: 100%;
         height: 150px;
-        margin-left: -@defaultPaddingHorizontal;
+        margin-left: -@gridWidth * 2;
         padding: @defaultPaddingVertical @defaultPaddingHorizontal;
         background: fadeout(@colorWhite, 10%);
         z-index: 10;
