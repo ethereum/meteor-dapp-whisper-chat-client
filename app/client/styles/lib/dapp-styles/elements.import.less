@@ -28,15 +28,15 @@
     font-weight: 100;
     line-height: 27pt;
 
-    input[type="text"] {
-        display: block;
-        width: @gridWidth * 10;
-        color: @colorLink;
-        margin-top: 1*@gridHeight;
-        background: lighten(@colorGrayLight, 4%);
-        border-bottom: solid 2px @colorGrayLight;
-        font-size: 1em;
-    }
+    // input[type="text"] {
+    //     display: block;
+    //     width: @gridWidth * 10;
+    //     color: @colorLink;
+    //     margin-top: 1*@gridHeight;
+    //     background: lighten(@colorGrayLight, 4%);
+    //     border-bottom: solid 2px @colorGrayLight;
+    //     font-size: 1em;
+    // }
 }
 
 
@@ -113,6 +113,11 @@ textarea {
     font-weight: 300;
     width: 250px;
 
+    color: @colorLink;
+        margin-top: @gridHeight;
+        background: @colorGrayLight;
+        border-bottom: solid 2px @colorGray;
+
     .placeholder(@colorLink);
 
     &:focus {
@@ -122,7 +127,7 @@ textarea {
 }
 :disabled {
     color: @colorGrayDark;
-    background-color: @colorGrayLight;
+    // background-color: @colorGrayLight;
 }
 label {
     font-weight: 300;

@@ -38,6 +38,9 @@
     textarea, input[type="text"] {
         // position: absolute;
         padding: 0;
+        margin: 0;
+        border: 0;
+        background-color: transparent;
         font-family: @fontFamily;
         font-weight: 300;
         color: @colorTextSecondary;
@@ -94,10 +97,14 @@
     // .display(flex);
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;//@defaultPaddingHorizontal;
     padding-left: @gridWidth * 2;
-    border-top: 1px solid @colorGrayLight;
+    border-top: 1px solid @colorGray;
+
+    &:first-of-type {
+        border-top: 0;
+    }
 
     &.you {
-        background-color: lighten(@colorLightGray, 3%);
+        background-color: @colorGrayLight;
     }
 
     .whisper-user-info {

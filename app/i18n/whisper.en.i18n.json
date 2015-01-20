@@ -13,7 +13,8 @@
             },
             "texts": {
                 "invitePeople1": "To add people to this chat, click the",
-                "invitePeople2": "icon or send someone this link:"
+                "invitePeople2": "icon or send someone this link:",
+                "invitePeople3": "To add people to this chat click a person you follow, or send someone this link:"
             }
         },
         "users": {

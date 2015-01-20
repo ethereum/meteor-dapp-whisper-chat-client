@@ -53,6 +53,11 @@ Template['elements_modal'].destroyed = function(){
 
 
 Template['elements_modal'].events({
+    /**
+    Hide the modal on click
+
+    @event click  .dapp-modal-overlay
+    */
     'click .dapp-modal-overlay': function(e){
         if($(e.target).hasClass('dapp-modal-overlay'))
             history.back();
