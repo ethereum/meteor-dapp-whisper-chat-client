@@ -44,6 +44,7 @@ body:hover .dapp-grid {
     .display(flex);
     .align-items(flex-start);
     .justify-content(center);
+    .overflow;
 
     background: fadeout(@colorMainBackgroundDark, 20%);
 
@@ -63,8 +64,8 @@ body:hover .dapp-grid {
 .dapp-modal-container {
     position: relative;
     width: 14*@gridWidth;
-    height: 18 * @gridHeight;
-    margin-top: 6*@gridHeight;
+    // height: 20 * @gridHeight;
+    margin: 6*@gridHeight auto;
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
     background: @colorWhite;
     .box-sizing(border-box);
@@ -82,9 +83,14 @@ body:hover .dapp-grid {
         margin: -@defaultPaddingVertical -@defaultPaddingHorizontal;
         margin-bottom: @defaultPaddingVertical;
         .border-radius(2px 2px 0 0);
-        color: @colorWhite;
+        color: @colorTextPrimary;
         line-height: 2 * @gridHeight;
         text-align: center;
+
+        &.dapp-pattern {
+            color: @colorWhite;
+        }
+
 
         h1 {
             margin: 0;
