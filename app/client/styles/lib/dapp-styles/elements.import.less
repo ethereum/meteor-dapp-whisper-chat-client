@@ -14,11 +14,16 @@
         width: @gridWidth;
         height: @gridWidth;
     }
+    &.dapp-medium {
+        width: @gridWidth * 1.5;
+        height: @gridWidth * 1.5;
+    }
 }
 
 .dapp-message {
     position: relative;
     max-width: @gridWidth * 16;
+    margin: @defaultMargin*3 0;
     font-size: 1.5em;
     font-weight: 100;
     line-height: 27pt;

@@ -18,7 +18,7 @@ Look the scrolling of the body
 @method rendered
 */
 Template['elements_modal'].created = function(){
-    $('body').addClass('disable-scroll');
+    $('body').addClass('disable-scroll blur');
 };
 
 
@@ -47,7 +47,7 @@ Remove look of scrolling from the body
 @method rendered
 */
 Template['elements_modal'].destroyed = function(){
-    $('body').removeClass('disable-scroll');
+    $('body').removeClass('disable-scroll blur');
 };
 
 

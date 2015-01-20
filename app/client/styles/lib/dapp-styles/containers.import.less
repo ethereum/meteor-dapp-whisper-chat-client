@@ -10,10 +10,13 @@ body {
 
     .background-image(linear-gradient(to bottom,  lighten(@colorMainBackground, 15%) 0, @colorMainBackground 100px));
 
+
+    // lock scroll and blur content
     &.disable-scroll {
         overflow: hidden;
 
-
+    }
+    &.blur {
         .dapp-flex-content,
         footer.dapp-main {
             .blur(8px);
@@ -28,10 +31,9 @@ body {
     background: #FFF url(hex-grid-tile.png);
     background-size: 64px 111px;
     position: absolute;
-    top: 0;
+    height: 200%;
     left: 0;
     right: 0;
-    bottom: 0;
     opacity: 0.1;
 }
 body:hover .dapp-grid {

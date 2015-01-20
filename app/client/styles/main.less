@@ -70,7 +70,7 @@
 }
 
 
-.user-list {
+.whisper-user-list {
     .horizontal-menu;
 
     li {
@@ -86,5 +86,23 @@
     .dapp-profile-image {
         width: @gridWidth * 1.5;
         height: @gridWidth * 1.5;
+    }
+}
+
+.whisper-chat {
+    position: relative;
+    // .display(flex);
+    padding: @defaultPaddingVertical 0;//@defaultPaddingHorizontal;
+    padding-left: @gridWidth * 1.5;
+    border-top: 1px solid @colorGrayLight;
+
+    .whisper-user-info {
+        position: absolute;
+        left: 0;
+        // .flex(0 0 @gridWidth * 1.5);
+    } 
+
+    .whisper-user-notification {
+        font-style: italic;
     }
 }
