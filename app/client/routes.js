@@ -39,7 +39,8 @@ ChatController = RouteController.extend({
 Router.route('/chat/create/:sessionKey', function () {
     this.render();
     this.render('elements_modal', {to: 'modal'});
-    this.render('view_modals_addUser', {to: 'modalContent',
+    this.render('view_modals_addUser', {
+        to: 'modalContent',
         data: function(){
             return Chats.findOne(this.params.sessionKey);
         }

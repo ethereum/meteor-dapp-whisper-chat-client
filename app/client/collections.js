@@ -35,48 +35,45 @@ Users.insert({
 });
 
 
-Chats.insert({
-    _id: Random.id(),
-    name: null,
-    lastActivity: moment().subtract(7,'days').toDate(),
-    entries: [],
-    users: []
-});
-
-
 Entries.insert({
     timestamp: new Date(),
     topic: 'Courses',
+    unread: true,
     from: Users.find().fetch()[0]._id,
     message: 'Lorem ipsum Irure elit commodo adipisicing magna Duis exercitation proident Duis cillum consequat eiusmod minim aute.',
 });
 Entries.insert({
     timestamp: new Date(),
     topic: 'Courses',
+    unread: false,
     from: Users.find().fetch()[0]._id,
     message: 'Proident Duis cillum consequat eiusmod minim aute.',
 });
 Entries.insert({
     timestamp: new Date(),
     topic: 'Courses',
+    unread: true,
     from: Users.find().fetch()[1]._id,
     message: 'Ipsum Irure elit commodo adipisicing magna Duis exercitation proident Duis cillum consequat eiusmod minim aute.',
 });
 Entries.insert({
     timestamp: new Date(),
     topic: 'Courses',
+    unread: false,
     from: Users.find().fetch()[2]._id,
     message: 'Irure elit commodo adipisicing magna Duis exercitation proident Duis cillum consequat eiusmod minim aute.',
 });
 Entries.insert({
     timestamp: new Date(),
     topic: 'Courses',
+    unread: false,
     from: Users.find().fetch()[2]._id,
     message: 'Commodo adipisicing magna Duis exercitation proident Duis cillum consequat eiusmod minim aute.',
 });
 Entries.insert({
     timestamp: new Date(),
     topic: 'Courses',
+    unread: false,
     from: Users.find().fetch()[1]._id,
     message: 'Adipisicing magna Duis exercitation proident Duis cillum consequat eiusmod minim aute.',
 });

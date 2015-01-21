@@ -19,15 +19,16 @@ Template['views_chats_aside'].helpers({
     @method (chats)
     */
     'chats': function(){
+
         return Chats.find({}, {sort: {lastActivity: -1}});
     },
     /**
-    Return the session key, if NULL, then return 'public'
+    Get all my chats
 
-    @method (sessionKey)
+    @method (chats)
     */
-    'sessionKey': function(){
-        return this.sessionKey || 'public';
+    'unreadCount': function(){
+        return Entries.find({_id: {$in: this.entries}, unread: true}).count();
     }
 });
 
