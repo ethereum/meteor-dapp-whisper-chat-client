@@ -1,0 +1,8 @@
+@page {
+  size: auto;
+  margin: 10%
+}
+
+@page foo, bar {
+  bar: baz
+}

@@ -1,0 +1,6 @@
+{
+  "meteorRelease": "METEOR@1.0.3.1",
+  "clientPaths": {
+    "web.browser": "../web.browser/program.json"
+  }
+}

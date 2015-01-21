@@ -8,8 +8,6 @@ body {
     font: 100 16px 'Source Sans Pro', 'Helvetica Neue', arial, sans-serif;
     color: @colorTextPrimary;
 
-    .background-image(linear-gradient(to bottom,  lighten(@colorMainBackground, 15%) 0, @colorMainBackground 100px));
-
 
     // lock scroll and blur content
     &.disable-scroll {
@@ -164,8 +162,11 @@ header.dapp-main {
 
 aside.dapp-main {
     .flex(0 0 @widthSidebar);
-
     padding-right: 0;
+
+    .background-image(linear-gradient(to bottom,  lighten(@colorMainBackground, 15%) 0, @colorMainBackground 100px));
+
+
 
     // ANIMATION
     .transition(flex @animationSpeed);

@@ -1,11 +1,11 @@
 body {
 	background-color: #000;
-    font: 16px solid 'Roboto', 'Helvetica Neue', sans-serif;
+    font: 16px solid 'Helvetica Neue', sans-serif;
 }
 
-.loading-box {
+.inject-loading-container {
     position: relative;
-    top: 20%;
+    padding-top: 20%;
     /*left: 50%;*/
     margin: 0 auto;
     /*max-width: 600px;*/
@@ -13,7 +13,7 @@ body {
     text-align: center;
 
 }
-.loading-box h1 {
+.inject-loading-container h1 {
     text-align: center;
     font-weight: 300;
     font-size: 2em;

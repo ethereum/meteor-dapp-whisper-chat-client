@@ -1,0 +1,77 @@
+{
+  "name": "sockjs",
+  "description": "SockJS-node is a server counterpart of SockJS-client a JavaScript library that provides a WebSocket-like object in the browser. SockJS gives you a coherent, cross-browser, Javascript API which creates a low latency, full duplex, cross-domain communication",
+  "version": "0.3.11",
+  "author": {
+    "name": "Marek Majkowski"
+  },
+  "bugs": {
+    "url": "https://github.com/sockjs/sockjs-node/issues"
+  },
+  "contributors": [
+    {
+      "name": "Bryce Kahle",
+      "email": "bkahle@gmail.com"
+    },
+    {
+      "name": "Marek Majkowski",
+      "email": "deadbeef@popcount.org"
+    }
+  ],
+  "dependencies": {
+    "faye-websocket": "^0.7.3 || ^0.8.0",
+    "node-uuid": "^1.4.1"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.8.0"
+  },
+  "homepage": "https://github.com/sockjs/sockjs-node",
+  "keywords": [
+    "websockets",
+    "websocket"
+  ],
+  "license": "MIT",
+  "main": "index",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sockjs/sockjs-node.git"
+  },
+  "gitHead": "06eaad62a968520ea090c44ad7d6a84c0f5e37b3",
+  "_id": "sockjs@0.3.11",
+  "scripts": {},
+  "_shasum": "936d84d00f5bfce82f939aec9a7e1c9b8b39fb17",
+  "_from": "sockjs@0.3.11",
+  "_npmVersion": "1.4.28",
+  "_npmUser": {
+    "name": "glasser",
+    "email": "glasser@meteor.com"
+  },
+  "maintainers": [
+    {
+      "name": "majek",
+      "email": "majek04@gmail.com"
+    },
+    {
+      "name": "msackman",
+      "email": "matthew@rabbitmq.com"
+    },
+    {
+      "name": "squaremo",
+      "email": "mikeb@squaremobius.net"
+    },
+    {
+      "name": "glasser",
+      "email": "glasser@meteor.com"
+    },
+    {
+      "name": "brycekahle",
+      "email": "bkahle@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "936d84d00f5bfce82f939aec9a7e1c9b8b39fb17",
+    "tarball": "http://registry.npmjs.org/sockjs/-/sockjs-0.3.11.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/sockjs/-/sockjs-0.3.11.tgz"
+}

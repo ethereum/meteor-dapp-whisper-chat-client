@@ -17,6 +17,7 @@ Router.route('/', function () {
 
 
 Router.route('/user/:userId', function () {
+
     this.render('elements_modal', {to: 'modal'});
     this.render('view_modals_userProfile', {to: 'modalContent'});
 },{
