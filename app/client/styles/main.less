@@ -35,7 +35,22 @@
 
 // style the content of the dapp-content-header
 .dapp-content-header {
-    textarea, input[type="text"] {
+    .whisper-user-chat-header {
+        float: left;
+
+        input {
+            width: 3 * @gridWidth;
+            text-align: center;
+            border-bottom: @colorLink 1px dashed;
+            font-size: 0.8em;
+        }
+
+        .dapp-profile-image {
+            float: left;
+            margin-right: @defaultMargin;
+        }
+    }
+    textarea, input {
         // position: absolute;
         padding: 0;
         margin: 0;
@@ -54,22 +69,11 @@
         width: 60%;
         height: @gridHeight * 5;
     }
-    a,
-    input.message-topic {
-        float: left;
-    }
-    input.message-topic {
-        width: 4 * @gridWidth;
-        text-align: center;
-        margin-left: @defaultMargin;
-        border-bottom: @colorLink 1px dashed;
-    }
 
-    .dapp-profile-image {
-        float: left;
-        margin-right: @defaultMargin;
-    }
+}
 
+.whisper-username {
+    text-transform: uppercase;
 }
 
 

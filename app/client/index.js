@@ -1,12 +1,8 @@
 Meteor.startup(function() {
 
 
-
-    // remove the loading box
-    $('.loading-box').remove();
-
     // ENABLE FASTCLICK
-    new FastClick(document.body);
+    // new FastClick(document.body);
 
 
     // SET default language

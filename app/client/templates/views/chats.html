@@ -16,11 +16,13 @@
 <template name="views_chats">
 
     <header class="dapp-content-header">
-        <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-        
-        <a href="{{pathFor route='userProfile' userId='1323423'}}">Random Username</a>
-        
-        <input type="text" placeholder="{{i18n 'whisper.chat.placeholder.addTopic'}}" class="message-topic">
+        <div class="whisper-user-chat-header">
+            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
+            
+            <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">Random Username</a> {{i18n 'whisper.chat.texts.talksAbout'}}
+            <input type="text" value="{{myTopic}}">
+        </div>
+
         <textarea placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
     </header>
 
@@ -36,7 +38,7 @@
             <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
         </div>
         <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
+            <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
         </small>
 
         <p>
@@ -50,7 +52,7 @@
             <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
         </div>
         <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}">YOU</a> on <span class="topic">Courses</span> 12 minutes ago
+            <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">YOU</a> on <span class="topic">Courses</span> 12 minutes ago
         </small>
 
         <p>
@@ -64,7 +66,7 @@
             <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
         </div>
         <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
+            <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
         </small>
 
         <p>
@@ -78,7 +80,7 @@
             <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d410234c84d466debf7fec50c73db6f3?d=retro&s=60')"></div>
         </div>
         <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}">JOHN WAYNE</a> on <span class="topic">Courses</span> 12 minutes ago
+            <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">JOHN WAYNE</a> on <span class="topic">Courses</span> 12 minutes ago
         </small>
 
         <p class="whisper-user-notification">
@@ -92,7 +94,7 @@
             <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
         </div>
         <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
+            <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
         </small>
 
         <p>
