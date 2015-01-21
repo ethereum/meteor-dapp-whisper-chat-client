@@ -51,9 +51,10 @@
     margin-top: @defaultMargin;
     // background: @colorWhite;
 
-    button {
+    button, a, a:visited {
         .flex(1);
         height: 2*@gridHeight;
+        line-height: 2*@gridHeight;
         font-family: @fontFamily;
         font-size: 1em;
         text-transform: uppercase;
@@ -63,7 +64,6 @@
             font-weight: 600;
         }
     }
-
 }
 
 // default elements
@@ -109,7 +109,7 @@ textarea {
     padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal/2;
     background-color: transparent;
     border: 0;
-    font-size: 1.3em;
+    font-size: 1em;
     font-weight: 300;
     width: 250px;
 

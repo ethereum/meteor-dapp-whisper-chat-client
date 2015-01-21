@@ -74,7 +74,6 @@ body:hover .dapp-grid {
 .dapp-modal-container {
     position: relative;
     width: 14*@gridWidth;
-    // height: 20 * @gridHeight;
     margin: 6*@gridHeight auto;
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
     background: @colorWhite;
@@ -84,8 +83,10 @@ body:hover .dapp-grid {
 
     text-align: center;
 
+
     // ANIMATION
     .transition(transform @animationSpeed);
+
 
     .dapp-modal-header {
         position: relative;
@@ -114,12 +115,6 @@ body:hover .dapp-grid {
         }
     }
 
-    .dapp-modal-scroll-container {
-        margin: -@defaultPaddingVertical -@defaultPaddingHorizontal;
-        padding: @defaultPaddingVertical @defaultPaddingHorizontal;
-        max-height: 10 * @gridHeight;
-        .overflow;
-    }
 
     p {
         margin: @defaultPaddingVertical*2 0;
@@ -178,17 +173,18 @@ aside.dapp-main {
 
             li {
 
-                a {
+                a, button {
                     // display: block;
                     .display(flex);
                     .align-items(center);
-                    min-height: @gridHeight*2;
+                    min-height: @gridHeight*4;
                     max-height: @gridHeight*5;
                     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
                     padding-left: @gridWidth / 3;
                     overflow: hidden;
                     border-top: @colorMainBackgroundDark solid 1px;
                     color: @colorWhite;
+                    .box-sizing(border-box); // align button and links properties
 
                     text-overflow: ellipsis;
                     // .dapp-shorten-text;
@@ -201,20 +197,21 @@ aside.dapp-main {
                     }
 
 
-                    &.dapp-main-button {
-                        position: relative;
-                        // position: fixed;
-                        // width: 6 * @gridWidth;
-                        margin-bottom: 4*@gridHeight;
-                        .border-radius(3px 0 0 3px);
-                        background: @colorMainBackgroundDark;
-                        border-top: none;
-                        
-                        i {
-                            position: absolute;
-                            right: @gridWidth / 4;
-                            top: @gridHeight * 1.5;
-                        }
+                }
+                .dapp-main-button {
+                    position: relative;
+                    width: 100%;
+                    // position: fixed;
+                    // width: 6 * @gridWidth;
+                    margin-bottom: 4*@gridHeight;
+                    .border-radius(3px 0 0 3px);
+                    background: @colorMainBackgroundDark;
+                    border-top: none;
+                    
+                    i {
+                        position: absolute;
+                        right: @gridWidth / 4;
+                        top: @gridHeight * 1.5;
                     }
                 }
 

@@ -8,6 +8,7 @@
         "insufficientRights": "You don't have enough rights for this action."
     },
     "buttons": {
+        "ok": "OK",
         "save": "Save",
         "tryToReconnect": "Try to reconnect"
     },

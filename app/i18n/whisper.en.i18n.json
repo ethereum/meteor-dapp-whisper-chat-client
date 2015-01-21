@@ -3,14 +3,19 @@
         "app": {
             "buttons": {
                 "addUser": "Add People",
-                "newChat": "New Chat"
+                "newChat": "New Chat",
+                "cancel": "Nevermind",
+                "inviteUsers": "Invite to chat"
             }
         },
         "chat": {
             "placeholder": {
-                "writeHere": "Write your message here"
+                "writeHere": "Write your message here",
+                "unnamedChat": "Unnamed Chat"
             },
             "texts": {
+                "addUserTitle": "Add users",
+                "publicChat": "Public",
                 "talksAbout": "talks about",
                 "invitePeople1": "To add people to this chat, click the",
                 "invitePeople2": "icon or send someone this link:",

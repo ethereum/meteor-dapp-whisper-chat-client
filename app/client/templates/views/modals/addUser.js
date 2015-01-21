@@ -11,6 +11,19 @@ The add user template
 @constructor
 */
 
+Template['view_modals_addUser'].helpers({
+    /**
+    Show either the ok or invite users button text
+
+    @method (inviteButtonText)
+    */
+    'inviteButtonText': function(){
+        var selectedUsers = TemplateVar.get('invitedUsers');
+        return (_.isEmpty(selectedUsers))
+            ? TAPi18n.__('buttons.ok')
+            : TAPi18n.__('whisper.app.buttons.inviteUsers');
+    }
+});
 
 Template['view_modals_addUser'].events({
     /**
@@ -20,5 +33,20 @@ Template['view_modals_addUser'].events({
     */
     'click input[type="text"]': function(e){
         $(e.currentTarget).focus().select();
+    },
+    /**
+    Send invites and close the window
+
+    @event click button.invite
+    */
+    'click button.invite': function(e){
+        var selectedUsers = TemplateVar.get('invitedUsers');
+        
+        // invite users
+        if(!_.isEmpty(selectedUsers)) {
+
+        }
+
+        Router.go('chat', {sessionKey: this._id});
     }
 });

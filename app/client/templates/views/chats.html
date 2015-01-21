@@ -1,13 +1,17 @@
 <template name="views_chats_aside">
     <nav>
         <ul>
-            <li><a href="" class="dapp-main-button">{{i18n 'whisper.app.buttons.newChat'}} <i class="icon-pencil"></i></a></li>
-            <li><a href="">Public</a></li>
-            <li><a href="">Alice Wonderland, Bob Burnsquit</a></li>
-            <li><a href="">Chat room #1</a></li>
-            <li class="active"><a href="">Alice Wonderland, Bob Burnsquit and Eve Walliston Marriot</a></li>
-            <li><a href="">Chat room #1</a></li>
-            <li><a href="">Chat room #1</a></li>
+            <li><button class="add-chat dapp-main-button">{{i18n 'whisper.app.buttons.newChat'}} <i class="icon-pencil"></i></button></li>
+            <li class="{{isActivePath regex='public'}}">
+                <a href="{{pathFor route='chat' sessionKey='public'}}">{{i18n 'whisper.chat.texts.publicChat'}}</a>
+            </li>
+            {{#each chats}}
+                <li class="{{isActivePath regex=_id}}">
+                    <a href="{{pathFor route='chat' sessionKey=_id}}">
+                        {{#if name}}{{name}}{{else}}{{i18n 'whisper.chat.placeholder.unnamedChat'}}{{/if}}
+                    </a>
+                </li>
+            {{/each}}
         </ul>
     </nav>
 </template>

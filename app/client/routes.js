@@ -7,12 +7,7 @@ Router.configure({
 
 // ROUTES
 Router.route('/', function () {
-    // this.redirect('/signin');
-    
-    this.render('views_chats');
-    this.render('views_chats_aside', {to: 'aside'});
-    this.render('views_chats_actionbar', {to: 'actionbar'});
-    this.render(null, {to: 'modal'});
+    this.redirect('chat', {sessionKey: 'public'});
 });
 
 
@@ -25,15 +20,62 @@ Router.route('/user/:userId', function () {
 });
 
 
+// CHAT ROUTES
+ChatController = RouteController.extend({
+    template: 'views_chats',
+    yieldRegions: {
+        'views_chats_aside': {to: 'aside'},
+        'views_chats_actionbar': {to: 'actionbar'}
+    },
+    data: function(){
+        return Chats.findOne(this.params.sessionKey);
+    },
+    onBeforeAction: function(){
+        this.render(null, {to: 'modal'});
+        this.next();
+    }
+});
+
+Router.route('/chat/create/:sessionKey', function () {
+    this.render();
+    this.render('elements_modal', {to: 'modal'});
+    this.render('view_modals_addUser', {to: 'modalContent',
+        data: function(){
+            return Chats.findOne(this.params.sessionKey);
+        }
+    });
+},{
+    name: 'createChat',
+    controller: ChatController
+});
+
+Router.route('/chat/:sessionKey', function () {
+
+    // check if this chat already exists, if not create a new one
+    if(this.params.sessionKey !== 'public' &&
+       !Chats.findOne(this.params.sessionKey)) {
+        
+        // ADD new CHAT
+        Chats.insert({
+            _id: this.params.sessionKey,
+            name: null,
+            lastActivity: new Date(),
+            entries: [],
+            users: [User.findOne().identities[0].identity]
+        });
+    }
+
+
+    this.render();
+},{
+    name: 'chat',
+    controller: ChatController
+});
+
+
 Router.route('/add-user', function () {
     this.render('elements_modal', {to: 'modal'});
     this.render('view_modals_addUser', {to: 'modalContent'});
 },{
     name: 'addUser'
 });
-
-
-// Router.route('/items/:_id', function () {
-//     var item = Items.findOne({_id: this.params._id});
-//     this.render('ShowItem', {data: item});
-// });
