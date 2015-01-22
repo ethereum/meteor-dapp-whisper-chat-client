@@ -31,10 +31,10 @@
             <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
             
             <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">Random Username</a> {{i18n 'whisper.chat.texts.talksAbout'}}
-            <input type="text" value="{{myTopic}}">
+            <input type="text" value="{{myTopic}}" name="topic">
         </div>
 
-        <textarea class="write-message" placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
+        <textarea name="write-message" placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
     </header>
 
     <!-- <div class="dapp-message">
@@ -53,7 +53,7 @@
             <a href="{{pathFor route='userProfile' userId=from}}" class="whisper-username">{{from}}</a> on <span class="topic">{{topic}}</span> {{formatTime timestamp 'fromnow'}}
         </small>
 
-        <p>{{message}}</p>   
+        <p>{{{message}}}</p>   
 
     </div>
     {{/each}}
