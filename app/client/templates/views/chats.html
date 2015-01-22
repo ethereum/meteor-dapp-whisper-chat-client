@@ -14,8 +14,9 @@
                             {{i18n 'whisper.chat.placeholder.unnamedChat'}}
                         {{/if}}
 
-
-                        <span class="dapp-count">{{unreadCount}}</span>
+                        {{#if $gt unreadCount 0}}
+                            <span class="dapp-count">{{unreadCount}}</span>
+                        {{/if}}
                     </a>
                 </li>
             {{/each}}

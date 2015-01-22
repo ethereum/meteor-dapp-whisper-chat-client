@@ -30,17 +30,16 @@ Template['views_chats'].helpers({
 
     @method (message)
     */
-    'message': function(stripHtml){
+    'message': function(){
         var text = this.message || '';
 
         // make sure not existing values are not Spacebars.kw
-        if(stripHtml instanceof Spacebars.kw)
-            stripHtml = false;
+        // if(stripHtml instanceof Spacebars.kw)
+        //     stripHtml = false;
 
         if(_.isString(text)) {
 
-            if(stripHtml)
-                text = _.stripTags(text);
+            text = _.stripTags(text);
 
             // parse hashtags and add a target="_blank" to links
             return text
@@ -74,7 +73,15 @@ Template['views_chats'].events({
     */
     'keyup textarea[name="write-message"]': function(e, template){
 
-        if(e.keyCode === 13 && !e.shiftKey) {
+        // prevent simple enter
+        if(e.currentTarget.value === "\n")
+            e.currentTarget.value = '';
+
+        if(e.keyCode === 13 && !e.shiftKey && !_.isEmpty(e.currentTarget.value)) {
+
+            // propagate to whipser (or do in an observe)
+
+            // insert entry
             var entryId = Entries.insert({
                 timestamp: new Date(),
                 topic: template.find('input[name="topic"]').value,
