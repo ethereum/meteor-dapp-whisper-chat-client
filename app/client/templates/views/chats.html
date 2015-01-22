@@ -46,17 +46,19 @@
     </div> -->
 
     {{#each entries}}
-    <div class="whisper-chat-item">
-        <div class="whisper-user-info">
-            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/{{from}}?d=retro&s=60')"></div>
+        <div class="whisper-chat-item">
+            <div class="whisper-user-info">
+                <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/{{from}}?d=retro&s=60')"></div>
+            </div>
+            <small>
+                <a href="{{pathFor route='userProfile' userId=from}}" class="whisper-username">{{from}}</a> on <span class="topic">{{topic}}</span> {{formatTime timestamp 'fromnow'}}
+            </small>
+
+            <p>{{{message}}}</p>   
+
         </div>
-        <small>
-            <a href="{{pathFor route='userProfile' userId=from}}" class="whisper-username">{{from}}</a> on <span class="topic">{{topic}}</span> {{formatTime timestamp 'fromnow'}}
-        </small>
-
-        <p>{{{message}}}</p>   
-
-    </div>
+    {{else}}
+        <p>{{i18n 'whisper.chat.texts.noChats'}}</p>
     {{/each}}
    
 </template>
