@@ -21,7 +21,7 @@ Template['views_chats'].helpers({
     */
     'entries': function(){
         if(_.isArray(this.entries))
-            return Entries.find({_id: {$in: this.entries}});
+            return Entries.find({_id: {$in: this.entries}}, {sort: {timestamp: -1}});
     },
     /**
     Super duper format message helper.
