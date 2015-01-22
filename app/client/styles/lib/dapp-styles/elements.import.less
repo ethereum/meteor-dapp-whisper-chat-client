@@ -46,17 +46,22 @@
 
 .dapp-count {
     position: absolute;
-    margin-top: -7px;
-    right: @gridWidth/2;
-    width: @gridHeight;
-    height: @gridHeight;
+    margin-top: -2*@gridHeight;
+    top: 50%;
+    right: 0;
+    height: 4*@gridHeight;
     display: inline-block;
-    background-color: @colorGray;
-    padding: @gridHeight/3;
-    .border-radius(50%);
-    text-align: center;
-    color: @colorMainBackground;
-    font-weight: 400;
+    padding: 0 @gridWidth/4;
+    text-align: right;
+    line-height: 4*@gridHeight;
+    color: @colorWhite;
+    font-weight: 100;
+    opacity: 0.7;
+}
+
+.active .dapp-count {
+    background-color: @colorGrayLight;
+    color: @colorMainBackground;    
 }
 
 .dapp-modal-buttons {
