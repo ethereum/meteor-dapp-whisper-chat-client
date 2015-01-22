@@ -34,7 +34,7 @@
             <input type="text" value="{{myTopic}}">
         </div>
 
-        <textarea placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
+        <textarea class="write-message" placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
     </header>
 
     <!-- <div class="dapp-message">
@@ -44,75 +44,19 @@
         <input type="text" value="whisperchat.eth/9183k1sd/" disabled>
     </div> -->
 
+    {{#each entries}}
     <div class="whisper-chat-item">
         <div class="whisper-user-info">
-            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
+            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/{{from}}?d=retro&s=60')"></div>
         </div>
         <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
+            <a href="{{pathFor route='userProfile' userId=from}}" class="whisper-username">{{from}}</a> on <span class="topic">{{topic}}</span> {{formatTime timestamp 'fromnow'}}
         </small>
 
-        <p>
-            Lorem ipsum Sit labore velit voluptate dolore eiusmod cillum sunt occaecat et nisi id cillum aliquip laboris tempor sint.
-        </p>   
+        <p>{{message}}</p>   
 
     </div>
-
-    <div class="whisper-chat-item you">
-        <div class="whisper-user-info">
-            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-        </div>
-        <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">YOU</a> on <span class="topic">Courses</span> 12 minutes ago
-        </small>
-
-        <p>
-            Lorem ipsum Sit labore velit voluptate dolore eiusmod cillum sunt occaecat et nisi id cillum aliquip laboris tempor sint.
-        </p>   
-
-    </div>
-
-    <div class="whisper-chat-item">
-        <div class="whisper-user-info">
-            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-        </div>
-        <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
-        </small>
-
-        <p>
-            Lorem ipsum Sit labore velit voluptate dolore eiusmod cillum sunt occaecat et nisi id cillum aliquip laboris tempor sint.
-        </p>   
-
-    </div>
-
-    <div class="whisper-chat-item">
-        <div class="whisper-user-info">
-            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d410234c84d466debf7fec50c73db6f3?d=retro&s=60')"></div>
-        </div>
-        <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">JOHN WAYNE</a> on <span class="topic">Courses</span> 12 minutes ago
-        </small>
-
-        <p class="whisper-user-notification">
-            John Wayne rode by on a Horse.
-        </p>
-
-    </div>
-
-    <div class="whisper-chat-item">
-        <div class="whisper-user-info">
-            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-        </div>
-        <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}" class="whisper-username">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
-        </small>
-
-        <p>
-            Lorem ipsum Sit labore velit voluptate dolore eiusmod cillum sunt occaecat et nisi id cillum aliquip laboris tempor sint.
-        </p>
-
-    </div>
+    {{/each}}
    
 </template>
 
