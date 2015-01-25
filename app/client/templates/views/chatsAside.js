@@ -42,15 +42,12 @@ Template['views_chats_aside'].events({
     'click button.add-chat': function(e){
         var sessionKey = Random.id();
         
-        // CREATE new CHAT
-        Chats.insert({
-            _id: sessionKey,
-            name: null,
-            lastActivity: new Date(),
-            entries: [],
-            users: [User.findOne().identities[0].identity]
-        });
+        // create a new chat
+        Router.go('chat', {sessionKey: sessionKey});
 
-        Router.go('createChat', {sessionKey: sessionKey});
+        // and immediately after, show the invite screen
+        Tracker.afterFlush(function(){
+            Router.go('createChat', {sessionKey: sessionKey});
+        });
     }
 });

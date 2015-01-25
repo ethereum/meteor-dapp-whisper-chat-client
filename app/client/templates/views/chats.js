@@ -5,8 +5,7 @@ Template Controllers
 */
 
 /**
-The chats
- template
+The chats template
 
 @class [template] views_chats
 @constructor

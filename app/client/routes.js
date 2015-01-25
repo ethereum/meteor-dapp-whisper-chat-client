@@ -1,3 +1,16 @@
+/**
+Template Controllers
+
+@module Routes
+*/
+
+/**
+The app routes
+
+@class App routes
+@constructor
+*/
+
 // Router defaults
 Router.configure({
     layoutTemplate: 'layout_main',
@@ -6,6 +19,12 @@ Router.configure({
 
 
 // ROUTES
+
+/**
+The default route, will redirect to the public stream.
+
+@method home
+*/
 Router.route('/', function () {
     this.redirect('chat', {sessionKey: 'public'});
 },{
@@ -13,6 +32,11 @@ Router.route('/', function () {
 });
 
 
+/**
+Shows the modal with a users profile
+
+@method userProfile
+*/
 Router.route('/user/:userId', function () {
 
     this.render('elements_modal', {to: 'modal'});
@@ -39,6 +63,11 @@ ChatController = RouteController.extend({
 });
 
 
+/**
+Shows the modal with the user invitation screen.
+
+@method createChat
+*/
 Router.route('/chat/create/:sessionKey', function () {
     this.render();
     this.render('elements_modal', {
@@ -59,6 +88,11 @@ Router.route('/chat/create/:sessionKey', function () {
 });
 
 
+/**
+Shows the chat itself, with all recent messages.
+
+@method createChat
+*/
 Router.route('/chat/:sessionKey', function () {
 
     // check if this chat already exists, if not create a new one
@@ -83,6 +117,11 @@ Router.route('/chat/:sessionKey', function () {
 });
 
 
+/**
+Shows the modal with the user invitation screen.
+
+@method addUser
+*/
 Router.route('/chat/:sessionKey/add-user', function () {
     this.render();
     this.render('elements_modal', {
