@@ -8,6 +8,8 @@ Router.configure({
 // ROUTES
 Router.route('/', function () {
     this.redirect('chat', {sessionKey: 'public'});
+},{
+    name: 'home'
 });
 
 
@@ -36,9 +38,15 @@ ChatController = RouteController.extend({
     }
 });
 
+
 Router.route('/chat/create/:sessionKey', function () {
     this.render();
-    this.render('elements_modal', {to: 'modal'});
+    this.render('elements_modal', {
+        to: 'modal',
+        data: {
+            closePath: Router.routes.chat.path(this.params)
+        }
+    });
     this.render('view_modals_addUser', {
         to: 'modalContent',
         data: function(){
@@ -49,6 +57,7 @@ Router.route('/chat/create/:sessionKey', function () {
     name: 'createChat',
     controller: ChatController
 });
+
 
 Router.route('/chat/:sessionKey', function () {
 
@@ -74,9 +83,21 @@ Router.route('/chat/:sessionKey', function () {
 });
 
 
-Router.route('/add-user', function () {
-    this.render('elements_modal', {to: 'modal'});
-    this.render('view_modals_addUser', {to: 'modalContent'});
+Router.route('/chat/:sessionKey/add-user', function () {
+    this.render();
+    this.render('elements_modal', {
+        to: 'modal',
+        data: {
+            closePath: Router.routes.chat.path(this.params)
+        }
+    });
+    this.render('view_modals_addUser', {
+        to: 'modalContent',
+        data: function(){
+            return Chats.findOne(this.params.sessionKey);
+        }
+    });
 },{
-    name: 'addUser'
+    name: 'addUser',
+    controller: ChatController
 });

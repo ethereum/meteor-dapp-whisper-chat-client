@@ -1,7 +1,3 @@
-// Change the URLS to use #!
-// Iron.Location.configure({useHashPaths: true});
-
-
 Meteor.startup(function() {
 
 

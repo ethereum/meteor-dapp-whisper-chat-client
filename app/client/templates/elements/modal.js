@@ -5,7 +5,9 @@ Template Controllers
 */
 
 /**
-The modal wrapper template
+The modal wrapper template.
+If you pass "closePath" in the data context, it will use this path, when the modal overlay is clicked.
+
 
 @class [template] elements_modal
 @constructor
@@ -54,12 +56,22 @@ Template['elements_modal'].destroyed = function(){
 
 Template['elements_modal'].events({
     /**
-    Hide the modal on click
+    Hide the modal on click. If the data context has the property "closePath",
+    it will route to this one instead of going back in the browser history.
 
-    @event click  .dapp-modal-overlay
+    @event click .dapp-modal-overlay
     */
     'click .dapp-modal-overlay': function(e){
-        if($(e.target).hasClass('dapp-modal-overlay'))
-            history.back();
+        // hide the modal
+        if($(e.target).hasClass('dapp-modal-overlay')) {
+
+            // hide modal
+            Router.current().render(null, {to: 'modal'});
+
+            if(this.closePath)
+                Router.go(this.closePath);
+            else
+                history.back();
+        }
     }
 });

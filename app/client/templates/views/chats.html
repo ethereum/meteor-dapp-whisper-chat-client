@@ -68,7 +68,7 @@
     <nav>
         <ul>
             <li>
-                <a href="{{pathFor route='addUser'}}">
+                <a href="{{pathFor route='addUser' sessionKey=_id}}">
                     <i class="icon-user-add"></i>
                     Add Users
                 </a>
@@ -77,6 +77,12 @@
                 <button>
                     <i class="icon-bolt"></i>
                     Connect
+                </button>
+            </li>
+            <li>
+                <button class="leave-chat">
+                    <i class="icon-logout"></i>
+                    Leave Chat
                 </button>
             </li>
         </ul>

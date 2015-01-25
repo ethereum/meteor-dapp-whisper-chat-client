@@ -9,6 +9,7 @@
     },
     "buttons": {
         "ok": "OK",
+        "cancel": "Cancel",
         "save": "Save",
         "tryToReconnect": "Try to reconnect"
     },
