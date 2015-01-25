@@ -85,7 +85,7 @@ Template['views_chats'].events({
             var entryId = Entries.insert({
                 timestamp: new Date(),
                 topic: template.find('input[name="topic"]').value,
-                unread: false,
+                unread: true,
                 from: User.findOne().identities[0].identity,
                 message: e.currentTarget.value,
             });

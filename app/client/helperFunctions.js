@@ -21,7 +21,7 @@ Reruns functions reactively, based on an interval. Use it like so:
 @method rerun
 **/
 Helpers.rerun = {
-    '10s': {tick: function(){}} //new ReactiveTimer(10)
+    '10s': new ReactiveTimer(10)
 };
 
 
@@ -212,15 +212,10 @@ Formats a timestamp to any format given.
 @return {String} The formated time
 **/
 Helpers.formatTime = function(time, format) { //parameters
-
     
     // make sure not existing values are not Spacebars.kw
     if(format instanceof Spacebars.kw)
         format = null;
-
-
-    // if(realTime)
-    //     TemplateStore.get(false, 'mainEvents->clock10Seconds');
 
     if(time) {
 

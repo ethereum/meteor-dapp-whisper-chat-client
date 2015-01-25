@@ -16,3 +16,5 @@ frozeman:global-notifications
 frozeman:template-var
 
 zimme:iron-router-active
+frozeman:persistent-minimongo
+frozeman:reactive-timer
