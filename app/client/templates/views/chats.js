@@ -78,13 +78,12 @@ Template['views_chats'].events({
 
         if(e.keyCode === 13 && !e.shiftKey && !_.isEmpty(e.currentTarget.value)) {
 
-            // propagate to whipser (or do in an observe)
-
             // insert entry
             var entryId = Entries.insert({
-                timestamp: new Date(),
+                chat: this._id,
+                // timestamp: new Date(),
                 topic: template.find('input[name="topic"]').value,
-                unread: true,
+                // unread: true,
                 from: User.findOne().identities[0].identity,
                 message: e.currentTarget.value,
             });

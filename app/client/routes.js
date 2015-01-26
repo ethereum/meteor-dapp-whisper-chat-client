@@ -14,7 +14,10 @@ The app routes
 // Router defaults
 Router.configure({
     layoutTemplate: 'layout_main',
-    notFoundTemplate: 'layout_notFound'
+    notFoundTemplate: 'layout_notFound',
+    yieldRegions: {
+        'views_chats_aside': {to: 'aside'}
+    }
 });
 
 
@@ -27,7 +30,7 @@ The default route, will redirect to the public stream.
 */
 Router.route('/', function () {
     this.redirect('chat', {sessionKey: 'public'});
-    this.next();
+    this.render('views_chats_aside', {to: 'aside'});
 },{
     name: 'home'
 });
