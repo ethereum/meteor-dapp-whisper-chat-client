@@ -26,19 +26,37 @@ Helpers.rerun = {
 
 
 /**
+Clear localStorage
+
+@method getLocalStorageSize
+**/
+Helpers.getLocalStorageSize = function(){
+
+    var size = 0;
+    if(localStorage) {
+        _.each(Object.keys(localStorage), function(key){
+            size += localStorage[key].length * 2 / 1024 / 1024;
+        });
+    }
+
+    return size;
+};
+
+
+/**
 Shows the offline mesage
 
 @method displayOffline
 **/
-Helpers.displayOffline = function(){
-    return GlobalNotification.warning({
-        content: 'i18n:app.offline',
-        okText: TAPi18n.__('buttons.tryToReconnect'),
-        ok: function(){
-            Meteor.reconnect();
-        }
-    });
-};
+// Helpers.displayOffline = function(){
+//     return GlobalNotification.warning({
+//         content: 'i18n:app.offline',
+//         okText: TAPi18n.__('buttons.tryToReconnect'),
+//         ok: function(){
+//             Meteor.reconnect();
+//         }
+//     });
+// };
 
 /**
 Displays an error as global notification
@@ -48,97 +66,42 @@ Displays an error as global notification
 @param {Boolean} accounts will show the accounts errors
 @return {Boolean}
 **/
-Helpers.displayError = function(error, accounts) {
-    var duration = 8;
+// Helpers.displayError = function(error, accounts) {
+//     var duration = 8;
 
-    if(error) {
+//     if(error) {
 
-        if(error.reason){
-            // hack to make account errors still work
-            if(accounts) {
-                GlobalNotification.error({
-                    content: 'i18n:accounts.error.' + error.reason.toLowerCase().replace(/[ ]+/g, ''),
-                    duration: duration
-                });
+//         if(error.reason){
+//             // hack to make account errors still work
+//             if(accounts) {
+//                 GlobalNotification.error({
+//                     content: 'i18n:accounts.error.' + error.reason.toLowerCase().replace(/[ ]+/g, ''),
+//                     duration: duration
+//                 });
 
-            } else {
-                GlobalNotification.error({
-                    content: 'i18n:'+ error.reason,
-                    duration: duration
-                });
-            }
-        } else if(error.message) {
-            GlobalNotification.error({
-                content: error.message,
-                duration: duration
-            });
-        } else {
-            GlobalNotification.error({
-                content: error,
-                duration: duration
-            });
-        }
+//             } else {
+//                 GlobalNotification.error({
+//                     content: 'i18n:'+ error.reason,
+//                     duration: duration
+//                 });
+//             }
+//         } else if(error.message) {
+//             GlobalNotification.error({
+//                 content: error.message,
+//                 duration: duration
+//             });
+//         } else {
+//             GlobalNotification.error({
+//                 content: error,
+//                 duration: duration
+//             });
+//         }
 
-        return true;
+//         return true;
 
-    } else
-        return false;
-};
-
-
-/**
-Wraps Meteor.call but shows the loading before and an error message if one happened.
-It doesn't make the call if the user is offline.
-
-@method callMethod
-@param {String} method
-@return {Boolean}
-**/
-Helpers.callMethod = function() {
-    var args = Array.prototype.slice.call(arguments),
-        loadingId = null;
-
-    // create wrapper for callback
-    if(_.isFunction(_.last(args))) {
-        var callback = args[args.length - 1];
-        args[args.length - 1] = function(error, result){
-            GlobalNotification.hide(loadingId);
-            Helpers.displayError(error);
-
-            // call the original callback
-            var argsInside = Array.prototype.slice.call(arguments);
-            callback.apply(this, argsInside);
-        };
-
-    // if no callback was provided
-    } else {
-        args.push(function(error){
-            GlobalNotification.hide(loadingId);
-            Helpers.displayError(error);
-        });
-    }
-
-
-    Tracker.nonreactive(function(){
-        // check if offline
-        if(!Meteor.status().connected) {
-            GlobalNotification.warning({
-                content: 'i18n:app.offline',
-                duration: 3
-            });
-
-        // if online show loading
-        } else {
-            
-            loadingId = GlobalNotification.info({
-                content: 'i18n:app.loading',
-                closeable: false
-            });
-
-            Meteor.call.apply(null, args);
-        }
-    });
-};
+//     } else
+//         return false;
+// };
 
 
 /**
@@ -153,32 +116,32 @@ Get form values and build a parameters object out of it.
         key2: 'value2'
     }
 **/
-Helpers.formValuesToParameters = function(elements) {
-    var parameters = {};
+// Helpers.formValuesToParameters = function(elements) {
+//     var parameters = {};
 
-    $(elements).each(function(){
-        var $element = $(this),
-            name = $element.attr('name'),
-            value = $element.val();
+//     $(elements).each(function(){
+//         var $element = $(this),
+//             name = $element.attr('name'),
+//             value = $element.val();
 
-        // add only values wich are not null or empty
-        if(name && !_.isEmpty(value) && value !== 'null' && value !== 'NULL') {
-            if(_.isFinite(value))
-                parameters[name] = parseInt(value);
-            else if(_.isBoolean(value))
-                parameters[name] = (value === 'true' || value === 'True' || value === 'TRUE') ? true : false;
-            else if($element.attr('type') === 'radio')
-                parameters[name] = ($element.is(':checked')) ? true : false;
-            else if($element.attr('type') === 'checkbox')
-                parameters[name] = ($element.is(':checked')) ? true : false;
-            else
-                parameters[name] = value;
-        }
-        $element = null;
-    });
+//         // add only values wich are not null or empty
+//         if(name && !_.isEmpty(value) && value !== 'null' && value !== 'NULL') {
+//             if(_.isFinite(value))
+//                 parameters[name] = parseInt(value);
+//             else if(_.isBoolean(value))
+//                 parameters[name] = (value === 'true' || value === 'True' || value === 'TRUE') ? true : false;
+//             else if($element.attr('type') === 'radio')
+//                 parameters[name] = ($element.is(':checked')) ? true : false;
+//             else if($element.attr('type') === 'checkbox')
+//                 parameters[name] = ($element.is(':checked')) ? true : false;
+//             else
+//                 parameters[name] = value;
+//         }
+//         $element = null;
+//     });
 
-    return parameters;
-};
+//     return parameters;
+// };
 
 
 /**

@@ -44,7 +44,27 @@ Shows the modal with a users profile
 Router.route('/user/:userId', function () {
 
     this.render('elements_modal', {to: 'modal'});
-    this.render('view_modals_userProfile', {to: 'modalContent'});
+    this.render('view_modals_userProfile', {
+        to: 'modalContent',
+        data: function(){
+            var user = Users.findOne(this.params.userId);
+            
+            // return username
+            if (user) {
+                return user;
+            // return myself
+            } else if(Whisper.getIdentity().identity === this.params.userId) {
+                return Whisper.getIdentity();
+
+            // return anonymous
+            } else {
+                return {
+                    name: 'anonymous',
+                    identity: this.params.userId
+                };
+            }
+        }
+    });
 },{
     name: 'userProfile'
 });

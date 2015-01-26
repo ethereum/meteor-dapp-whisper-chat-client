@@ -25,24 +25,6 @@ Template['elements_modal'].created = function(){
 
 
 /**
-Inititate the geo pattern.
-
-@method rendered
-*/
-Template['elements_modal'].rendered = function(){
-
-    // initiate the geo pattern
-    var pattern = GeoPattern.generate(Math.random().toString());
-    this.$('.dapp-modal-header.dapp-pattern').css('background-image', pattern.toDataUrl());
-    this.$('.dapp-profile-image').each(function(){ $(this).css("background-image", "url(http://www.gravatar.com/avatar/" + chance.hash() + '?d=retro&s=128)')});
-
-    if (typeof chance != 'undefined') { 
-        var genchance = new Chance(pattern.hash.toString);
-        this.$('.dapp-unauthenticated').text(chance.prefix() + " " +  chance.capitalize(chance.word())); 
-    }
-};
-
-/**
 Remove look of scrolling from the body
 
 @method rendered

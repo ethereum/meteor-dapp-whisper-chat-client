@@ -1,14 +1,14 @@
 <template name="view_modals_userProfile">
-    <!--profile overlay-->
+
     <header class="dapp-modal-header dapp-pattern">
-        <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-        
-        <h1 class="dapp-unauthenticated">Random Username</h1>
+        {{> elements_profileImage identity=identity}}
+
+        <h1 class="whisper-username dapp-unauthenticated">{{name}}</h1>
     </header>
 
     <p>
         {{i18n 'whisper.users.texts.anonymous'}}
     </p>
 
-    <button class="dapp-block-button">Follow</button>
+    <button class="dapp-block-button">{{i18n 'whisper.users.buttons.follow'}}</button>
 </template>

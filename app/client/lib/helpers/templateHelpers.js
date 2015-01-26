@@ -14,7 +14,7 @@ Global template helpers
 /**
 A simple template helper to log objects in the console.
 
-@method ((debug))
+@method (debug)
 **/
 Template.registerHelper('debug', function(object){
     console.log(object);
@@ -24,7 +24,7 @@ Template.registerHelper('debug', function(object){
 /**
 Gets the current users name.
 
-@method ((username))
+@method (username)
 **/
 Template.registerHelper('username', function(identity){
     var user = Users.findOne(identity);
@@ -42,13 +42,23 @@ Template.registerHelper('username', function(identity){
     }
 });
 
+/**
+Gets the current identity (name and identity).
+
+@method (currentIdentity)
+**/
+Template.registerHelper('currentIdentity', function(identity){
+    return Whisper.getIdentity();
+});
+
+
 
 /**
 Formats a timestamp to any format given.
 
     {{formatTime myTime "YYYY-MM-DD"}}
 
-@method ((formatTime))
+@method (formatTime)
 @param {String} time         The timstamp, can be string or unix format
 @param {String} format       the format string, can also be "iso", to format to ISO string, or "fromnow"
 //@param {Boolean} realTime    Whether or not this helper should re-run every 10s

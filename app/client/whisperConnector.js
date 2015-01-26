@@ -152,6 +152,7 @@ Chats.find({}).observe({
                     // Add/UPDATE the current messages USER
                     Users.upsert(payload.from.identity, {
                         _id: payload.from.identity,
+                        identity: payload.from.identity,
                         name: payload.from.name
                     });
 
