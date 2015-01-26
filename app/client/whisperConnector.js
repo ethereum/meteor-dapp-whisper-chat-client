@@ -15,7 +15,7 @@ if(!user) {
     });
 
 // CHECK if the IDENTITY IS still VALID, if not create a new one
-} else if(!web3.shh.haveIdentity(web3.toDecimal(user.identities[0].identity))) {
+} else if(!web3.shh.haveIdentity(web3.fromAscii(user.identities[0].identity))) {
     User.update(user._id, {$set: {
             identities: [{
                 name: 'frozeman',
