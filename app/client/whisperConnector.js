@@ -253,6 +253,7 @@ Messages.find({}).observe({
     Sends an edit for an message, which will patch the message on the receiver side.
         
         {
+            id: 'fsdf32sdfs',
             type: 'edit',
             topic: 'my new topic',
             message: 'my edited message',
