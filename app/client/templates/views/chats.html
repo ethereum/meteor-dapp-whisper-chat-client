@@ -46,11 +46,13 @@
     </div> -->
 
     {{#each messages}}
-        <div class="whisper-chat-item {{#if isYou}}you{{/if}}">
+        {{#Animate}}
+
+        <div class="whisper-chat-item {{#if isYou}}you{{/if}} animate">
             <div class="whisper-user-info">
                 <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/{{from}}?d=retro&s=60')"></div>
             </div>
-            <small>
+            <div class="whisper-chat-header">
                 <a href="{{pathFor route='userProfile' userId=from}}" class="whisper-username">{{username from.identity}}</a> on <span class="topic">{{topic}}</span> {{formatTime timestamp 'fromnow'}}
                 {{#if isYou}}
                     <button class="edit-message">{{i18n 'buttons.edit'}}</button>
@@ -58,11 +60,13 @@
                 {{#if edited}}
                     <i class="icon-pencil" title="{{i18n 'whisper.chat.texts.edited'}} {{formatTime edited 'fromnow'}}"></i>
                 {{/if}}
-            </small>
+            </div>
 
             <p>{{{message}}}</p>   
 
         </div>
+        {{/Animate}}
+
     {{else}}
         <p>{{i18n 'whisper.chat.texts.noChats'}}</p>
     {{/each}}

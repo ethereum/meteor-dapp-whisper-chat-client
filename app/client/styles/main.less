@@ -65,7 +65,8 @@
         clear: left;
         float: left;
         margin-top: 0;
-        padding-top: 1.5 * @gridHeight;
+        padding-top: 0.4 * @gridHeight;
+        padding-left: 1.5 * @gridWidth;
         width: 60%;
         height: @gridHeight * 5;
     }
@@ -102,6 +103,12 @@
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;//@defaultPaddingHorizontal;
     padding-left: @gridWidth * 2;
     border-top: 1px solid @colorGray;
+    .transition(transform @animationSpeed);
+    
+    &.animate {
+        //.opacity(0);
+        .translateY(-11 * @gridHeight);
+    }
 
     &:first-of-type {
         border-top: 0;

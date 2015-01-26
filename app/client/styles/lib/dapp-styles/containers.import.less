@@ -279,7 +279,7 @@ aside.dapp-actions {
 main.dapp-content {
     .flex(1);
     background: @colorWhite;
-    padding-left: @gridWidth * 2;
+    padding-left: @gridWidth / 8;
     padding-right: @gridWidth * 2;
 
     &.dapp-has-header {
@@ -292,12 +292,15 @@ main.dapp-content {
         top: 0;
         width: 100%;
         height: 150px;
-        margin-left: -@gridWidth * 2;
-        padding: @defaultPaddingVertical @defaultPaddingHorizontal;
+        padding: @defaultPaddingVertical @gridWidth / 2;
         background: fadeout(@colorGrayLight, 20%);
         z-index: 10;
         line-height: 30px;
         
+        .transition(opacity @animationSpeed);
+        &.animate {
+            .opacity(0);
+        }
     }
 }
 
