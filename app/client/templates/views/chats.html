@@ -50,18 +50,18 @@
 
         <div class="whisper-chat-item {{#if isYou}}you{{/if}} animate">
             <div class="whisper-user-info">
-                <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/{{from}}?d=retro&s=60')"></div>
+                <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/{{from.identity}}?d=retro&s=60')"></div>
             </div>
             <div class="whisper-chat-header">
-                <a href="{{pathFor route='userProfile' userId=from}}" class="whisper-username">{{username from.identity}}</a> on <span class="topic">{{topic}}</span> {{formatTime timestamp 'fromnow'}}
-                {{#if isYou}}
-                    <button class="edit-message">{{i18n 'buttons.edit'}}</button>
-                {{/if}}
+                <a href="{{pathFor route='userProfile' userId=from}}" class="whisper-username">{{username from.identity}}</a>
+                {{#if topic}}{{i18n 'commonWords.on'}} <span class="topic">{{topic}}</span>{{/if}} {{formatTime timestamp 'fromnow'}}
                 {{#if edited}}
                     <i class="icon-pencil" title="{{i18n 'whisper.chat.texts.edited'}} {{formatTime edited 'fromnow'}}"></i>
                 {{/if}}
+                {{#if isYou}}
+                    <button class="edit-message">{{i18n 'buttons.edit'}}</button>
+                {{/if}}
             </div>
-
             <p>{{{message}}}</p>   
 
         </div>
