@@ -103,8 +103,9 @@
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;//@defaultPaddingHorizontal;
     padding-left: @gridWidth * 2;
     border-top: 1px solid @colorGray;
+
+    // ANIMATION
     .transition(transform @animationSpeed);
-    
     &.animate {
         //.opacity(0);
         .translateY(-11 * @gridHeight);
