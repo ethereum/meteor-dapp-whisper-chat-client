@@ -99,7 +99,7 @@ Chats.find({}).observe({
 
                 // if the chat got a message, store it as entry
                 var entryId = Entries.insert({
-                    chat: newDocument._id,
+                    chat: payload.chat,
                     timestamp: moment.unix(message.sent).toDate(),
                     topic: payload.topic,
                     unread: true,
@@ -107,7 +107,7 @@ Chats.find({}).observe({
                     message: payload.message,
                 });
                 // add the entry to the chats entry list
-                Chats.update(this._id, {
+                Chats.update(payload.chat, {
                     $addToSet: {entries: entryId}
                 });
             }
