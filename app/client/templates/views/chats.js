@@ -69,12 +69,36 @@ Template['views_chats'].helpers({
     */
     'isYou': function(){
         return this.from.identity === Whisper.getIdentity().identity;
+    },
+    /**
+    Gets the last stored topic.
+
+    @method (myTopic)
+    @return {String}
+    */
+    'myTopic': function(){
+        return amplify.store('whisper-last-topic');
     }
 });
 
 
 
 Template['views_chats'].events({
+    /**
+    Sets the clicked topic, as the current topic
+
+    @event click button.topic
+    */
+    'click button.topic': function(e, template){
+        var selectedTopic = $(e.currentTarget).text();
+        template.find('input[name="topic"]').value = selectedTopic;
+
+        // set as the last topic, to survive reload
+        amplify.store('whisper-last-topic', selectedTopic);
+
+        // focus the textarea
+        template.$('textarea[name="write-message"]').focus();
+    },
     /**
     Edit the current message
 
@@ -97,7 +121,8 @@ Template['views_chats'].events({
     */
     'keyup textarea[name="write-message"]': function(e, template){
         var message = _.trim(e.currentTarget.value, "\n"),
-            messageId = null;
+            messageId = null,
+            selectedTopic = $(e.currentTarget).text();
 
         // IF KEYUP is pressed, EDIT the LAST MESSAGE
         if(e.keyCode === 38) {
@@ -125,11 +150,15 @@ Template['views_chats'].events({
         if(e.keyCode === 13 && !e.shiftKey && !_.isEmpty(message)) {
             e.preventDefault();
 
+            // set as the last topic, to survive reload
+            amplify.store('whisper-last-topic', selectedTopic);
+
+
             // EDIT current message
             if(TemplateVar.get('editMessage')) {
                 messageId = Messages.update(TemplateVar.get('editMessage'), {$set: {
                         type: 'edit',
-                        topic: template.find('input[name="topic"]').value,
+                        topic: selectedTopic,
                         message: message,
                         edited: new Date()
                     }
@@ -146,7 +175,7 @@ Template['views_chats'].events({
                     type: 'message',
                     chat: this._id,
                     timestamp: new Date(),
-                    topic: template.find('input[name="topic"]').value,
+                    topic: selectedTopic,
                     // unread: true,
                     from: {
                         identity: Whisper.getIdentity().identity,
