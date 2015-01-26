@@ -84,7 +84,7 @@ Template['views_chats'].events({
                 // timestamp: new Date(),
                 topic: template.find('input[name="topic"]').value,
                 // unread: true,
-                from: User.findOne().identities[0].identity,
+                from: Whisper.getIdentity().identity,
                 message: e.currentTarget.value,
             });
             // add the entry to the chats entry list

@@ -113,8 +113,6 @@ Chats.find({}).observe({
             }
         });
 
-        console.log(watcher);
-
         // add the watcher to the chat document
         Chats.update(newDocument._id, {$set: {
                 watcher: watcher
@@ -165,7 +163,8 @@ Entries.find({}).observe({
         var chat = Chats.findOne(newDocument.chat);
 
         // if a chat for that entry was found, propagate it to the whisper network
-        if(chat) {
+        // But only send messages, which come from myself, otherwise i would re-send received messages!
+        if(chat && newDocument.from === Whisper.getIdentity().identity) {
 
             web3.shh.post({
                 "from": Whisper.getIdentity().identity,
