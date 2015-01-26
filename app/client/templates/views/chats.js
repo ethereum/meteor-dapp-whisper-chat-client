@@ -173,7 +173,7 @@ Template['views_chats'].events({
 
                 messageId = Messages.insert({
                     type: 'message',
-                    chat: this._id,
+                    chat: template.data._id,
                     timestamp: new Date(),
                     topic: selectedTopic,
                     // unread: true,
@@ -184,7 +184,7 @@ Template['views_chats'].events({
                     message: message,
                 });
                 // add the entry to the chats entry list
-                Chats.update(this._id, {
+                Chats.update(template.data._id, {
                     $addToSet: {messages: messageId},
                     $set: {lastActivity: new Date()}
                 });

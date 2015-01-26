@@ -54,7 +54,7 @@
             <div class="whisper-user-info">
                 {{> elements_profileImage identity=from.identity class="dapp-small"}}
             </div>
-            <small>
+            <div class="whisper-chat-header">
                 <a href="{{pathFor route='userProfile' userId=from.identity}}" class="whisper-username">{{username from.identity}}</a>
                 {{#if topic}}{{i18n 'commonWords.on'}} <button class="topic">{{topic}}</button>{{/if}} {{formatTime timestamp 'fromnow'}}
                 {{#if edited}}
