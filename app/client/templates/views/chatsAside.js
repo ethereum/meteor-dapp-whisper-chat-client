@@ -28,8 +28,8 @@ Template['views_chats_aside'].helpers({
     @method (chats)
     */
     'unreadCount': function(){
-        if(_.isArray(this.entries))
-            return Entries.find({_id: {$in: this.entries}, unread: true}).count();
+        if(_.isArray(this.messages))
+            return Messages.find({_id: {$in: this.messages}, unread: true}).count();
     }
 });
 

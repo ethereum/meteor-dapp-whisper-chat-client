@@ -21,6 +21,27 @@ Template.registerHelper('debug', function(object){
 });
 
 
+/**
+Gets the current users name.
+
+@method ((username))
+**/
+Template.registerHelper('username', function(identity){
+    var user = Users.findOne(identity);
+    // return username
+    if (user) {
+        return user.name;
+
+    // return myself
+    } else if(Whisper.getIdentity().identity === identity) {
+        return Whisper.getIdentity().name;
+
+    // return anonymous
+    } else {
+        return 'anonymous';
+    }
+});
+
 
 /**
 Formats a timestamp to any format given.

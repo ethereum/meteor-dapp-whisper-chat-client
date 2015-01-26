@@ -11,5 +11,5 @@ new PersistentMinimongo(Users);
 Chats = new Mongo.Collection('chats', {connection: null});
 new PersistentMinimongo(Chats);
 
-Entries = new Mongo.Collection('entries', {connection: null});
-new PersistentMinimongo(Entries);
+Messages = new Mongo.Collection('messages', {connection: null});
+new PersistentMinimongo(Messages);

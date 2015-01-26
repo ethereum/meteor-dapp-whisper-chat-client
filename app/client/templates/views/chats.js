@@ -14,13 +14,13 @@ The chats template
 
 Template['views_chats'].helpers({
     /**
-    Get the entries for this chat
+    Get the messages for this chat
 
-    @method (entries)
+    @method (messages)
     */
-    'entries': function(){
-        if(_.isArray(this.entries))
-            return Entries.find({_id: {$in: this.entries}}, {sort: {timestamp: -1}});
+    'messages': function(){
+        if(_.isArray(this.messages))
+            return Messages.find({_id: {$in: this.messages}}, {sort: {timestamp: -1}});
     },
     /**
     Super duper format message helper.
@@ -59,6 +59,16 @@ Template['views_chats'].helpers({
         } else {
             return null;
         }
+    },
+    /**
+    Returns true, if the current message data context is from myself.
+    Means has my `from.identity`.
+
+    @method (isYou)
+    @return {Boolean}
+    */
+    'isYou': function(){
+        return this.from.identity === Whisper.getIdentity().identity;
     }
 });
 
@@ -66,35 +76,94 @@ Template['views_chats'].helpers({
 
 Template['views_chats'].events({
     /**
-    Send a message to the chat on ENTER (but onlyn when shift is not pressed)
+    Edit the current message
+
+    @event click button.edit-message
+    */
+    'click button.edit-message': function(e, template){
+        template.find('input[name="topic"]').value = this.topic;
+        template.find('textarea[name="write-message"]').value = this.message;
+
+        TemplateVar.set('editMessage', this._id);
+
+        // focus the textarea
+        template.$('textarea[name="write-message"]').focus();
+    },
+    /**
+    Send a message to the chat on ENTER (but only when shift is not pressed).
+    Clear the message on ESC and edit the last message on ARROW UP
 
     @event keyup textarea[name="write-message"]
     */
     'keyup textarea[name="write-message"]': function(e, template){
+        var message = _.trim(e.currentTarget.value, "\n"),
+            messageId = null;
 
-        // prevent simple enter
-        if(e.currentTarget.value === "\n")
-            e.currentTarget.value = '';
+        // IF KEYUP is pressed, EDIT the LAST MESSAGE
+        if(e.keyCode === 38) {
+            // get my last message
+            var lastEntry = Messages.findOne({'from.identity': Whisper.getIdentity().identity}, {sort: {timestamp: -1}});
 
-        if(e.keyCode === 13 && !e.shiftKey && !_.isEmpty(e.currentTarget.value)) {
+            template.find('input[name="topic"]').value = lastEntry.topic;
+            e.currentTarget.value = lastEntry.message;
 
-            // insert entry
-            var entryId = Entries.insert({
-                chat: this._id,
-                timestamp: new Date(),
-                topic: template.find('input[name="topic"]').value,
-                // unread: true,
-                from: Whisper.getIdentity().identity,
-                message: e.currentTarget.value,
-            });
-            // add the entry to the chats entry list
-            Chats.update(this._id, {
-                $addToSet: {entries: entryId},
-                $set: {lastActivity: new Date()}
-            });
+            TemplateVar.set('editMessage', lastEntry._id);
+        }
+
+        // IF ESC, clear the form, and cancel the edit message
+        if(e.keyCode === 27) {
+
+            // unset the edited message
+            TemplateVar.set('editMessage', null);
 
             // clear text field
-            if(entryId)
+            e.currentTarget.value = '';
+        }
+
+
+        // IF ENTER, send new/edited message
+        if(e.keyCode === 13 && !e.shiftKey && !_.isEmpty(message)) {
+            e.preventDefault();
+
+            // EDIT current message
+            if(TemplateVar.get('editMessage')) {
+                messageId = Messages.update(TemplateVar.get('editMessage'), {$set: {
+                        type: 'edit',
+                        topic: template.find('input[name="topic"]').value,
+                        message: message,
+                        edited: new Date()
+                    }
+                })
+
+                // unset the edited message
+                TemplateVar.set('editMessage', null);
+
+
+            // INSERT new message
+            } else {
+
+                messageId = Messages.insert({
+                    type: 'message',
+                    chat: this._id,
+                    timestamp: new Date(),
+                    topic: template.find('input[name="topic"]').value,
+                    // unread: true,
+                    from: {
+                        identity: Whisper.getIdentity().identity,
+                        name: Whisper.getIdentity().name
+                    },
+                    message: message,
+                });
+                // add the entry to the chats entry list
+                Chats.update(this._id, {
+                    $addToSet: {messages: messageId},
+                    $set: {lastActivity: new Date()}
+                });
+            }
+
+
+            // clear text field
+            if(messageId)
                 e.currentTarget.value = '';
         }
 

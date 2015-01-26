@@ -37,9 +37,9 @@ Template['views_chats_actionbar'].events({
                 text: TAPi18n.__('whisper.chat.texts.leaveChat'),
                 // DELETE the chat on OK
                 ok: function(){
-                    // delete all entries
-                    _.each(Entries.find({_id: {$in: template.data.entries}}).fetch(), function(item){
-                        Entries.remove(item._id);
+                    // delete all messages
+                    _.each(Messages.find({_id: {$in: template.data.messages}}).fetch(), function(item){
+                        Messages.remove(item._id);
                     });
 
 

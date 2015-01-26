@@ -108,8 +108,8 @@ Router.route('/chat/:sessionKey', function () {
             _id: this.params.sessionKey,
             name: null,
             lastActivity: new Date(),
-            entries: [],
-            users: [User.findOne().identities[0].identity]
+            messages: [],
+            users: [Whisper.getIdentity().identity]
         });
     }
 

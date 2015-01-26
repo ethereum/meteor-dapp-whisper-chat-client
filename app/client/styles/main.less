@@ -111,6 +111,16 @@
         background-color: @colorGrayLight;
     }
 
+    // show edit button only in hover
+    &:hover {
+        button.edit-message {
+            display: inline-block;
+        }
+    }
+    button.edit-message {
+        display: none;
+    }
+
     .whisper-user-info {
         position: absolute;
         left: @gridWidth/2;
