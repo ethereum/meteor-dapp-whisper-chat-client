@@ -91,8 +91,8 @@ Chats.find({}).observe({
         });
 
         // IF a MESSAGE ARRIVED
-        watcher.arrived(function(m){
-            var payload = EJSON.parse(web3.toAscii(m.payload));
+        watcher.arrived(function(message){
+            var payload = EJSON.parse(web3.toAscii(message.payload));
 
             // DONT add entry, if its from myself
             if(payload.from !== Whisper.getIdentity().identity) { // later change to message.from
