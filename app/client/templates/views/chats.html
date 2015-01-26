@@ -48,7 +48,9 @@
     </div> -->
 
     {{#each messages}}
-        <div class="whisper-chat-item {{#if isYou}}you{{/if}}">
+        {{#Animate}}
+
+        <div class="whisper-chat-item {{#if isYou}}you{{/if}} animate">
             <div class="whisper-user-info">
                 {{> elements_profileImage identity=from.identity class="dapp-small"}}
             </div>
@@ -61,11 +63,12 @@
                 {{#if isYou}}
                     <button class="edit-message">{{i18n 'buttons.edit'}}</button>
                 {{/if}}
-            </small>
-
+            </div>
             <p>{{{message}}}</p>   
 
         </div>
+        {{/Animate}}
+
     {{else}}
         <p>{{i18n 'whisper.chat.texts.noChats'}}</p>
     {{/each}}
