@@ -574,7 +574,9 @@ Filter.prototype.changed = function(callback) {
 /// trigger calling new message from people
 Filter.prototype.trigger = function(messages) {
     for(var i = 0; i < this.callbacks.length; i++) {
-        this.callbacks[i].call(this, messages);
+        for (var j = 0; j < messages.length; j++) {
+            this.callbacks[i].call(this, messages[j]);
+        }
     }
 };
 
@@ -721,7 +723,7 @@ var ProviderManager = function() {
                     return;
                 }
 
-                data.callback(result);
+                data.callback(result.result);
             });
         }
         setTimeout(poll, 1000);
