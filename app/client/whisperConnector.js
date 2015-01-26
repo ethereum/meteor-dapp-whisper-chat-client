@@ -20,7 +20,7 @@ if(!user) {
 
     User.insert({
         identities: [{
-            name: 'frozeman',
+            name: chance.capitalize(chance.word()), // random username!
             identity: identity,
             selected: true
         }],
