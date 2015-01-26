@@ -77,13 +77,13 @@ ChatController = RouteController.extend({
         'views_chats_aside': {to: 'aside'},
         'views_chats_actionbar': {to: 'actionbar'}
     },
-    data: function(){
-        return Chats.findOne(this.params.sessionKey);
-    },
     onBeforeAction: function(){
         this.render(null, {to: 'modal'});
         this.next();
-    }
+    },
+    data: function(){
+        return Chats.findOne(this.params.sessionKey);
+    }   
 });
 
 
