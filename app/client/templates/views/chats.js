@@ -81,7 +81,7 @@ Template['views_chats'].events({
             // insert entry
             var entryId = Entries.insert({
                 chat: this._id,
-                // timestamp: new Date(),
+                timestamp: new Date(),
                 topic: template.find('input[name="topic"]').value,
                 // unread: true,
                 from: Whisper.getIdentity().identity,
