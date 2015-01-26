@@ -27,6 +27,7 @@ The default route, will redirect to the public stream.
 */
 Router.route('/', function () {
     this.redirect('chat', {sessionKey: 'public'});
+    this.next();
 },{
     name: 'home'
 });

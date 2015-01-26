@@ -31,15 +31,14 @@ Inititate the geo pattern.
 */
 Template['elements_modal'].rendered = function(){
 
-
     // initiate the geo pattern
     var pattern = GeoPattern.generate(Math.random().toString());
-    $('.dapp-modal-header.dapp-pattern').css('background-image', pattern.toDataUrl());
-    $('.dapp-profile-image').each(function(){ $(this).css("background-image", "url(http://www.gravatar.com/avatar/" + chance.hash() + '?d=retro&s=128)')});
+    this.$('.dapp-modal-header.dapp-pattern').css('background-image', pattern.toDataUrl());
+    this.$('.dapp-profile-image').each(function(){ $(this).css("background-image", "url(http://www.gravatar.com/avatar/" + chance.hash() + '?d=retro&s=128)')});
 
     if (typeof chance != 'undefined') { 
         var genchance = new Chance(pattern.hash.toString);
-        $('.dapp-unauthenticated').text(chance.prefix() + " " +  chance.capitalize(chance.word())); 
+        this.$('.dapp-unauthenticated').text(chance.prefix() + " " +  chance.capitalize(chance.word())); 
     }
 };
 

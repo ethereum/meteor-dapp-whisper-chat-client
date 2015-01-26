@@ -40,14 +40,15 @@ Template['views_chats_aside'].events({
     @event click button.add-chat
     */
     'click button.add-chat': function(e){
+
         var sessionKey = Random.id();
         
         // create a new chat
         Router.go('chat', {sessionKey: sessionKey});
 
         // and immediately after, show the invite screen
-        Tracker.afterFlush(function(){
+        Meteor.setTimeout(function(){
             Router.go('createChat', {sessionKey: sessionKey});
-        });
+        }, 10);
     }
 });

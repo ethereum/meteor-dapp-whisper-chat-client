@@ -724,7 +724,7 @@ var ProviderManager = function() {
                 data.callback(result);
             });
         }
-        setTimeout(poll, 12000);
+        setTimeout(poll, 1000);
     };
     poll();
 };
