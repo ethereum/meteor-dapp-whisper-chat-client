@@ -64,7 +64,8 @@
                     <button class="edit-message">{{i18n 'buttons.edit'}}</button>
                 {{/if}}
             </div>
-            <p>{{{message}}}</p>   
+            
+            {{#markdown}}{{{message}}}{{/markdown}}
 
         </div>
         {{/Animate}}

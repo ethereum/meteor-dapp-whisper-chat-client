@@ -11,6 +11,19 @@ The chats template
 @constructor
 */
 
+Template['views_chats'].rendered = function(){
+    // add autogrow
+    // console.log(this.$('textarea[name="write-message"]'));
+    // this.$('textarea[name="write-message"]').autogrow({
+    //     context: $('main.dapp-content.dapp-has-header'), //what to wire events to
+    //     animate: false, //if you want the size change to animate
+    //     speed: 200, //speed of animation
+    //     fixMinHeight: true, //if you don't want the box to shrink below its initial size
+    //     // cloneClass: 'autogrowclone', //helper CSS class for clone if you need to add special rules
+    //     // onInitialize: false, //resizes the textareas when the plugin is initialized
+    // });
+};
+
 
 Template['views_chats'].helpers({
     /**
@@ -32,6 +45,18 @@ Template['views_chats'].helpers({
     'message': function(){
         var text = this.message || '';
 
+
+        // add prettyprint
+        // var template = Template.instance();
+        // if(template.view.isRendered) {
+            
+        //     Tracker.afterFlush(function(){
+        //         console.log(template.$('code')[0]);
+        //         template.$('code').wrap('<pre class="prettyprint">');
+        //         prettyPrint();
+        //     });
+        // }
+
         // make sure not existing values are not Spacebars.kw
         // if(stripHtml instanceof Spacebars.kw)
         //     stripHtml = false;
@@ -42,7 +67,7 @@ Template['views_chats'].helpers({
 
             // parse hashtags and add a target="_blank" to links
             return text
-                .replace(/\n+/g,'<br>')
+                // .replace(/\n+/g,'<br>')
                 // this regex finds every link http://mylink.de, www.mylink.de and even mylink.de
                 // Thanks to Android: http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/2.0_r1/android/text/util/Regex.java#Regex.0WEB_URL_PATTERN
                 .replace(/((?:(http|https|Http|Https|rtsp|Rtsp):\/\/(?:(?:[a-zA-Z0-9\$\-\_\.\+\!\*\'\(\)\,\;\?\&\=]|(?:\%[a-fA-F0-9]{2})){1,64}(?:\:(?:[a-zA-Z0-9\$\-\_\.\+\!\*\'\(\)\,\;\?\&\=]|(?:\%[a-fA-F0-9]{2})){1,25})?\@)?)?((?:(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,64}\.)+(?:(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])|(?:biz|b[abdefghijmnorstvwyz])|(?:cat|com|coop|c[acdfghiklmnoruvxyz])|d[ejkmoz]|(?:edu|e[cegrstu])|f[ijkmor]|(?:gov|g[abdefghilmnpqrstuwy])|h[kmnrtu]|(?:info|int|i[delmnoqrst])|(?:jobs|j[emop])|k[eghimnrwyz]|l[abcikrstuvy]|(?:mil|mobi|museum|m[acdghklmnopqrstuvwxyz])|(?:name|net|n[acefgilopruz])|(?:org|om)|(?:pro|p[aefghklmnrstwy])|qa|r[eouw]|s[abcdeghijklmnortuvyz]|(?:tel|travel|t[cdfghjklmnoprtvwz])|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw]))|(?:(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[0-9])))(?:\:\d{1,5})?)(\/(?:(?:[a-zA-Z0-9\;\/\?\:\@\&\=\#\~\-\.\+\!\*\'\(\)\,\_])|(?:\%[a-fA-F0-9]{2}))*)?(?:\b|$)/gi, '<a href="http://$1" target="_blank">$1</a>')
@@ -124,6 +149,7 @@ Template['views_chats'].events({
             // prevent default behavior
             e.preventDefault();
         }
+
     },
     /**
     Send a message to the chat on ENTER (but only when shift is not pressed).
@@ -132,12 +158,18 @@ Template['views_chats'].events({
     @event keyup textarea[name="write-message"]
     */
     'keyup textarea[name="write-message"]': function(e, template){
+        // AUTOGROW THE TEXTAREA
+        var newlines = e.currentTarget.value.match(/^/mg).length;
+        console.log(newlines, e.currentTarget.value);
+        if(newlines > 3)
+            $(e.currentTarget).css('height', 100 + ((newlines - 4) * 20));
+
         var message = _.trim(e.currentTarget.value, "\n"),
             messageId = null,
             selectedTopic = template.find('input[name="topic"]').value;
 
         // IF KEYUP is pressed, EDIT the LAST MESSAGE
-        if(e.keyCode === 38) {
+        if(e.keyCode === 38 && _.isEmpty(message)) {
             // get my last message
             var lastEntry = Messages.findOne({'from.identity': Whisper.getIdentity().identity}, {sort: {timestamp: -1}});
 
