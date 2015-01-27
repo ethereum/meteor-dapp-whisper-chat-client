@@ -240,13 +240,14 @@ Template['views_chats'].events({
                     $set: {lastActivity: new Date()}
                 });
 
-                setTimeout(function(){
+                // ANIMATION
+                Meteor.setTimeout(function(){
                     $(".dapp-content-header").addClass("animate").hide();
                 }, 100);
-                setTimeout(function(){
+                Meteor.setTimeout(function(){
                     $(".dapp-content-header").show();
                 }, 200);                
-                setTimeout(function(){
+                Meteor.setTimeout(function(){
                     $(".dapp-content-header")
                         .removeClass("animate")
                         .find("textarea")
