@@ -24,12 +24,18 @@ Get the current selected identity e.g.
     }
 
 @method getIdentity
+@return {Object}
 */
 Whisper.getIdentity = function(){
     var identities = User.findOne().identities;
-    return identity = _.find(identities, function(item){
-        return item.selected;
-    });
+
+    if(identities) {
+        return identity = _.find(identities, function(item){
+            return item.selected;
+        });
+    } else {
+        return {};
+    }
 };
 
 

@@ -11,6 +11,16 @@ The app routes
 @constructor
 */
 
+
+/**
+We use this variable, to store the current selected chat,
+so we can show it in the background when e.g. the user profile is loaded.
+
+@property currentSelectedChat
+*/
+var currentSelectedChat = null;
+
+
 // Router defaults
 Router.configure({
     layoutTemplate: 'layout_main',
@@ -43,7 +53,12 @@ Shows the modal with a users profile
 */
 Router.route('/user/:userId', function () {
 
-    this.render('elements_modal', {to: 'modal'});
+    this.render('elements_modal', {
+        to: 'modal',
+        data: {
+            closePath: Router.routes.chat.path(this.params)
+        }
+    });
     this.render('view_modals_userProfile', {
         to: 'modalContent',
         data: function(){
@@ -78,12 +93,16 @@ ChatController = RouteController.extend({
         'views_chats_actionbar': {to: 'actionbar'}
     },
     onBeforeAction: function(){
+
+        // store the current selected chat
+        currentSelectedChat = this.params.sessionKey;
+
         this.render(null, {to: 'modal'});
         this.next();
     },
     data: function(){
         return Chats.findOne(this.params.sessionKey);
-    }   
+    }
 });
 
 
