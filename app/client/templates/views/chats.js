@@ -149,6 +149,12 @@ Template['views_chats'].events({
             // prevent default behavior
             e.preventDefault();
         }
+
+        // if empty, cancel the editing of a message and return
+        if(_.isEmpty(_.trim(e.currentTarget.value, "\n"))) {
+            TemplateVar.set('editMessage', null);
+        }
+
     },
     /**
     Send a message to the chat on ENTER (but only when shift is not pressed).
@@ -166,6 +172,7 @@ Template['views_chats'].events({
         var message = _.trim(e.currentTarget.value, "\n"),
             messageId = null,
             selectedTopic = template.find('input[name="topic"]').value;
+
 
         // IF KEYUP is pressed, EDIT the LAST MESSAGE
         if(e.keyCode === 38 && _.isEmpty(message)) {
