@@ -135,6 +135,15 @@ Router.route('/chat/create/:sessionKey', function () {
     controller: ChatController
 });
 
+/**
+Prevent that a chat is created, when directed to null
+
+@method /chat/null
+*/
+Router.route('/chat/null',{
+    template: 'layout_notFound',
+    controller: ChatController
+});
 
 /**
 Shows the chat itself, with all recent messages.
@@ -156,7 +165,6 @@ Router.route('/chat/:sessionKey', function () {
             users: [Whisper.getIdentity().identity]
         });
     }
-
 
     this.render();
 },{

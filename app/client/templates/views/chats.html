@@ -2,9 +2,9 @@
     <nav>
         <ul>
             <li><button class="add-chat dapp-main-button">{{i18n 'whisper.app.buttons.newChat'}} <i class="icon-pencil"></i></button></li>
-            <li class="{{isActivePath regex='public$'}}">
+            <!-- <li class="{{isActivePath regex='public$'}}">
                 <a href="{{pathFor route='chat' sessionKey='public'}}">{{i18n 'whisper.chat.texts.publicChat'}}</a>
-            </li>
+            </li> -->
             {{#each chats}}
                 <li class="{{isActivePath regex=_id}}">
                     <a href="{{pathFor route='chat' sessionKey=_id}}">
@@ -86,12 +86,12 @@
                     Add Users
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <button>
                     <i class="icon-bolt"></i>
                     Connect
                 </button>
-            </li>
+            </li> -->
             <li>
                 <button class="leave-chat">
                     <i class="icon-logout"></i>

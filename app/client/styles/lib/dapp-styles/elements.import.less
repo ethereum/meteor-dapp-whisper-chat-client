@@ -9,7 +9,7 @@
     .border-radius(50%);
     .background-size(cover);
     background-positon: 50% 50%;
-    .box-shadow(inset rgba(255,255,255,0.3) 0 2px 1px, inset rgba(0,0,0,0.9) 0 -1px 8px);
+    .box-shadow(inset rgba(255,255,255,0.5) 0 2px 2px, inset rgba(0,0,0,0.9) 0 -1px 8px);
 
     &.dapp-small {
         width: @gridWidth;
@@ -74,10 +74,11 @@
 
     button, a, a:visited {
         .flex(1);
+        margin: 0 @defaultMargin/2;
         height: 2*@gridHeight;
         line-height: 2*@gridHeight;
         font-family: @fontFamily;
-        font-size: 1em;
+        font-size: 0.9em;
         text-transform: uppercase;
         font-weight: 400;
         

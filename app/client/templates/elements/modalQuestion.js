@@ -26,6 +26,25 @@ The data context for this modal should look as follows:
 @constructor
 */
 
+Template['elements_modal_question'].helpers({
+    /**
+    Check if the `ok` property is present, without executing it yet.
+
+    @method (hasOk)
+    */
+    'hasOk': function(){
+        return (this.ok);
+    },
+    /**
+    Check if the `cancel` property is present, without executing it yet.
+
+    @method (hasCancel)
+    */
+    'hasCancel': function(){
+        return (this.cancel);
+    }
+});
+
 
 Template['elements_modal_question'].events({
     /**

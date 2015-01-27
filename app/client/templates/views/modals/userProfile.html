@@ -6,9 +6,27 @@
         <h1 class="whisper-username dapp-unauthenticated">{{name}}</h1>
     </header>
 
-    <p>
-        {{i18n 'whisper.users.texts.anonymous'}}
-    </p>
+    {{#if $eq identity currentIdentity.identity}}
 
-    <button class="dapp-block-button">{{i18n 'whisper.users.buttons.follow'}}</button>
+        <p>{{i18n 'whisper.users.texts.yourProfile'}}</p>
+
+        <fieldset>
+            <label>{{i18n 'whisper.users.texts.changeUsername'}}
+            <input type="text" name="username" value="{{name}}">
+            </label>
+        </fieldset>
+
+        <button class="dapp-block-button save-username">{{i18n 'whisper.users.buttons.changeUsername'}}</button>
+
+    {{else}}
+
+        <p>{{i18n 'whisper.users.texts.anonymous'}}</p>
+
+        <div class="dapp-modal-buttons">
+            {{#if identity}}
+                <button class="dapp-block-button follow">{{i18n 'whisper.users.buttons.follow'}}</button>
+                <a href="{{pathFor route='privateMessage' userId=identity}}" class="dapp-block-button send-message">{{i18n 'whisper.users.buttons.sendMessage'}}</a>
+            {{/if}}
+        </div>
+    {{/if}}
 </template>

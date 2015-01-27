@@ -1,10 +1,10 @@
 <template name="elements_modal_question">
     <p>{{text}}</p>
     <div class="dapp-modal-buttons">
-        {{#if cancel}}
+        {{#if hasCancel}}
             <button class="cancel">{{i18n 'buttons.cancel'}}</button>
         {{/if}}
-        {{#if ok}}
+        {{#if hasOk}}
             <button class="ok dapp-primary-button">{{i18n 'buttons.ok'}}</button>
         {{/if}}
     </div>

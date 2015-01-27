@@ -4,7 +4,7 @@
 
 Start an eth node using:
 
-    $ eth -j -b -f -n no -m yes
+    $ eth -j -b // for a mining node: $ eth -j -b -f -n no -m yes
 
 Start your app
 
