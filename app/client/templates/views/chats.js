@@ -149,7 +149,6 @@ Template['views_chats'].events({
             // prevent default behavior
             e.preventDefault();
         }
-
     },
     /**
     Send a message to the chat on ENTER (but only when shift is not pressed).
@@ -187,6 +186,7 @@ Template['views_chats'].events({
 
             // clear text field
             e.currentTarget.value = '';
+            $(e.currentTarget).css('height', '');
         }
 
 
@@ -236,8 +236,10 @@ Template['views_chats'].events({
 
 
             // clear text field
-            if(messageId)
+            if(messageId) {
                 e.currentTarget.value = '';
+                $(e.currentTarget).css('height', '');
+            }
         }
 
     }

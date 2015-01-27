@@ -33,32 +33,36 @@ Template['view_modals_userProfile'].events({
 
     @event click button.save-username
     */
-    'click button.save-username': function(e, template){
-        var user = User.findOne(),
-            username = template.find('input[name="username"]').value;
+    'click button.save-username, keyup input[name="username"]': function(e, template){
 
-        // change username
-        var currentIdentity = null;
-        user.identities = _.map(user.identities, function(item){
-            if(item.selected) {
-                currentIdentity = item.identity;
-                item.name = username;
-            }
-            return item;
-        });
+        if(!e.keyCode || e.keyCode === 13) {
+            var user = User.findOne(),
+                username = template.find('input[name="username"]').value;
 
-        // UPDATE IDENTITY username
-        User.update(user._id, {$set: {
-            identities: user.identities
-        }});
+            // change username
+            var currentIdentity = null;
+            user.identities = _.map(user.identities, function(item){
+                if(item.selected) {
+                    currentIdentity = item.identity;
+                    item.name = username;
+                }
+                return item;
+            });
 
-        // also UPDATE un the USERS COLLECTION
-        Users.update(currentIdentity, {$set: {
-            name: username
-        }});
+            // UPDATE IDENTITY username
+            User.update(user._id, {$set: {
+                identities: user.identities
+            }});
 
-        // close the modal
-        history.back();
+            // also UPDATE un the USERS COLLECTION
+            Users.update(currentIdentity, {$set: {
+                name: username
+            }});
+
+            // close the modal
+            history.back();
+        }
+
     },
     /**
     Add the user to the follow list
