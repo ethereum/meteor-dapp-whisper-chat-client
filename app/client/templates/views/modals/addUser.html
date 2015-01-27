@@ -12,9 +12,10 @@
     <ul class="whisper-user-list">
         {{#each following}}
         <li>
-            <button>
+            <button class="{{#if isInvited}}invited{{/if}}">
                 {{> elements_profileImage identity=identity}}
-                {{name}}
+                
+                <span class="whisper-username">{{name}}</span>
             </button>
         </li>
         {{/each}}

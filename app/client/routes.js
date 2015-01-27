@@ -162,7 +162,7 @@ Router.route('/chat/:sessionKey', function () {
             name: null,
             lastActivity: new Date(),
             messages: [],
-            users: [Whisper.getIdentity().identity]
+            users: [] // should i add myself? Whisper.getIdentity().identity
         });
     }
 

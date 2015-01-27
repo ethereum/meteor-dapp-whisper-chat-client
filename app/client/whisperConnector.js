@@ -171,7 +171,10 @@ Meteor.startup(function(){
 
                         // add the entry to the chats entry list
                         Chats.update(newDocument._id, {
-                            $addToSet: {messages: messageId}
+                            $addToSet: {
+                                messages: messageId,
+                                users: payload.from.identity
+                            }
                         });
 
                         // -> Add/UPDATE the current messages USER

@@ -24,7 +24,11 @@
 
         <div class="dapp-modal-buttons">
             {{#if identity}}
-                <button class="dapp-block-button follow">{{i18n 'whisper.users.buttons.follow'}}</button>
+                {{#if isFollowing}}
+                    <button class="dapp-block-button unfollow">{{i18n 'whisper.users.buttons.unfollow'}}</button>
+                {{else}}
+                    <button class="dapp-block-button follow">{{i18n 'whisper.users.buttons.follow'}}</button>
+                {{/if}}
                 <a href="{{pathFor route='privateMessage' userId=identity}}" class="dapp-block-button send-message">{{i18n 'whisper.users.buttons.sendMessage'}}</a>
             {{/if}}
         </div>

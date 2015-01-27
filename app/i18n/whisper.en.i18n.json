@@ -29,6 +29,7 @@
         "users": {
             "buttons": {
                 "follow": "Add to contacts",
+                "unfollow": "Remove from contacts",
                 "sendMessage": "Send private message",
                 "changeUsername": "Change name"
             },

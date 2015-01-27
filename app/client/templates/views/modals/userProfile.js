@@ -24,8 +24,17 @@ Template['view_modals_userProfile'].rendered = function(){
 };
 
 
-// Template['view_modals_userProfile'].helpers({
-// });
+Template['view_modals_userProfile'].helpers({
+    /**
+    Checks whether or not the current user is in the following list
+
+    @method (isFollowing)
+    */
+    'isFollowing': function(){
+        var user = User.findOne();
+        return _.contains(user.following, this.identity);
+    }
+});
 
 Template['view_modals_userProfile'].events({
     /**
@@ -65,7 +74,7 @@ Template['view_modals_userProfile'].events({
 
     },
     /**
-    Add the user to the follow list
+    Add the user to the following list
 
     @event click button.follow
     */
@@ -73,6 +82,22 @@ Template['view_modals_userProfile'].events({
         User.update(User.findOne()._id, {$addToSet: {
             following: this.identity
         }});
+
+        // jump to the previous page
+        // history.back();
+    },
+    /**
+    Remove the user from the following list
+
+    @event click button.unfollow
+    */
+    'click button.unfollow': function(e){
+        User.update(User.findOne()._id, {$pull: {
+            following: this.identity
+        }});
+
+        // jump to the previous page
+        // history.back();
     },
     /**
     Send a private message

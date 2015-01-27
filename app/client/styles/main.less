@@ -91,8 +91,20 @@
         margin-bottom: @gridHeight;
 
         button {
+            padding: 5px;
             color: @colorTextPrimary;
             font-size: 0.8em;
+            .border-radius(4px);
+
+            &.invited {
+                background-color: @colorMainBackground;
+                color: @colorWhite;
+            }
+
+            span.whisper-username {
+                display: inline-block;
+                margin-top: @gridHeight/4;
+            }
         }
     }
 
