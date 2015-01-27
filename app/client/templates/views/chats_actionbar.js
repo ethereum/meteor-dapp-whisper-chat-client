@@ -24,7 +24,6 @@ Template['views_chats_actionbar'].events({
     */
     'click button.leave-chat': function(e, template){
 
-        // render the question modal
         Router.current().render('elements_modal', {
             to: 'modal',
             data: {
@@ -52,6 +51,6 @@ Template['views_chats_actionbar'].events({
                     });
                 }
             }
-        })
+        });
     }
 });
