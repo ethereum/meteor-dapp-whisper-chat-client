@@ -56,7 +56,7 @@ Router.route('/user/:userId', function () {
     this.render('elements_modal', {
         to: 'modal',
         data: {
-            closePath: Router.routes.chat.path(this.params)
+            closePath: Router.routes.chat.path({sessionKey: currentSelectedChat})
         }
     });
     this.render('view_modals_userProfile', {
@@ -64,12 +64,12 @@ Router.route('/user/:userId', function () {
         data: function(){
             var user = Users.findOne(this.params.userId);
             
-            // return username
-            if (user) {
-                return user;
             // return myself
-            } else if(Whisper.getIdentity().identity === this.params.userId) {
+            if(Whisper.getIdentity().identity === this.params.userId) {
                 return Whisper.getIdentity();
+            // return username
+            } else if (user) {
+                return user;
 
             // return anonymous
             } else {
@@ -81,7 +81,12 @@ Router.route('/user/:userId', function () {
         }
     });
 },{
-    name: 'userProfile'
+    name: 'userProfile',
+    data: function(){
+        // make sure the last chat is still the data context
+        return Chats.findOne(currentSelectedChat);
+    }
+
 });
 
 
@@ -101,7 +106,7 @@ ChatController = RouteController.extend({
         this.next();
     },
     data: function(){
-        return Chats.findOne(this.params.sessionKey);
+        return Chats.findOne(currentSelectedChat);
     }
 });
 

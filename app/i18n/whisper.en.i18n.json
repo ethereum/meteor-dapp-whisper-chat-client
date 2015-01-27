@@ -29,7 +29,7 @@
         "users": {
             "buttons": {
                 "follow": "Follow",
-                "sendMessage": "Send message"    
+                "sendMessage": "Send private message"    
             },
             "texts": {
                 "anonymous": "This is an anonymous user. No guarantees can be made  about it’s identity, or any links between him and any other user with the same nickname here or any other platform."

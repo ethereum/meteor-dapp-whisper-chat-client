@@ -28,13 +28,14 @@ Gets the current users name.
 **/
 Template.registerHelper('username', function(identity){
     var user = Users.findOne(identity);
-    // return username
-    if (user) {
-        return user.name;
-
+    
     // return myself
-    } else if(Whisper.getIdentity().identity === identity) {
+    if(Whisper.getIdentity().identity === identity) {
         return Whisper.getIdentity().name;
+    
+    // return username
+    } else if (user) {
+        return user.name;
 
     // return anonymous
     } else {
