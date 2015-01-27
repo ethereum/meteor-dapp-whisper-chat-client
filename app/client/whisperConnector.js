@@ -158,6 +158,11 @@ Meteor.startup(function(){
                     // INSERT IF its a NEW MESSAGE
                     if(payload.type === 'message') {
 
+                        // FILTER
+                        // cut to long messages and username
+                        payload.message = payload.message.substr(0, 50000);
+                        payload.from.name = payload.from.name.substr(0, 100);
+
                         // if the chat got a message, store it as entry
                         var messageId = Messages.insert({
                             _id: payload.id, // use the same id, as your opponen has, so we can prevent duplicates
