@@ -9,95 +9,16 @@
         <input type="text" value="whisperchat.eth/chat/{{_id}}">
     </p>
 
-    <!-- <div class="dapp-modal-scroll-container"> -->
-        
-        <ul class="whisper-user-list">
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-                    Aeron Buchanan
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7f3c50c73db61?d=retro&s=60')"></div>
-                    Thomas Salzar
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d4126c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-                    Birgit Benod
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-                    Aeron Buchanan
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7f3c50c73db61?d=retro&s=60')"></div>
-                    Thomas Salzar
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d4126c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-                    Birgit Benod
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-                    Aeron Buchanan
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7f3c50c73db61?d=retro&s=60')"></div>
-                    Thomas Salzar
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d4126c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-                    Birgit Benod
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7f3c50c73db61?d=retro&s=60')"></div>
-                    Thomas Salzar
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d4126c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-                    Birgit Benod
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-                    Aeron Buchanan
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7f3c50c73db61?d=retro&s=60')"></div>
-                    Thomas Salzar
-                </button>
-            </li>
-            <li>
-                <button>
-                    <div class="dapp-profile-image" style="background-image: url('http://www.gravatar.com/avatar/30d4126c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-                    Birgit Benod
-                </button>
-            </li>
-        </ul>
-    <!-- </div> -->
+    <ul class="whisper-user-list">
+        {{#each following}}
+        <li>
+            <button>
+                {{> elements_profileImage identity=identity}}
+                {{name}}
+            </button>
+        </li>
+        {{/each}}
+    </ul>
 
     <div class="dapp-modal-buttons">
         <a href="{{pathFor route='chat' sessionKey=_id}}">{{i18n 'whisper.app.buttons.cancel'}}</a>

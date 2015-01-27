@@ -34,7 +34,7 @@
             },
             "texts": {
                 "yourProfile": "That's you!",
-                "changeUsername": "You can change your username, but your identity will stay the same.",
+                "changeUsername": "You can change your name, but your identity will stay the same.",
                 "anonymous": "This is an anonymous user. No guarantees can be made  about it’s identity, or any links between him and any other user with the same nickname here or any other platform."
             }
         }

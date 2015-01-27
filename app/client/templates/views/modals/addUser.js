@@ -13,6 +13,17 @@ The add user template
 
 Template['view_modals_addUser'].helpers({
     /**
+    List the users you're following
+
+    @method (following)
+    */
+    'following': function(){
+        var user = User.findOne();
+
+        if(user && _.isArray(user.following))
+            return Users.find({_id: {$in: user.following}});
+    },
+    /**
     Show either the ok or invite users button text
 
     @method (inviteButtonText)
