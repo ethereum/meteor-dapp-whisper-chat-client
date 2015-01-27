@@ -8,14 +8,13 @@ Template Controllers
 var appName = web3.fromAscii('whisper-chat-client'),
     user = User.findOne();
 
-
 // if NO USER exists, CREATE a NEW ONE
 if(!user) {
     var identity = null;
     try {
         identity = web3.shh.newIdentity();
     } catch(error) {
-
+        Whisper.showIdentityErrorModal();
     }
 
     User.insert({
@@ -28,23 +27,24 @@ if(!user) {
     });
 
 // CHECK if the IDENTITY IS still VALID, if not create a new one
-} else if(!web3.shh.haveIdentity(web3.toDecimal(user.identities[0].identity))) {
-    var identity = null;
+} else {
     try {
-        identity = web3.shh.newIdentity();
-    } catch(error) {
+        if(!web3.shh.haveIdentity(web3.toDecimal(Whisper.getIdentity().identity))) {
+            var identity = web3.shh.newIdentity();
 
-    }
-
-    if(identity) {
-        User.update(user._id, {$set: {
-                identities: [{
-                    name: chance.capitalize(chance.word()),
-                    identity: web3.shh.newIdentity(),
-                    selected: true
-                }]
+            if(identity) {
+                User.update(user._id, {$set: {
+                        identities: [{
+                            name: chance.capitalize(chance.word()),
+                            identity: web3.shh.newIdentity(),
+                            selected: true
+                        }]
+                    }
+                });
             }
-        });
+        }
+    } catch(error) {
+        Whisper.showIdentityErrorModal();
     }
 }
 

@@ -31,3 +31,25 @@ Whisper.getIdentity = function(){
         return item.selected;
     });
 };
+
+
+/**
+Shows a modal, saying that the identity couldn't be retrieved.
+
+@method showIdentityErrorModal
+*/
+Whisper.showIdentityErrorModal = function(){
+    Meteor.startup(function(){
+        // make sure the modal is rendered after all routes are executed
+        Tracker.afterFlush(function(){
+            Router.current().render('elements_modal', {to: 'modal'});
+            Router.current().render('elements_modal_question', {
+                to: 'modalContent',
+                data: {
+                    text: TAPi18n.__('whisper.chat.texts.identityError'),
+                    ok: true
+                }
+            });
+        });
+    });
+};

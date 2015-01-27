@@ -12,10 +12,6 @@ The chats action bar template
 */
 
 
-Template['views_chats_actionbar'].helpers({
-});
-
-
 Template['views_chats_actionbar'].events({
     /**
     Show a modal and leave the chat
@@ -24,16 +20,12 @@ Template['views_chats_actionbar'].events({
     */
     'click button.leave-chat': function(e, template){
 
-        Router.current().render('elements_modal', {
-            to: 'modal',
-            data: {
-                closePath: Router.routes.chat.path({sessionKey: template.data._id})
-            }
-        });
+        Router.current().render('elements_modal', {to: 'modal'});
         Router.current().render('elements_modal_question', {
             to: 'modalContent',
             data: {
                 text: TAPi18n.__('whisper.chat.texts.leaveChat'),
+                
                 // DELETE the chat on OK
                 ok: function(){
                     // delete all messages
@@ -49,7 +41,8 @@ Template['views_chats_actionbar'].events({
                     Tracker.afterFlush(function(){
                         Chats.remove(template.data._id);
                     });
-                }
+                },
+                cancel: true
             }
         });
     }

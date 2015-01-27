@@ -46,13 +46,10 @@ Template['elements_modal'].events({
         // hide the modal
         if($(e.target).hasClass('dapp-modal-overlay')) {
 
-            // hide modal
-            Router.current().render(null, {to: 'modal'});
-
             if(this.closePath)
                 Router.go(this.closePath);
             else
-                history.back();
+                Router.current().render(null, {to: 'modal'});
         }
     }
 });
