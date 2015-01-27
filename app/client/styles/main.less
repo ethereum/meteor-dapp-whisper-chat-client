@@ -112,9 +112,9 @@
     border-top: 1px solid @colorGray;
 
     // ANIMATION
-    .transition(transform @animationSpeed);
+    .transition(opacity @animationSpeed, transform @animationSpeed);
     &.animate {
-        //.opacity(0);
+        .opacity(0);
         .translateY(-11 * @gridHeight);
     }
 
