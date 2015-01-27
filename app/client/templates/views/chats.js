@@ -114,6 +114,18 @@ Template['views_chats'].events({
         template.$('textarea[name="write-message"]').focus();
     },
     /**
+    Prevent ENTER in the text area, if no shift is pressed
+
+    @event keydown textarea[name="write-message"]
+    */
+    'keydown textarea[name="write-message"]': function(e){
+        // Enter was pressed without shift key
+        if (e.keyCode == 13 && !e.shiftKey) {
+            // prevent default behavior
+            e.preventDefault();
+        }
+    },
+    /**
     Send a message to the chat on ENTER (but only when shift is not pressed).
     Clear the message on ESC and edit the last message on ARROW UP
 
