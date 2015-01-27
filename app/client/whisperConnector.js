@@ -39,7 +39,7 @@ if(!user) {
     if(identity) {
         User.update(user._id, {$set: {
                 identities: [{
-                    name: 'frozeman',
+                    name: chance.capitalize(chance.word()),
                     identity: web3.shh.newIdentity(),
                     selected: true
                 }]
@@ -81,11 +81,11 @@ Example data:
 }).arrived(function(message){
 
     // if i got a message, create a new chat, if none exists already
-    // console.log('Personal message');
+    console.log('Personal message');
 
     // console.log(message);
     // new message m
-    // console.log(EJSON.parse(web3.toAscii(message.payload)));
+    console.log(EJSON.parse(web3.toAscii(message.payload)));
 });
 
 /**

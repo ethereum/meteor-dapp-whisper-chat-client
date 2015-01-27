@@ -122,7 +122,7 @@ Template['views_chats'].events({
     'keyup textarea[name="write-message"]': function(e, template){
         var message = _.trim(e.currentTarget.value, "\n"),
             messageId = null,
-            selectedTopic = $(e.currentTarget).text();
+            selectedTopic = template.find('input[name="topic"]').value;
 
         // IF KEYUP is pressed, EDIT the LAST MESSAGE
         if(e.keyCode === 38) {
