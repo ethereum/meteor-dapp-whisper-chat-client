@@ -17,14 +17,26 @@ if(!user) {
         Whisper.showIdentityErrorModal();
     }
 
-    User.insert({
-        identities: [{
-            name: chance.capitalize(chance.word()), // random username!
+    if(identity) {
+        // random username!
+        var username = chance.capitalize(chance.word());
+
+        User.insert({
+            identities: [{
+                name: username,
+                identity: identity,
+                selected: true
+            }],
+            following: []
+        });
+
+        // ADD CURRENT USER ALSO as a USER IDENTITY
+        Users.upsert(identity, {
+            _id: identity,
             identity: identity,
-            selected: true
-        }],
-        following: []
-    });
+            name: username
+        });
+    }
 
 // CHECK if the IDENTITY IS still VALID, if not create a new one
 } else {
@@ -32,14 +44,25 @@ if(!user) {
         if(!web3.shh.haveIdentity(web3.toDecimal(Whisper.getIdentity().identity))) {
             var identity = web3.shh.newIdentity();
 
+            // random username!
+            var username = chance.capitalize(chance.word());
+
             if(identity) {
                 User.update(user._id, {$set: {
                         identities: [{
-                            name: chance.capitalize(chance.word()),
-                            identity: web3.shh.newIdentity(),
+                            name: username,
+                            identity: identity,
                             selected: true
                         }]
                     }
+                });
+
+
+                // ADD CURRENT USER ALSO as a USER IDENTITY
+                Users.upsert(identity, {
+                    _id: identity,
+                    identity: identity,
+                    name: username
                 });
             }
         }
@@ -149,7 +172,7 @@ Chats.find({}).observe({
                         $addToSet: {messages: messageId}
                     });
 
-                    // Add/UPDATE the current messages USER
+                    // -> Add/UPDATE the current messages USER
                     Users.upsert(payload.from.identity, {
                         _id: payload.from.identity,
                         identity: payload.from.identity,
