@@ -174,7 +174,7 @@ aside.dapp-main {
 
             li {
 
-                a, button {
+                a, a:visited, button {
                     // display: block;
                     .display(flex);
                     .align-items(center);
@@ -188,7 +188,7 @@ aside.dapp-main {
                     color: @colorWhite;
                     .box-sizing(border-box); // align button and links properties
 
-                    text-overflow: ellipsis;
+
                     // .dapp-shorten-text;
                     font-weight: 300;
                     line-height: @gridHeight;
@@ -198,6 +198,14 @@ aside.dapp-main {
                         .scale(0.98);
                     }
 
+                    // elipsis span
+                    > span {
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
 
                 }
                 .dapp-main-button {

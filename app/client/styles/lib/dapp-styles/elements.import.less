@@ -46,18 +46,16 @@
 }
 
 .dapp-count {
+    .display(flex);
+    .align-items(center);
     position: absolute;
-    margin-top: -2*@gridHeight;
-    top: 50%;
+    top: 0;
+    bottom: 0;
     right: 0;
-    height: 4*@gridHeight;
-    display: inline-block;
     padding: 0 @gridWidth/4;
-    text-align: right;
-    line-height: 4*@gridHeight;
     color: @colorWhite;
     font-weight: 100;
-    opacity: 0.7;
+    .opacity(0.7);
 }
 
 .active .dapp-count {
