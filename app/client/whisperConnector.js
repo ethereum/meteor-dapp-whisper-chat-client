@@ -189,6 +189,10 @@ Meteor.startup(function(){
                             name: payload.from.name
                         });
 
+                        //SOUND downloaded from http://www.pdsounds.org/sounds/blip listed as Public Domain
+                        var beep = new Audio('/sounds/bip.mp3');
+                        beep.play();
+
 
                     // EDIT if existing message
                     // should exist already
