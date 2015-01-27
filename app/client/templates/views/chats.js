@@ -239,6 +239,20 @@ Template['views_chats'].events({
                     $addToSet: {messages: messageId},
                     $set: {lastActivity: new Date()}
                 });
+
+                setTimeout(function(){
+                    $(".dapp-content-header").addClass("animate").hide();
+                }, 100);
+                setTimeout(function(){
+                    $(".dapp-content-header").show();
+                }, 200);                
+                setTimeout(function(){
+                    $(".dapp-content-header")
+                        .removeClass("animate")
+                        .find("textarea")
+                        .focus();
+                }, 400);
+
             }
 
 

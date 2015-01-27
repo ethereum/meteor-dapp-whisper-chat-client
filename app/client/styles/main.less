@@ -35,8 +35,15 @@
 
 // style the content of the dapp-content-header
 .dapp-content-header {
+
+   .transition(opacity @animationSpeed*2);
+    &.animate {
+       .opacity(0);
+   }
+
     .whisper-user-chat-header {
         float: left;
+
 
         input {
             width: 3 * @gridWidth;
@@ -124,9 +131,9 @@
     border-top: 1px solid @colorGray;
 
     // ANIMATION
-    .transition(opacity @animationSpeed, transform @animationSpeed);
+    .transition(margin @animationSpeed, transform @animationSpeed);
     &.animate {
-        .opacity(0);
+        margin-bottom: -5 * @gridHeight;
         .translateY(-11 * @gridHeight);
     }
 
