@@ -27,10 +27,10 @@ Get the current selected identity e.g.
 @return {Object}
 */
 Whisper.getIdentity = function(){
-    var identities = User.findOne().identities;
+    var user = User.findOne();
 
-    if(identities) {
-        return identity = _.find(identities, function(item){
+    if(user && _.isArray(user.identities)) {
+        return identity = _.find(user.identities, function(item){
             return item.selected;
         });
     } else {
