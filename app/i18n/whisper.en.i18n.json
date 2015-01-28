@@ -3,7 +3,7 @@
         "app": {
             "buttons": {
                 "addUser": "Add People",
-                "newChat": "New Chat",
+                "newChat": "New chat",
                 "cancel": "Nevermind",
                 "inviteUsers": "Invite to chat"
             }
@@ -11,9 +11,10 @@
         "chat": {
             "placeholder": {
                 "writeHere": "Write your message here",
-                "unnamedChat": "Unnamed Chat"
+                "unnamedChat": "Unnamed chat"
             },
             "texts": {
+                "home": "Click \"New chat\" to start a private or group chat.",
                 "addUserTitle": "Add users",
                 "publicChat": "Public",
                 "talksAbout": "talks about",

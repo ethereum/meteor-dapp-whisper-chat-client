@@ -29,54 +29,50 @@
 
 
 <template name="views_chats">
+    <main class="dapp-content dapp-has-header">
 
-    {{#with currentIdentity}}
-        <header class="dapp-content-header">
-            <div class="whisper-user-chat-header">
-                {{> elements_profileImage identity=identity class="dapp-small"}}
+        {{#with currentIdentity}}
+            <header class="dapp-content-header">
+                <div class="whisper-user-chat-header">
+                    {{> elements_profileImage identity=identity class="dapp-small"}}
+                    
+                    <a href="{{pathFor route='userProfile' userId=identity}}" class="whisper-username">{{name}}</a> {{i18n 'whisper.chat.texts.talksAbout'}}
+                    <input type="text" value="{{myTopic}}" name="topic">
+                </div>
+
+                <textarea name="write-message" placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
+            </header>
+        {{/with}}
+
+
+        {{#each messages}}
+            {{#Animate}}
+
+            <div class="whisper-chat-item {{#if isYou}}you{{/if}} animate">
+                <div class="whisper-user-info">
+                    {{> elements_profileImage identity=from.identity class="dapp-small"}}
+                </div>
+                <div class="whisper-chat-header">
+                    <a href="{{pathFor route='userProfile' userId=from.identity}}" class="whisper-username">{{username from.identity}}</a>
+                    {{#if topic}}{{i18n 'commonWords.on'}} <button class="topic">{{topic}}</button>{{/if}} {{formatTime timestamp 'fromnow'}}
+                    {{#if edited}}
+                        <i class="icon-pencil" title="{{i18n 'whisper.chat.texts.edited'}} {{formatTime edited 'fromnow'}}"></i>
+                    {{/if}}
+                    {{#if isYou}}
+                        <button class="edit-message">{{i18n 'buttons.edit'}}</button>
+                    {{/if}}
+                </div>
                 
-                <a href="{{pathFor route='userProfile' userId=identity}}" class="whisper-username">{{name}}</a> {{i18n 'whisper.chat.texts.talksAbout'}}
-                <input type="text" value="{{myTopic}}" name="topic">
+                {{#markdown}}{{{message}}}{{/markdown}}
+
             </div>
+            {{/Animate}}
 
-            <textarea name="write-message" placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
-        </header>
-    {{/with}}
+        {{else}}
+            <p>{{i18n 'whisper.chat.texts.noChats'}}</p>
+        {{/each}}
 
-    <!-- <div class="dapp-message">
-        {{i18n 'whisper.chat.texts.invitePeople1'}}
-        <a href="{{pathFor route='addUser'}}"><i class="icon-user-add"></i> {{i18n 'whisper.app.buttons.addUser'}}</a>
-        {{i18n 'whisper.chat.texts.invitePeople2'}}
-        <input type="text" value="whisperchat.eth/9183k1sd/" disabled>
-    </div> -->
-
-    {{#each messages}}
-        {{#Animate}}
-
-        <div class="whisper-chat-item {{#if isYou}}you{{/if}} animate">
-            <div class="whisper-user-info">
-                {{> elements_profileImage identity=from.identity class="dapp-small"}}
-            </div>
-            <div class="whisper-chat-header">
-                <a href="{{pathFor route='userProfile' userId=from.identity}}" class="whisper-username">{{username from.identity}}</a>
-                {{#if topic}}{{i18n 'commonWords.on'}} <button class="topic">{{topic}}</button>{{/if}} {{formatTime timestamp 'fromnow'}}
-                {{#if edited}}
-                    <i class="icon-pencil" title="{{i18n 'whisper.chat.texts.edited'}} {{formatTime edited 'fromnow'}}"></i>
-                {{/if}}
-                {{#if isYou}}
-                    <button class="edit-message">{{i18n 'buttons.edit'}}</button>
-                {{/if}}
-            </div>
-            
-            {{#markdown}}{{{message}}}{{/markdown}}
-
-        </div>
-        {{/Animate}}
-
-    {{else}}
-        <p>{{i18n 'whisper.chat.texts.noChats'}}</p>
-    {{/each}}
-   
+    </main>
 </template>
 
 

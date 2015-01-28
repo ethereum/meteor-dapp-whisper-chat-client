@@ -122,6 +122,19 @@
         }
     }
 
+    .whisper-username {
+        // .dapp-shorten-text;
+        max-width: @gridWidth*2;
+        max-height: @gridHeight*1.4;
+        // line-height: 1.2em;
+        display: inline-block;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .dapp-profile-image {
         width: @gridWidth * 1.5;
         height: @gridWidth * 1.5;

@@ -240,6 +240,7 @@ Template['views_chats'].events({
                     $set: {lastActivity: new Date()}
                 });
 
+
                 // ANIMATION
                 Meteor.setTimeout(function(){
                     $(".dapp-content-header").addClass("animate").hide();

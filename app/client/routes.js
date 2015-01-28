@@ -36,12 +36,12 @@ Router.configure({
 /**
 The default route, will redirect to the public stream.
 
+TODO: in the future this will be the chats/public route
+
 @method home
 */
-Router.route('/', function () {
-    this.redirect('chat', {sessionKey: 'public'});
-    this.render('views_chats_aside', {to: 'aside'});
-},{
+Router.route('/', {
+    template: 'views_home',
     name: 'home'
 });
 
