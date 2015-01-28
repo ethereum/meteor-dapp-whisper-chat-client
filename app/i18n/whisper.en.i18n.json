@@ -38,6 +38,7 @@
             "texts": {
                 "yourProfile": "That's you!",
                 "changeUsername": "You can change your name, but your identity will stay the same.",
+                "youreFollowing": "This user is in your contacts",
                 "anonymous": "This is an anonymous user. No guarantees can be made  about it’s identity, or any links between him and any other user with the same nickname here or any other platform."
             }
         }

@@ -79,11 +79,11 @@ Meteor.startup(function(){
     
 
     // TEST encruyption watcher
-    // web3.shh.watch({
-    //     "topic": [ appName, Whisper.getIdentity().identity ]
-    // }).arrived(function(message){
-    //     console.log(web3.toAscii(message.payload));
-    // });
+    web3.shh.watch({
+        "topic": [ appName, Whisper.getIdentity().identity ]
+    }).arrived(function(message){
+        console.log(web3.toAscii(message.payload));
+    });
 
 
     // WATCH for personal messages

@@ -63,7 +63,7 @@ Template['views_chats'].helpers({
 
         if(_.isString(text)) {
 
-            text = _.escapeHTML(text); // srtipTags?
+            text = _.stripTags(text); // stripTags or escapeHTML?
 
             // parse hashtags and add a target="_blank" to links
             return text
@@ -103,6 +103,17 @@ Template['views_chats'].helpers({
     */
     'myTopic': function(){
         return amplify.store('whisper-last-topic');
+    },
+    /**
+    Check whether the iterated user is in your following list.
+
+    @method (inContacts)
+    @return {Boolean}
+    */
+    'inContacts': function(){
+        var user = User.findOne();
+        // console.log(user, this);
+        return (user && _.contains(user.following, this.from.identity));
     }
 });
 
