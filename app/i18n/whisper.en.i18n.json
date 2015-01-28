@@ -5,7 +5,8 @@
                 "addUser": "Add People",
                 "newChat": "New chat",
                 "cancel": "Nevermind",
-                "inviteUsers": "Invite to chat"
+                "inviteUsers": "Invite to chat",
+                "startPrivateChat": "Start private chat"
             }
         },
         "chat": {

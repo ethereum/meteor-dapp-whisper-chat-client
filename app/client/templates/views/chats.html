@@ -8,6 +8,9 @@
             {{#each chats}}
                 <li class="{{isActivePath regex=_id}}">
                     <a href="{{pathFor route='chat' sessionKey=_id}}" title="{{generatedName}}">
+                        {{#if privateChat}}
+                            <i class="icon-lock"></i>
+                        {{/if}}
                         <!-- the span is in here to make multiline text ellipsis possible -->
                         <span>
                             {{#if name}}

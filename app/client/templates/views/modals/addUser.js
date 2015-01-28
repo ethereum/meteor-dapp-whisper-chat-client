@@ -43,9 +43,13 @@ Template['view_modals_addUser'].helpers({
     */
     'inviteButtonText': function(){
         var selectedUsers = TemplateVar.get('invitedUsers');
-        return (_.isEmpty(selectedUsers))
-            ? TAPi18n.__('buttons.ok')
-            : TAPi18n.__('whisper.app.buttons.inviteUsers');
+
+        if(_.isEmpty(selectedUsers))
+            return TAPi18n.__('buttons.ok');
+        else if(selectedUsers.length === 1 && Router.current().route.getName() === 'createChat')
+            return TAPi18n.__('whisper.app.buttons.startPrivateChat');
+        else
+            return TAPi18n.__('whisper.app.buttons.inviteUsers');
     }
 });
 
@@ -84,7 +88,7 @@ Template['view_modals_addUser'].events({
         if(!_.isEmpty(invitedUsers)) {
 
             // SINGLE CHAT
-            if(invitedUsers.length === 1) {
+            if(invitedUsers.length === 1 && Router.current().route.getName() === 'createChat') {
                 // remove current chat
                 // create new one
                 // send invite message

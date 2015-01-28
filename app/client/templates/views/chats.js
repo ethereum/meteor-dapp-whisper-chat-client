@@ -33,7 +33,7 @@ Template['views_chats'].helpers({
     */
     'messages': function(){
         if(_.isArray(this.messages))
-            return Messages.find({_id: {$in: this.messages}}, {sort: {timestamp: -1}});
+            return Messages.find({_id: {$in: this.messages}}, {sort: {timestamp: -1, privateChat: 1}});
     },
     /**
     Super duper format message helper.
@@ -63,7 +63,7 @@ Template['views_chats'].helpers({
 
         if(_.isString(text)) {
 
-            text = _.stripTags(text);
+            text = _.escapeHTML(text); // srtipTags?
 
             // parse hashtags and add a target="_blank" to links
             return text
@@ -169,7 +169,7 @@ Template['views_chats'].events({
             $(e.currentTarget).css('height', 100 + ((newlines - 4) * 20));
 
 
-        var message = _.trim(e.currentTarget.value, "\n"),
+        var message = _.trim(e.currentTarget.value, "\n "),
             messageId = null,
             selectedTopic = template.find('input[name="topic"]').value;
 
@@ -209,6 +209,7 @@ Template['views_chats'].events({
             if(TemplateVar.get('editMessage')) {
                 messageId = Messages.update(TemplateVar.get('editMessage'), {$set: {
                         type: 'edit',
+                        chat: template.data._id,
                         topic: selectedTopic,
                         message: message,
                         edited: new Date()

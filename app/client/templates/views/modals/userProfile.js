@@ -26,6 +26,14 @@ Template['view_modals_userProfile'].rendered = function(){
 
 Template['view_modals_userProfile'].helpers({
     /**
+    Checks whether the user has a valid identity
+
+    @method (hasIdentity)
+    */
+    'hasIdentity': function(){
+        return (this.identity && !_.isEmpty(web3.toAscii(this.identity)));
+    },
+    /**
     Checks whether or not the current user is in the following list
 
     @method (isFollowing)

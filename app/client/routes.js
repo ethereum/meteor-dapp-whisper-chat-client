@@ -156,14 +156,30 @@ Router.route('/chat/:sessionKey', function () {
     if(this.params.sessionKey !== 'public' &&
        !Chats.findOne(this.params.sessionKey)) {
         
-        // ADD new CHAT
-        Chats.insert({
-            _id: this.params.sessionKey,
-            name: null,
-            lastActivity: new Date(),
-            messages: [],
-            users: [] // should i add myself? Whisper.getIdentity().identity
-        });
+        // ADD new PRIVATE CHAT
+        if(Users.findOne(this.params.sessionKey) ||
+           (this.params.sessionKey.length === 130 && this.params.sessionKey.indexOf('0x') === 0)) {
+
+            Chats.insert({
+                _id: this.params.sessionKey,
+                name: null,
+                lastActivity: new Date(),
+                messages: [],
+                privateChat: this.params.sessionKey,
+                users: [this.params.sessionKey]
+            });
+
+        // ADD new group CHAT
+        } else {
+
+            Chats.insert({
+                _id: this.params.sessionKey,
+                name: null,
+                lastActivity: new Date(),
+                messages: [],
+                users: [] // should i add myself? Whisper.getIdentity().identity
+            });
+        }
     }
 
     this.render();

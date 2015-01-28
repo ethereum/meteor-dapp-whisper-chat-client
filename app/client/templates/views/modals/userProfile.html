@@ -23,7 +23,7 @@
         <p>{{i18n 'whisper.users.texts.anonymous'}}</p>
 
         <div class="dapp-modal-buttons">
-            {{#if identity}}
+            {{#if hasIdentity}}
                 {{#if isFollowing}}
                     <button class="dapp-block-button unfollow">{{i18n 'whisper.users.buttons.unfollow'}}</button>
                 {{else}}
