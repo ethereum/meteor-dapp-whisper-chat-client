@@ -29,7 +29,7 @@
                 {{else}}
                     <button class="dapp-block-button follow">{{i18n 'whisper.users.buttons.follow'}}</button>
                 {{/if}}
-                <a href="{{pathFor route='privateMessage' userId=identity}}" class="dapp-block-button send-message">{{i18n 'whisper.users.buttons.sendMessage'}}</a>
+                <a href="{{pathFor route='chat' sessionKey=identity}}" class="dapp-block-button send-message">{{i18n 'whisper.users.buttons.sendMessage'}}</a>
             {{/if}}
         </div>
     {{/if}}

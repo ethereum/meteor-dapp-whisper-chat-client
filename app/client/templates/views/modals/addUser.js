@@ -81,22 +81,29 @@ Template['view_modals_addUser'].events({
 
     @event click button.invite
     */
-    'click button.invite': function(e){
+    'click button.invite': function(e, template){
         var invitedUsers = TemplateVar.get('invitedUsers');
         
         // invite users
         if(!_.isEmpty(invitedUsers)) {
 
             // SINGLE CHAT
-            if(invitedUsers.length === 1 && Router.current().route.getName() === 'createChat') {
+            if(invitedUsers.length === 1 &&
+               Router.current().route.getName() === 'createChat') {
                 // remove current chat
-                // create new one
-                // send invite message
-                // redirect
+                if(_.isEmpty(this.messages))
+                    Chats.remove(this._id);
+
+                // create new private one
+                Router.go('chat', {sessionKey: invitedUsers[0]});
 
             // GROUP CHAT
             } else {
+
+                // check if currently in a private chat, if so generate a new one
+
                 // send invite messages
+
                 // redirect
                 Router.go('chat', {sessionKey: this._id});
             }
