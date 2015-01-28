@@ -34,7 +34,7 @@ Template['views_chats_actionbar'].events({
                     });
 
 
-                    Router.go('/chat/public');
+                    Router.go('home');
                     
                     // delete the chat itself, after redirect
                     // (so the chat route, doesn't try to re-create the chat)
