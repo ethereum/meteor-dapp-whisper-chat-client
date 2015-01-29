@@ -250,7 +250,7 @@ Template['views_chats'].events({
         // IF KEYUP is pressed, EDIT the LAST MESSAGE
         if(e.keyCode === 38 && _.isEmpty(message)) {
             // get my last message
-            var lastEntry = Messages.findOne({'from.identity': Whisper.getIdentity().identity}, {sort: {timestamp: -1}});
+            var lastEntry = Messages.findOne({_id: {$in: template.data.messages}, 'from.identity': Whisper.getIdentity().identity}, {sort: {timestamp: -1}});
 
             template.find('input[name="topic"]').value = lastEntry.topic;
             e.currentTarget.value = lastEntry.message;
