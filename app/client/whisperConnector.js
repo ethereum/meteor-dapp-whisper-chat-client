@@ -78,12 +78,12 @@ Meteor.startup(function(){
     // START observing for changes
     
 
-    // TEST encruyption watcher
-    web3.shh.watch({
-        "topic": [ appName, Whisper.getIdentity().identity ]
-    }).arrived(function(message){
-        console.log(web3.toAscii(message.payload));
-    });
+    // TEST encryption watcher
+    // web3.shh.watch({
+    //     "topic": [ appName, Whisper.getIdentity().identity ]
+    // }).arrived(function(message){
+    //     console.log(web3.toAscii(message.payload));
+    // });
 
 
     // WATCH for personal messages
