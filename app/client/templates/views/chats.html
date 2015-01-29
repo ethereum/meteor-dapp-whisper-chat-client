@@ -14,6 +14,7 @@
                             <i class="icon-users"></i>
                         {{/if}}
 
+
                         <!-- the span is in here to make multiline text ellipsis possible -->
                         <span>
                             {{#if name}}
@@ -26,6 +27,11 @@
                                 <span class="dapp-count">{{unreadCount}}</span>
                             {{/if}}
                         </span>
+
+
+                        {{#if invitation}}
+                            <i class="invited icon-bell"></i>
+                        {{/if}}
                     </a>
                 </li>
             {{/each}}

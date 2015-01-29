@@ -51,6 +51,7 @@ minimongo@1.0.6
 mistereo:identicon@1.0.0
 mobile-status-bar@1.0.2
 mongo@1.0.11
+mrt:jquery-visible@1.2.0
 observe-sequence@1.0.4
 ordered-dict@1.0.2
 raix:handlebar-helpers@0.2.4

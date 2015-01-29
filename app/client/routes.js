@@ -151,10 +151,11 @@ Shows the chat itself, with all recent messages.
 @method createChat
 */
 Router.route('/chat/:sessionKey', function () {
+    var chat = Chats.findOne(this.params.sessionKey);
 
     // check if this chat already exists, if not create a new one
     if(this.params.sessionKey !== 'public' &&
-       !Chats.findOne(this.params.sessionKey)) {
+       !chat) {
         
         // ADD new PRIVATE CHAT
         if(Users.findOne(this.params.sessionKey) ||
@@ -195,6 +196,11 @@ Router.route('/chat/:sessionKey', function () {
                 users: [] // should i add myself? Whisper.getIdentity().identity
             });
         }
+
+
+    // IF existing, check if its has the invitation property and remove it
+    } else if(chat && chat.invitation) {
+        Chats.update(chat._id, {$unset: {invitation: ''}});
     }
 
     this.render();

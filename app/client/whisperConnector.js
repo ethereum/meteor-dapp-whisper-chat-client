@@ -336,7 +336,7 @@ Meteor.startup(function(){
 
 
             // TODO: TRIGGER to get still floating messages
-            watchers[newDocument._id].messages();
+            // watchers[newDocument._id].messages();
         },
         /**
         Checks if a chat was removed, if so it will stop watching for messages for that chat.
