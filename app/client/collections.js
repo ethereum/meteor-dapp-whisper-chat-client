@@ -13,3 +13,6 @@ new PersistentMinimongo(Chats);
 
 Messages = new Mongo.Collection('messages', {connection: null});
 new PersistentMinimongo(Messages);
+
+// don't make them persistent, as we need them only once
+Invitations = new Mongo.Collection('invitations', {connection: null});

@@ -35,3 +35,12 @@ setTimeout(function(){
         "priority": 1000
     });
 }, 2000);
+
+
+// anonoymous message
+web3.shh.post({
+        "topic": [web3.fromAscii('whisper-chat-client'), web3.fromAscii('ethereum')],
+        "payload": web3.fromAscii('Hello world'),
+        "ttl": 100,
+        "priority": 1000
+    });

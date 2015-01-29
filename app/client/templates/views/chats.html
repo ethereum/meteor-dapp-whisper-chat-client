@@ -73,9 +73,9 @@
         </div>
 
         {{#each messages}}
-            <div class="whisper-chat-message">
+            <div class="whisper-chat-message {{#if $eq type 'notification'}}notification{{/if}}">
                 <div class="whisper-chat-message-header">
-                    {{#if isYou ../from}}
+                    {{#if canEdit ../from}}
                         <button class="edit-message">{{i18n 'buttons.edit'}}</button>
                     {{/if}}
                     {{#if topic}}{{i18n 'commonWords.on'}} <button class="topic">{{topic}}</button>{{/if}}
@@ -83,7 +83,15 @@
                         <i class="icon-pencil" title="{{i18n 'whisper.chat.texts.edited'}} {{formatTime edited 'fromnow'}}"></i>
                     {{/if}}
                 </div>
-                {{#markdown}}{{{message}}}{{/markdown}}
+
+                {{#if $eq type 'notification'}}
+                    <p>
+                        <i class="icon-info2"></i>
+                        {{{notificationType}}}
+                    </p>
+                {{else}}
+                    {{#markdown}}{{{message}}}{{/markdown}}
+                {{/if}}
             </div>
         {{/each}}
 

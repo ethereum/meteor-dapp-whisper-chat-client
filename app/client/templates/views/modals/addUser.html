@@ -22,7 +22,9 @@
     </ul>
 
     <div class="dapp-modal-buttons">
-        <a href="{{pathFor route='chat' sessionKey=_id}}">{{i18n 'whisper.app.buttons.cancel'}}</a>
+        {{#unless noneSelected}}
+            <a href="{{pathFor route='chat' sessionKey=_id}}">{{i18n 'whisper.app.buttons.cancel'}}</a>
+        {{/unless}}
         <button class="invite dapp-primary-button">{{inviteButtonText}}</button>
     </div>
     

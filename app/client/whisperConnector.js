@@ -197,7 +197,6 @@ Meteor.startup(function(){
 
             // IF a MESSAGE ARRIVED
             watchers[newDocument._id].arrived(function(message){
-
                 var payload = {};
 
                 // try to decode
@@ -235,28 +234,33 @@ Meteor.startup(function(){
                 if(payload.from.identity !== Whisper.getIdentity().identity && //  TODO: later change to message.from
                    payload.chat === newDocument._id) { 
                     
-                    // console.log('Chat message', message.from);
-                    // console.log(message, payload);
+                    console.log('Chat message', message.from);
+                    console.log(message, payload);
 
-                    // INSERT IF its a NEW MESSAGE
-                    if((payload.type === 'message' || !payload.type) &&
+                    // INSERT IF its a NEW MESSAGE or NOTIFICATIONs
+                    if((payload.type === 'message' ||
+                        payload.type === 'notification' ||
+                        !payload.type) &&
                        !Messages.findOne(payload.id)) {
 
                         // FILTER
                         // cut to long messages and username
-                        payload.message = payload.message.substr(0, 50000);
+                        if(payload.message)
+                            payload.message = payload.message.substr(0, 50000);
                         if(payload.from.name)
                             payload.from.name = payload.from.name.substr(0, 100);
 
                         // if the chat got a message, store it as entry
                         var messageId = Messages.insert({
                             _id: payload.id, // use the same id, as your opponen has, so we can prevent duplicates
+                            type: payload.type,
                             chat: payload.chat,
                             timestamp: moment.unix(message.sent).toDate(),
                             topic: payload.topic,
                             unread: true,
                             from: payload.from,
                             message: payload.message,
+                            data: payload.data
                         });
 
                         // add the entry to the chats entry list
@@ -292,6 +296,7 @@ Meteor.startup(function(){
                                 edited: moment(payload.edited).toDate()
                             }
                         });
+
                     }
 
                 }
@@ -319,7 +324,7 @@ Meteor.startup(function(){
     /**
     Observe messages, send messages.
 
-    @class Chats.find({}).observe
+    @class Messages.find({}).observe
     @constructor
     */
     Messages.find({}).observe({
@@ -327,7 +332,7 @@ Meteor.startup(function(){
         Checks if a new message entry was created, if so propagate it to the whisper network.
         See the chats.js for more.
 
-        The whisper paylod can look like this:
+        The whisper message paylod should look like this:
 
             {
                 id: '231rewf23', // the unique id of the message
@@ -341,6 +346,28 @@ Meteor.startup(function(){
                 },
                 message: 'Hello its me!',
             }
+
+        The whisper invitation notification paylod should look like this:
+
+            {
+                type: 'notification',
+                message: 'invitation',
+                chat: '234sdfasdasd',
+                timestamp: new Date(),
+                from: {
+                    identity: Whisper.getIdentity().identity,
+                    name: Whisper.getIdentity().name
+                },
+                data: [{
+                    identity: '0x345345345..',
+                    name: 'user x'
+                },
+                {
+                    identity: '0x67554345..',
+                    name: 'user y'
+                }]
+            }
+
 
         @method added
         */
@@ -377,9 +404,6 @@ Meteor.startup(function(){
 
                 // SEND
                 web3.shh.post(message);
-
-                // remove the type, after storing
-                Messages.update(newDocument.id, {$unset: {type: ''}});
             }
 
         },
@@ -387,10 +411,11 @@ Meteor.startup(function(){
         },
         /**
         Sends an edit for an message, which will patch the message on the receiver side.
-            
+        
+        The whisper edit paylod should look like this:
             {
-                id: 'fsdf32sdfs',
                 type: 'edit',
+                id: 'fsdf32sdfs',
                 topic: 'my new topic',
                 message: 'my edited message',
                 edited: new Date() // some iso date
@@ -427,6 +452,65 @@ Meteor.startup(function(){
                 // remove the type, after storing
                 Messages.update(newDocument.id, {$unset: {type: ''}});
             }
+        }
+    });
+
+
+
+    /**
+    Observe invitations, send inviation and remove it from the collection.
+
+    @class Chats.find({}).observe
+    @constructor
+    */
+    Invitations.find({}).observe({
+        /**
+        Checks if an invitation was add, send it out and remove it from the collection.
+
+        The whisper invitation paylod should look like this:
+
+            {
+                type: 'invitation',
+                chat: '234sdfasdasd',
+                timestamp: new Date(),
+                from: {
+                    identity: Whisper.getIdentity().identity,
+                    name: Whisper.getIdentity().name
+                },
+                to: '0x34556456..'
+            }
+
+        @method added
+        */
+        added: function(newDocument) {
+            var chat = Chats.findOne(newDocument.chat);
+
+            // if a chat for that entry was found, propagate it to the whisper network
+            // But only send messages, which come from myself, otherwise i would re-send received messages!
+            if(chat &&
+               newDocument.type === 'invitationNotification' &&
+               newDocument.from.identity === Whisper.getIdentity().identity) {
+
+                var message = {
+                    "from": Whisper.getIdentity().identity,
+                    "topic": [
+                        appName,
+                        web3.fromAscii(newDocument.chat)
+                    ],
+                    "payload": web3.fromAscii(EJSON.stringify(newDocument)),
+                    "ttl": 100,
+                    "priority": 1000
+                };
+
+                // console.log('Send message', newDocument.message, message);
+
+                // SEND
+                web3.shh.post(message);
+
+                // remove the invitation, after
+                Invitations.remove(newDocument._id);
+            }
+
         }
     });
 

@@ -61,12 +61,7 @@ Template['views_chats'].helpers({
                 if(!_.last(messageBlocks) ||
                    _.last(messageBlocks).from.identity !== item.from.identity) {
 
-                    item.messages = [{
-                        _id: item._id,
-                        topic: item.topic,
-                        message: item.message,
-                        edited: item.edited
-                    }];
+                    item.messages = [_.clone(item)];
 
                     delete item.message;
                     messageBlocks.push(item);
@@ -76,13 +71,10 @@ Template['views_chats'].helpers({
                 } else {
 
                     var messages = messageBlocks[messageBlocks.length-1].messages;
-                    messages.push({
-                        _id: item._id,
-                        // don't add a topic, if it stayed the same
-                        topic: (item.topic !== lastTopic) ? item.topic : null,
-                        message: item.message,
-                        edited: item.edited
-                    });
+                    var message = _.clone(item);
+                    item.topic = (item.topic !== lastTopic) ? item.topic : null;
+
+                    messages.push(message);
 
                     delete messageBlocks[messageBlocks.length-1].message;
                     messageBlocks[messageBlocks.length-1]._id = item._id; // keep one item id, to prevent rearrangement
@@ -147,17 +139,6 @@ Template['views_chats'].helpers({
         }
     },
     /**
-    Returns true, if the current message data context is from myself.
-    Means has my `from.identity`.
-
-    @method (isYou)
-    @param (from)
-    @return {Boolean}
-    */
-    'isYou': function(from){
-        return from && from.identity === Whisper.getIdentity().identity;
-    },
-    /**
     Gets the last stored topic.
 
     @method (myTopic)
@@ -165,17 +146,6 @@ Template['views_chats'].helpers({
     */
     'myTopic': function(){
         return amplify.store('whisper-last-topic');
-    },
-    /**
-    Check whether the iterated user is in your following list.
-
-    @method (inContacts)
-    @return {Boolean}
-    */
-    'inContacts': function(){
-        var user = User.findOne();
-        // console.log(user, this);
-        return (user && _.contains(user.following, this.from.identity));
     }
 });
 
@@ -250,7 +220,11 @@ Template['views_chats'].events({
         // IF KEYUP is pressed, EDIT the LAST MESSAGE
         if(e.keyCode === 38 && _.isEmpty(message)) {
             // get my last message
-            var lastEntry = Messages.findOne({_id: {$in: template.data.messages}, 'from.identity': Whisper.getIdentity().identity}, {sort: {timestamp: -1}});
+            var lastEntry = Messages.findOne({
+                _id: {$in: template.data.messages},
+                'from.identity': Whisper.getIdentity().identity,
+                type: {$ne: 'notification'
+            }}, {sort: {timestamp: -1}});
 
             template.find('input[name="topic"]').value = lastEntry.topic;
             e.currentTarget.value = lastEntry.message;

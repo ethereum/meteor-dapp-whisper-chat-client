@@ -14,6 +14,9 @@
                 "writeHere": "Write your message here",
                 "unnamedChat": "Unnamed chat"
             },
+            "notifications": {
+                "invitation": "invited __users__ into the chat."
+            },
             "texts": {
                 "home": "Click \"New chat\" to start a private or group chat.",
                 "addUserTitle": "Add users",

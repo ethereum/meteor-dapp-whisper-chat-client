@@ -182,6 +182,18 @@
         padding: @defaultPaddingVertical*0.5 @defaultPaddingHorizontal;
         border-bottom: 1px dotted @colorGray;
         
+        &.notification {
+            p {
+                i {
+                    position: relative;
+                    top: 1px;
+                    .opacity(0.1);
+                }
+
+                font-style: italic;
+            }
+        }
+
         &:last-child {
             border-bottom: none;
         }
@@ -209,14 +221,11 @@
 
 
     .whisper-user-info {
+        z-index: 2;
         position: absolute;
         left: @gridWidth/2;
-        // .flex(0 0 @gridWidth * 1.5);
     } 
 
-    .whisper-user-notification {
-        font-style: italic;
-    }
 
     code {
         font-size: 0.9em;
