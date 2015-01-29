@@ -88,16 +88,6 @@
     }
 }
 
-.whisper-chat-header {
-    font-size: 0.8em;
-
-    a i {
-        position: relative;
-        top: 2px;
-        .opacity(0.8);
-    }
-}
-
 .whisper-username {
     // text-transform: uppercase;
 }
@@ -169,18 +159,51 @@
 
     &.you {
         background-color: @colorGrayLight;
-    }
 
-    // show edit button only in hover
-    &:hover {
-        button.edit-message {
-            display: inline-block;
+        .whisper-chat-message:hover {
+            background-color: fadeout(@colorBlack, 98%);
         }
     }
-    button.edit-message {
-        display: none;
-        float: right;
+
+    .whisper-chat-header,
+    .whisper-chat-message-header {
+        font-size: 0.8em;
+
+        a i {
+            position: relative;
+            top: 2px;
+            .opacity(0.8);
+        }
     }
+    .whisper-chat-message {
+        position: relative;
+        margin-left: -@defaultPaddingHorizontal;
+        padding: @defaultPaddingVertical @defaultPaddingHorizontal;
+        margin-bottom: -2px;
+        padding-bottom: 2px;
+
+        // show edit button only in hover
+        &:hover {
+            button.edit-message {
+                display: inline-block;
+            }
+        }
+        button.edit-message {
+            display: none;
+        }
+
+        .whisper-chat-message-header {
+            position: absolute;
+            // float: right;
+            right: 4px;
+            top: 2px;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
 
     .whisper-user-info {
         position: absolute;

@@ -48,10 +48,10 @@
         {{/with}}
 
 
-        {{#each messages}}
+        {{#each groupedMessages}}
             {{#Animate}}
 
-            <div class="whisper-chat-item {{#if isYou}}you{{/if}} animate">
+            <div class="whisper-chat-item {{#if isYou from}}you{{/if}} animate">
                 <div class="whisper-user-info">
                     {{> elements_profileImage identity=from.identity class="dapp-small"}}
                 </div>
@@ -60,16 +60,23 @@
                         {{username from.identity}}
                         {{#if inContacts}}<i class="icon-book" title="{{i18n 'whisper.users.texts.youreFollowing'}}"></i>{{/if}}
                     </a>
-                    {{#if topic}}{{i18n 'commonWords.on'}} <button class="topic">{{topic}}</button>{{/if}} {{formatTime timestamp 'fromnow'}}
-                    {{#if edited}}
-                        <i class="icon-pencil" title="{{i18n 'whisper.chat.texts.edited'}} {{formatTime edited 'fromnow'}}"></i>
-                    {{/if}}
-                    {{#if isYou}}
-                        <button class="edit-message">{{i18n 'buttons.edit'}}</button>
-                    {{/if}}
+                    {{formatTime timestamp 'fromnow'}}
                 </div>
-                
-                {{#markdown}}{{{message}}}{{/markdown}}
+
+                {{#each messages}}
+                    <div class="whisper-chat-message">
+                        <div class="whisper-chat-message-header">
+                            {{#if isYou ../from}}
+                                <button class="edit-message">{{i18n 'buttons.edit'}}</button>
+                            {{/if}}
+                            {{#if topic}}{{i18n 'commonWords.on'}} <button class="topic">{{topic}}</button>{{/if}}
+                            {{#if edited}}
+                                <i class="icon-pencil" title="{{i18n 'whisper.chat.texts.edited'}} {{formatTime edited 'fromnow'}}"></i>
+                            {{/if}}
+                        </div>
+                        {{#markdown}}{{{message}}}{{/markdown}}
+                    </div>
+                {{/each}}
 
             </div>
             {{/Animate}}

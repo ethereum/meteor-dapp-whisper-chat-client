@@ -27,13 +27,74 @@ Template['views_chats'].rendered = function(){
 
 Template['views_chats'].helpers({
     /**
-    Get the messages for this chat
+    Get the messages for this chat, group them by user e.g.:
 
-    @method (messages)
+        {
+            _id: 'as2342',
+            from: {
+                identity: '0x4234..',
+                name: 'my name'
+            },
+            messages: [{
+                _id: '432334',
+                topic: 'my topic',
+                message: 'Hi!',
+                edited: some Date
+            },{
+                _id: 'as2342',
+                topic: null,
+                message: 'Whats up?'
+            }]
+        }
+
+    @method (groupedMessages)
     */
-    'messages': function(){
-        if(_.isArray(this.messages))
-            return Messages.find({_id: {$in: this.messages}}, {sort: {timestamp: -1, privateChat: 1}});
+    'groupedMessages': function(){
+        if(_.isArray(this.messages)) {
+            var messages = Messages.find({_id: {$in: this.messages}}, {sort: {timestamp: -1, privateChat: 1}}).fetch();
+
+            var messageBlocks = [],
+                lastTopic = null;
+            _.each(messages, function(item) {
+
+                // if identity changes, create a new "block"
+                if(!_.last(messageBlocks) ||
+                   _.last(messageBlocks).from.identity !== item.from.identity) {
+
+                    item.messages = [{
+                        _id: item._id,
+                        topic: item.topic,
+                        message: item.message,
+                        edited: item.edited
+                    }];
+
+                    delete item.message;
+                    messageBlocks.push(item);
+
+
+                // id the identity is the same, just a dd a new message to the messages array
+                } else {
+
+                    var messages = messageBlocks[messageBlocks.length-1].messages;
+                    messages.push({
+                        _id: item._id,
+                        // don't add a topic, if it stayed the same
+                        topic: (item.topic !== lastTopic) ? item.topic : null,
+                        message: item.message,
+                        edited: item.edited
+                    });
+
+                    delete messageBlocks[messageBlocks.length-1].message;
+                    messageBlocks[messageBlocks.length-1]._id = item._id; // keep one item id, to prevent rearrangement
+                    messageBlocks[messageBlocks.length-1].messages = messages;
+
+                }
+
+                lastTopic = item.topic;
+            });
+
+            return messageBlocks;
+        }
     },
     /**
     Super duper format message helper.
@@ -90,10 +151,11 @@ Template['views_chats'].helpers({
     Means has my `from.identity`.
 
     @method (isYou)
+    @param (from)
     @return {Boolean}
     */
-    'isYou': function(){
-        return this.from.identity === Whisper.getIdentity().identity;
+    'isYou': function(from){
+        return from && from.identity === Whisper.getIdentity().identity;
     },
     /**
     Gets the last stored topic.
