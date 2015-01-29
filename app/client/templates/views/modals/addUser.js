@@ -105,12 +105,13 @@ Template['view_modals_addUser'].events({
         // invite users
         if(!_.isEmpty(invitedUsers)) {
 
-            // SINGLE CHAT
+            // PRIVATE CHAT
             if(invitedUsers.length === 1 &&
                Router.current().route.getName() === 'createChat') {
+                
                 // remove current chat
-                if(_.isEmpty(this.messages))
-                    Chats.remove(this._id);
+                if(_.isEmpty(template.data.messages))
+                    Chats.remove(template.data._id);
 
                 // create new private one and go there
                 Router.go('chat', {sessionKey: invitedUsers[0]});
@@ -122,17 +123,25 @@ Template['view_modals_addUser'].events({
                 // check if currently in a private chat, if so generate a new one
 
                 // send invite messages
-                _.each(invitedUsers, function(item){
+                _.each(invitedUsers, function(user){
 
                     Invitations.insert({
                         type: 'invite',
-                        chat: this._id,
+                        chat: template.data._id,
                         timestamp: new Date(),
                         from: {
                             identity: Whisper.getIdentity().identity,
                             name: Whisper.getIdentity().name
                         },
-                        to: item
+                        to: user,
+                        // the list of users
+                        data: _.map(invitedUsers, function(item) {
+                            var user = Users.findOne(item);
+                            return {
+                                identity: user.identity,
+                                name: user.name
+                            };
+                        })
                     });
                 });
 
@@ -140,35 +149,40 @@ Template['view_modals_addUser'].events({
                 messageId = Messages.insert({
                     type: 'notification',
                     message: 'invitation',
-                    chat: this._id,
+                    chat: template.data._id,
                     timestamp: new Date(),
                     from: {
                         identity: Whisper.getIdentity().identity,
                         name: Whisper.getIdentity().name
                     },
+                    // the list of users
                     data: _.map(invitedUsers, function(item) {
                         var user = Users.findOne(item);
                         return {
                             identity: user.identity,
                             name: user.name
-                        }
+                        };
                     })
                 });
+
                 // add the entry to the chats message list
                 Chats.update(template.data._id, {
                     $addToSet: {messages: messageId},
-                    $set: {lastActivity: new Date()}
+                    $set: {
+                        lastActivity: new Date(),
+                        users: invitedUsers
+                    }
                 });
 
 
                 // redirect
-                Router.go('chat', {sessionKey: this._id});
+                Router.go('chat', {sessionKey: template.data._id});
             }
 
 
         // if nobody was explicityly invited, just redirect
         } else {
-            Router.go('chat', {sessionKey: this._id});
+            Router.go('chat', {sessionKey: template.data._id});
         }
 
     }

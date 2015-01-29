@@ -169,6 +169,21 @@ Router.route('/chat/:sessionKey', function () {
                 users: [this.params.sessionKey]
             });
 
+
+            // SEND PRIVATE MESSAGE INVITATION
+            Invitations.insert({
+                type: 'invite',
+                chat: this.params.sessionKey,
+                timestamp: new Date(),
+                from: {
+                    identity: Whisper.getIdentity().identity,
+                    name: Whisper.getIdentity().name
+                },
+                privateChat: this.params.sessionKey,
+                to: this.params.sessionKey
+            });
+
+
         // ADD new group CHAT
         } else {
 

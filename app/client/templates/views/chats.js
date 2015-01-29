@@ -272,6 +272,7 @@ Template['views_chats'].events({
 
                 messageId = Messages.insert({
                     type: 'message',
+                    sending: true, // needed to send them, will be removed after
                     chat: template.data._id,
                     timestamp: new Date(),
                     topic: selectedTopic,
@@ -281,6 +282,7 @@ Template['views_chats'].events({
                         name: Whisper.getIdentity().name
                     },
                     message: message,
+                    privateChat: template.data.privateChat
                 });
                 // add the entry to the chats entry list
                 Chats.update(template.data._id, {

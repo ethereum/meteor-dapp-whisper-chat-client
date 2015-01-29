@@ -87,10 +87,18 @@
         .dapp-shorten-text;
         line-height: 1.2em;
     }
+    .whisper-identity-string {
+        word-wrap: break-word;
+        margin: 0 20px;
+        .opacity(0.5);
+    }
 }
 
 .whisper-username {
     // text-transform: uppercase;
+}
+.whisper-unauthenticated {
+    font-style: italic;
 }
 
 
@@ -178,6 +186,7 @@
     }
     .whisper-chat-message {
         position: relative;
+        max-width: 600px;
         margin-left: -@defaultPaddingHorizontal;
         padding: @defaultPaddingVertical*0.5 @defaultPaddingHorizontal;
         border-bottom: 1px dotted @colorGray;

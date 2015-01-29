@@ -62,7 +62,7 @@ Template['views_chats_item'].helpers({
     @return {String}
     */
     'notificationType': function() {
-        console.log(this);
+
         if(this.message === 'invitation') {
 
             return TAPi18n.__('whisper.chat.notifications.'+ this.message, {

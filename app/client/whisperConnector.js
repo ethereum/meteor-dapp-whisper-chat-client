@@ -4,10 +4,12 @@ Template Controllers
 @module WhisperConnection
 */
 
-
 Meteor.startup(function(){
     var appName = web3.fromAscii('whisper-chat-client'),
         user = User.findOne();
+
+
+    // CREATE IDENTITY ---------------------------------------------------------------------
 
     // if NO USER exists, CREATE a NEW ONE
     if(!user) {
@@ -75,7 +77,7 @@ Meteor.startup(function(){
 
 
 
-    // START observing for changes
+    // COMMUNICATE with WHISPER ---------------------------------------------------------------------
     
 
     // TEST encryption watcher
@@ -87,37 +89,35 @@ Meteor.startup(function(){
 
 
     // WATCH for personal messages
-    web3.shh.watch({
-        "topic": [ appName, Whisper.getIdentity().identity ],
-        "to": Whisper.getIdentity().identity
-
     /**
     When a personal message arrives. Create a new private chat.
         
     @method personalMessageArrived
     */
+    web3.shh.watch({
+        "topic": [ appName, Whisper.getIdentity().identity ],
+        "to": Whisper.getIdentity().identity
     }).arrived(function(message){
 
         // if i got a message, create a new chat, if none exists already
-        // console.log('Personal message', message, web3.toAscii(message.payload));
+        console.log('Personal message', message);
 
         // Makes sure it comes from somebody and is ment for me, and doesn't already exists
-        if(!Chats.findOne(message.from) &&
-           !_.isEmpty(web3.toAscii(message.from)) &&
-           message.to === Whisper.getIdentity().identity) {
+        if(message.to === Whisper.getIdentity().identity) {
 
             var payload = {};
 
             try {
                 payload = EJSON.parse(web3.toAscii(message.payload));
 
-            // build anonymous message
             } catch(error) {
+                return;
             }
 
             // add anonymous (user without username)
             if(!payload.from)
                 payload.from = {};
+
 
             // add to the users collection
             Users.upsert(message.from, {
@@ -126,16 +126,50 @@ Meteor.startup(function(){
                 name: payload.from.name
             });
 
-            // add privat chat, if its not already existing
-            Chats.insert({
-                _id: message.from,
-                name: null,
-                lastActivity: new Date(),
-                messages: [],
-                privateChat: message.from,
-                users: [message.from]
-            });
+            var chatId = payload.privateChat ? message.from : payload.chat;
 
+            console.log(payload);
+
+            // IF INVITE add group or private chat
+            if(chatId && 
+               (payload.type === 'invite' || payload.type === 'message') &&
+               !Chats.findOne(chatId) && 
+               (!_.isEmpty(web3.toAscii(message.from)) || !payload.privateChat)) {
+
+                var users = [message.from];
+
+                // add the identities of the users invited
+                if(!payload.privateChat && _.isArray(payload.data)) {
+                    _.each(payload.data, function(item) {
+                        
+                        users.push(item.identity);
+
+                        Users.upsert(item.identity, {
+                            _id: item.identity,
+                            identity: item.identity,
+                            name: item.name
+                        });
+                    });
+                }
+
+                // remove myself from the users list
+                users = _.without(users, message.to);
+
+                // add invited chat, if its not already existing
+                Chats.insert({
+                    _id: chatId,
+                    name: null,
+                    lastActivity: new Date(),
+                    messages: [],
+                    users: users,
+                    privateChat: (payload.privateChat) ? message.from : undefined,
+                    invitation: true
+                });
+
+                // SOUND
+                $('#sound-invite')[0].play();
+
+            }
         }
     });
 
@@ -185,16 +219,13 @@ Meteor.startup(function(){
             // set a "to", if its a PRIVATE CHAT (means its ID is a user identity)
             if(newDocument.privateChat) {
                 chatOptions.to = Whisper.getIdentity().identity; // use the current identity to decrypt
-                // chatOptions.from = newDocument.privateChat
+                chatOptions.from = newDocument.privateChat
             }
 
             // start watching
             watchers[newDocument._id] = web3.shh.watch(chatOptions);
 
-            // TODO: GET EXISITNG MESSAGES??
-            // watchers[newDocument._id].messages();
-
-
+ 
             // IF a MESSAGE ARRIVED
             watchers[newDocument._id].arrived(function(message){
                 var payload = {};
@@ -232,9 +263,10 @@ Meteor.startup(function(){
 
                 // DONT add/edit messages, if its from myself, or is from another chat
                 if(payload.from.identity !== Whisper.getIdentity().identity && //  TODO: later change to message.from
-                   payload.chat === newDocument._id) { 
+                   payload.chat === newDocument._id &&
+                   Chats.findOne(newDocument._id)) { 
                     
-                    console.log('Chat message', message.from);
+                    console.log('Chat message');
                     console.log(message, payload);
 
                     // INSERT IF its a NEW MESSAGE or NOTIFICATIONs
@@ -280,8 +312,8 @@ Meteor.startup(function(){
                             });
                         }
 
-                        var beep = new Audio('/sounds/bloop.mp3');
-                        beep.play();
+                        // SOUND
+                        $('#sound-message')[0].play();
 
 
                     // EDIT if existing message
@@ -301,6 +333,10 @@ Meteor.startup(function(){
 
                 }
             });
+
+
+            // TODO: TRIGGER to get still floating messages
+            // watchers[newDocument._id].trigger();
         },
         /**
         Checks if a chat was removed, if so it will stop watching for messages for that chat.
@@ -311,7 +347,9 @@ Meteor.startup(function(){
 
             // stop watching on that chat
             if(watchers[oldDocument._id]) {
-                watchers[oldDocument._id].uninstall();
+                // TODO?: uninstall watchers private watchers (will remove also personal watcher)
+                if(!oldDocument.privateChat)
+                    watchers[oldDocument._id].uninstall();
                 delete watchers[oldDocument._id];
             }
         },
@@ -377,7 +415,7 @@ Meteor.startup(function(){
             // if a chat for that entry was found, propagate it to the whisper network
             // But only send messages, which come from myself, otherwise i would re-send received messages!
             if(chat &&
-               newDocument.type && // check for type, as existing messages, don't have any
+               newDocument.sending &&
                newDocument.from.identity === Whisper.getIdentity().identity) {
                 
                 // change _id to id
@@ -400,10 +438,14 @@ Meteor.startup(function(){
                 if(chat.privateChat)
                     message.to = chat.privateChat;
 
-                // console.log('Send message', newDocument.message, message);
+                console.log('Send message', newDocument);
 
                 // SEND
                 web3.shh.post(message);
+
+
+                // remove the send, after storing
+                Messages.update(newDocument.id, {$unset: {sending: ''}});
             }
 
         },
@@ -446,6 +488,8 @@ Meteor.startup(function(){
                 if(chat.privateChat)
                     message.to = chat.privateChat;
 
+                console.log('Edited message', newDocument);
+
                 // SEND
                 web3.shh.post(message);
 
@@ -470,14 +514,23 @@ Meteor.startup(function(){
         The whisper invitation paylod should look like this:
 
             {
-                type: 'invitation',
+                type: 'invite',
                 chat: '234sdfasdasd',
                 timestamp: new Date(),
                 from: {
                     identity: Whisper.getIdentity().identity,
                     name: Whisper.getIdentity().name
                 },
-                to: '0x34556456..'
+                to: '0x34556456..',
+                // the users invited
+                data: [{
+                    identity: '0x345345345..',
+                    name: 'user x'
+                },
+                {
+                    identity: '0x67554345..',
+                    name: 'user y'
+                }]
             }
 
         @method added
@@ -488,21 +541,22 @@ Meteor.startup(function(){
             // if a chat for that entry was found, propagate it to the whisper network
             // But only send messages, which come from myself, otherwise i would re-send received messages!
             if(chat &&
-               newDocument.type === 'invitationNotification' &&
+               newDocument.type === 'invite' &&
                newDocument.from.identity === Whisper.getIdentity().identity) {
 
                 var message = {
                     "from": Whisper.getIdentity().identity,
+                    "to": newDocument.to,
                     "topic": [
                         appName,
-                        web3.fromAscii(newDocument.chat)
+                        newDocument.to
                     ],
                     "payload": web3.fromAscii(EJSON.stringify(newDocument)),
                     "ttl": 100,
                     "priority": 1000
                 };
-
-                // console.log('Send message', newDocument.message, message);
+                
+                console.log('Send invite', newDocument);
 
                 // SEND
                 web3.shh.post(message);
