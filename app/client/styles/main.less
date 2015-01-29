@@ -36,10 +36,11 @@
 // style the content of the dapp-content-header
 .dapp-content-header {
 
-   .transition(opacity @animationSpeed*2);
+    // ANIMATION
+    .transition(opacity @animationSpeed*2);
     &.animate {
-       .opacity(0);
-   }
+        .opacity(0);
+    }
 
     .whisper-user-chat-header {
         float: left;
@@ -179,9 +180,7 @@
         position: relative;
         margin-left: -@defaultPaddingHorizontal;
         padding: @defaultPaddingVertical*0.5 @defaultPaddingHorizontal;
-        margin-bottom: -2px;
-        padding-bottom: @defaultPaddingVertical*0.5;
-        border-bottom: 1px dotted fade(@colorGray, 50%);
+        border-bottom: 1px dotted @colorGray;
         
         &:last-child {
             border-bottom: none;

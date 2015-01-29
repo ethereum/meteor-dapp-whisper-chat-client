@@ -49,43 +49,45 @@
 
 
         {{#each groupedMessages}}
-            {{#Animate}}
-
-            <div class="whisper-chat-item {{#if isYou from}}you{{/if}} animate">
-                <div class="whisper-user-info">
-                    {{> elements_profileImage identity=from.identity class="dapp-small"}}
-                </div>
-                <div class="whisper-chat-header">
-                    <a href="{{pathFor route='userProfile' userId=from.identity}}" class="whisper-username">
-                        {{username from.identity}}
-                        {{#if inContacts}}<i class="icon-book" title="{{i18n 'whisper.users.texts.youreFollowing'}}"></i>{{/if}}
-                    </a>
-                    {{formatTime timestamp 'fromnow'}}
-                </div>
-
-                {{#each messages}}
-                    <div class="whisper-chat-message">
-                        <div class="whisper-chat-message-header">
-                            {{#if isYou ../from}}
-                                <button class="edit-message">{{i18n 'buttons.edit'}}</button>
-                            {{/if}}
-                            {{#if topic}}{{i18n 'commonWords.on'}} <button class="topic">{{topic}}</button>{{/if}}
-                            {{#if edited}}
-                                <i class="icon-pencil" title="{{i18n 'whisper.chat.texts.edited'}} {{formatTime edited 'fromnow'}}"></i>
-                            {{/if}}
-                        </div>
-                        {{#markdown}}{{{message}}}{{/markdown}}
-                    </div>
-                {{/each}}
-
-            </div>
-            {{/Animate}}
+            {{> views_chats_item}}
 
         {{else}}
             <p>{{i18n 'whisper.chat.texts.noChats'}}</p>
         {{/each}}
 
     </main>
+</template>
+
+
+<template name="views_chats_item">
+    <div class="whisper-chat-item {{#if isYou from}}you{{/if}} animate">
+        <div class="whisper-user-info">
+            {{> elements_profileImage identity=from.identity class="dapp-small"}}
+        </div>
+        <div class="whisper-chat-header">
+            <a href="{{pathFor route='userProfile' userId=from.identity}}" class="whisper-username">
+                {{username from.identity}}
+                {{#if inContacts}}<i class="icon-book" title="{{i18n 'whisper.users.texts.youreFollowing'}}"></i>{{/if}}
+            </a>
+            {{formatTime timestamp 'fromnow'}}
+        </div>
+
+        {{#each messages}}
+            <div class="whisper-chat-message">
+                <div class="whisper-chat-message-header">
+                    {{#if isYou ../from}}
+                        <button class="edit-message">{{i18n 'buttons.edit'}}</button>
+                    {{/if}}
+                    {{#if topic}}{{i18n 'commonWords.on'}} <button class="topic">{{topic}}</button>{{/if}}
+                    {{#if edited}}
+                        <i class="icon-pencil" title="{{i18n 'whisper.chat.texts.edited'}} {{formatTime edited 'fromnow'}}"></i>
+                    {{/if}}
+                </div>
+                {{#markdown}}{{{message}}}{{/markdown}}
+            </div>
+        {{/each}}
+
+    </div>
 </template>
 
 
