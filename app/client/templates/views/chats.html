@@ -1,7 +1,7 @@
 <template name="views_chats_aside">
     <nav>
         <ul>
-            <li><button class="add-chat dapp-main-button">{{i18n 'whisper.app.buttons.newChat'}} <i class="icon-pencil"></i></button></li>
+            <li><button class="add-chat dapp-main-button">{{i18n 'whisper.app.buttons.newChat'}} <i class="icon-chat"></i></button></li>
             <!-- <li class="{{isActivePath regex='public$'}}">
                 <a href="{{pathFor route='chat' sessionKey='public'}}">{{i18n 'whisper.chat.texts.publicChat'}}</a>
             </li> -->
@@ -10,7 +10,10 @@
                     <a href="{{pathFor route='chat' sessionKey=_id}}" title="{{generatedName}}">
                         {{#if privateChat}}
                             <i class="icon-lock"></i>
+                        {{else}}
+                            <i class="icon-users"></i>
                         {{/if}}
+
                         <!-- the span is in here to make multiline text ellipsis possible -->
                         <span>
                             {{#if name}}

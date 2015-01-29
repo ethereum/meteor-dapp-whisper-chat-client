@@ -100,7 +100,7 @@ Meteor.startup(function(){
     }).arrived(function(message){
 
         // if i got a message, create a new chat, if none exists already
-        console.log('Personal message', message);
+        // console.log('Personal message', message);
 
         // Makes sure it comes from somebody and is ment for me, and doesn't already exists
         if(message.to === Whisper.getIdentity().identity) {
@@ -128,7 +128,6 @@ Meteor.startup(function(){
 
             var chatId = payload.privateChat ? message.from : payload.chat;
 
-            console.log(payload);
 
             // IF INVITE add group or private chat
             if(chatId && 
@@ -137,6 +136,8 @@ Meteor.startup(function(){
                (!_.isEmpty(web3.toAscii(message.from)) || !payload.privateChat)) {
 
                 var users = [message.from];
+
+            console.log('INVITED');
 
                 // add the identities of the users invited
                 if(!payload.privateChat && _.isArray(payload.data)) {
@@ -265,9 +266,9 @@ Meteor.startup(function(){
                 if(payload.from.identity !== Whisper.getIdentity().identity && //  TODO: later change to message.from
                    payload.chat === newDocument._id &&
                    Chats.findOne(newDocument._id)) { 
-                    
-                    console.log('Chat message');
-                    console.log(message, payload);
+
+                    // console.log('Chat message');
+                    // console.log(message, payload);
 
                     // INSERT IF its a NEW MESSAGE or NOTIFICATIONs
                     if((payload.type === 'message' ||
@@ -275,7 +276,6 @@ Meteor.startup(function(){
                         !payload.type) &&
                        !Messages.findOne(payload.id)) {
 
-                        // FILTER
                         // cut to long messages and username
                         if(payload.message)
                             payload.message = payload.message.substr(0, 50000);
@@ -336,7 +336,7 @@ Meteor.startup(function(){
 
 
             // TODO: TRIGGER to get still floating messages
-            // watchers[newDocument._id].trigger();
+            watchers[newDocument._id].messages();
         },
         /**
         Checks if a chat was removed, if so it will stop watching for messages for that chat.
@@ -440,16 +440,20 @@ Meteor.startup(function(){
 
                 console.log('Send message', newDocument);
 
-                // SEND
-                web3.shh.post(message);
+                try {
+                    // SEND
+                    web3.shh.post(message);
+
+                    // remove the send, after storing
+                    Messages.update(newDocument.id, {$unset: {sending: ''}});
+
+                } catch(error) {
+                    Whisper.showIdentityErrorModal();
+                }
 
 
-                // remove the send, after storing
-                Messages.update(newDocument.id, {$unset: {sending: ''}});
             }
 
-        },
-        removed: function(oldDocument) {
         },
         /**
         Sends an edit for an message, which will patch the message on the receiver side.
@@ -490,8 +494,15 @@ Meteor.startup(function(){
 
                 console.log('Edited message', newDocument);
 
-                // SEND
-                web3.shh.post(message);
+
+                try {
+
+                    // SEND
+                    web3.shh.post(message);
+
+                } catch(error) {
+                    Whisper.showIdentityErrorModal();
+                }
 
                 // remove the type, after storing
                 Messages.update(newDocument.id, {$unset: {type: ''}});
@@ -558,8 +569,15 @@ Meteor.startup(function(){
                 
                 console.log('Send invite', newDocument);
 
-                // SEND
-                web3.shh.post(message);
+
+                try {
+
+                    // SEND
+                    web3.shh.post(message);
+
+                } catch(error) {
+                    Whisper.showIdentityErrorModal();
+                }
 
                 // remove the invitation, after
                 Invitations.remove(newDocument._id);
