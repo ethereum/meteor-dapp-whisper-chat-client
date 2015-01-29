@@ -33,14 +33,25 @@
 @colorMainBackgroundDark: #064A80;
 
 
+// add the invitation state
 .dapp-aside {
     nav {
-        a {
-            i.invited {
-                position: absolute;
-                top: 4px;
-                left: 4px;
-                font-size: 0.6em;
+        li.invitation {
+
+            + li a {
+                border-color: transparent; 
+            }
+
+            a {
+                background-color: fadeout(#fff, 60%);
+                border-color: transparent; 
+
+                i.invited {
+                    position: absolute;
+                    top: 4px;
+                    left: 4px;
+                    font-size: 0.6em;
+                }
             }
         }
     }

@@ -185,8 +185,9 @@ body:hover .dapp-grid {
                     padding-left: @gridWidth / 3;
                     overflow: hidden;
                     border-top: @colorMainBackgroundDark solid 1px;
-                    color: @colorWhite;
+                    .border-radius(3px 0 0 3px);
                     .box-sizing(border-box); // align button and links properties
+                    color: @colorWhite;
 
 
                     // .dapp-shorten-text;
@@ -232,7 +233,6 @@ body:hover .dapp-grid {
                 &.active a {
                     background: #FFF;
                     border-top: none;        
-                    .border-radius(3px 0 0 3px);
                     color: @colorMainBackgroundDark; 
                     font-weight: 500;       
                 }

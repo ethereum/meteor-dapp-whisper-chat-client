@@ -6,7 +6,7 @@
                 <a href="{{pathFor route='chat' sessionKey='public'}}">{{i18n 'whisper.chat.texts.publicChat'}}</a>
             </li> -->
             {{#each chats}}
-                <li class="{{isActivePath regex=_id}}">
+                <li class="{{isActivePath regex=_id}} {{#if invitation}}invitation{{/if}}">
                     <a href="{{pathFor route='chat' sessionKey=_id}}" title="{{generatedName}}">
                         {{#if privateChat}}
                             <i class="icon-lock"></i>
