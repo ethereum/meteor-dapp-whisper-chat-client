@@ -178,10 +178,14 @@
     .whisper-chat-message {
         position: relative;
         margin-left: -@defaultPaddingHorizontal;
-        padding: @defaultPaddingVertical @defaultPaddingHorizontal;
+        padding: @defaultPaddingVertical*0.5 @defaultPaddingHorizontal;
         margin-bottom: -2px;
-        padding-bottom: 2px;
-
+        padding-bottom: @defaultPaddingVertical*0.5;
+        border-bottom: 1px dotted fade(@colorGray, 50%);
+        
+        &:last-child {
+            border-bottom: none;
+        }
         // show edit button only in hover
         &:hover {
             button.edit-message {
