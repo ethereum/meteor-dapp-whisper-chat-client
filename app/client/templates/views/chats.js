@@ -72,7 +72,7 @@ Template['views_chats'].helpers({
 
                     var messages = messageBlocks[messageBlocks.length-1].messages;
                     var message = _.clone(item);
-                    item.topic = (item.topic !== lastTopic) ? item.topic : null;
+                    message.topic = (item.topic !== lastTopic) ? item.topic : null;
 
                     messages.push(message);
 
