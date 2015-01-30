@@ -40,6 +40,32 @@ Whisper.getIdentity = function(){
 
 
 /**
+Inserts a message to the message colleciton and adds itself to the parent chat.
+
+@method addMessage
+@return {Boolean}
+*/
+Whisper.addMessage = function(chatId, doc) {
+
+    // set the parent chat id if not given
+    doc.chat = doc.chat || chatId;
+
+    if(Chats.findOne(chatId)) {
+        messageId = Messages.insert(doc);
+
+        // add the entry to the chats entry list
+        Chats.update(chatId, {
+            $addToSet: {messages: messageId},
+            $set: {lastActivity: new Date()}
+        });
+        
+        return true;
+    } else
+        return false;
+};
+
+
+/**
 Shows a modal, saying that the identity couldn't be retrieved.
 
 @method showIdentityErrorModal

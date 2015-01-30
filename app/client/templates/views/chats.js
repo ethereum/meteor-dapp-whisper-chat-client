@@ -161,11 +161,11 @@ Template['views_chats'].events({
         var selectedTopic = $(e.currentTarget).text();
         template.find('input[name="topic"]').value = selectedTopic;
 
-        // set as the last topic, to survive reload
-        amplify.store('whisper-last-topic', selectedTopic);
-
         // focus the textarea
         template.$('textarea[name="write-message"]').focus();
+
+        // trigger blur to send notification and store in localstorage
+        template.$('input[name="topic"]').trigger('blur');
     },
     /**
     Edit the current message
@@ -180,6 +180,33 @@ Template['views_chats'].events({
 
         // focus the textarea
         template.$('textarea[name="write-message"]').focus();
+    },
+    /**
+    Send the changed topic notification
+
+    @event blur input[name="topic"]
+    */
+    'blur input[name="topic"]': function(e, template){
+        if(e.currentTarget.value !== amplify.store('whisper-last-topic')) {
+            // SEND the INVITATION NOTIFICATION
+            Whisper.addMessage(template.data._id,{
+                type: 'notification',
+                sending: true,
+                message: 'topicChanged',
+                chat: template.data._id,
+                timestamp: new Date(),
+                from: {
+                    identity: Whisper.getIdentity().identity,
+                    name: Whisper.getIdentity().name
+                },
+                // the new topic name
+                data: e.currentTarget.value
+            });
+
+            // store the new topic
+            amplify.store('whisper-last-topic', e.currentTarget.value);
+        }
+
     },
     /**
     Prevent ENTER in the text area, if no shift is pressed
@@ -248,10 +275,6 @@ Template['views_chats'].events({
         if(e.keyCode === 13 && !e.shiftKey && !_.isEmpty(message)) {
             e.preventDefault();
 
-            // set as the last topic, to survive reload
-            amplify.store('whisper-last-topic', selectedTopic);
-
-
             // EDIT current message
             if(TemplateVar.get('editMessage')) {
                 messageId = Messages.update(TemplateVar.get('editMessage'), {$set: {
@@ -270,10 +293,9 @@ Template['views_chats'].events({
             // INSERT new message
             } else {
 
-                messageId = Messages.insert({
+                if(Whisper.addMessage(template.data._id, {
                     type: 'message',
                     sending: true, // needed to send them, will be removed after
-                    chat: template.data._id,
                     timestamp: new Date(),
                     topic: selectedTopic,
                     // unread: true,
@@ -283,27 +305,24 @@ Template['views_chats'].events({
                     },
                     message: message,
                     privateChat: template.data.privateChat
-                });
-                // add the entry to the chats entry list
-                Chats.update(template.data._id, {
-                    $addToSet: {messages: messageId},
-                    $set: {lastActivity: new Date()}
-                });
+                })) {
+
+                    // ANIMATION
+                    Meteor.setTimeout(function(){
+                        $(".dapp-content-header").addClass("animate").hide();
+                    }, 100);
+                    Meteor.setTimeout(function(){
+                        $(".dapp-content-header").show();
+                    }, 200);                
+                    Meteor.setTimeout(function(){
+                        $(".dapp-content-header")
+                            .removeClass("animate")
+                            .find("textarea")
+                            .focus();
+                    }, 400);
+                }
 
 
-                // ANIMATION
-                Meteor.setTimeout(function(){
-                    $(".dapp-content-header").addClass("animate").hide();
-                }, 100);
-                Meteor.setTimeout(function(){
-                    $(".dapp-content-header").show();
-                }, 200);                
-                Meteor.setTimeout(function(){
-                    $(".dapp-content-header")
-                        .removeClass("animate")
-                        .find("textarea")
-                        .focus();
-                }, 400);
 
             }
 

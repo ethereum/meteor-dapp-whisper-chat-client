@@ -146,10 +146,10 @@ Template['view_modals_addUser'].events({
                 });
 
                 // SEND the INVITATION NOTIFICATION
-                messageId = Messages.insert({
+                if(Whisper.addMessage(template.data._id, {
                     type: 'notification',
+                    sending: true,
                     message: 'invitation',
-                    chat: template.data._id,
                     timestamp: new Date(),
                     from: {
                         identity: Whisper.getIdentity().identity,
@@ -163,16 +163,13 @@ Template['view_modals_addUser'].events({
                             name: user.name
                         };
                     })
-                });
+                })) {
 
-                // add the entry to the chats message list
-                Chats.update(template.data._id, {
-                    $addToSet: {messages: messageId},
-                    $set: {
-                        lastActivity: new Date(),
-                        users: invitedUsers
-                    }
-                });
+                    // add the invited users to the chat as well
+                    Chats.update(template.data._id, {
+                        $set: {users: invitedUsers}
+                    });
+                }
 
 
                 // redirect

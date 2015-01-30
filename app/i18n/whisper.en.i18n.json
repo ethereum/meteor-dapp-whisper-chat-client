@@ -15,7 +15,9 @@
                 "unnamedChat": "Unnamed chat"
             },
             "notifications": {
-                "invitation": "invited __users__ into the chat."
+                "invitation": "invited __users__ into the chat.",
+                "topicChanged": "changed topic to __topic__.",
+                "topicChangedEmpty": "has no topic anymore."
             },
             "texts": {
                 "home": "Click \"New chat\" to start a private or group chat.",

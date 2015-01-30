@@ -63,6 +63,7 @@ Template['views_chats_item'].helpers({
     */
     'notificationType': function() {
 
+        // INVIATIONs
         if(this.message === 'invitation') {
 
             return TAPi18n.__('whisper.chat.notifications.'+ this.message, {
@@ -75,9 +76,21 @@ Template['views_chats_item'].helpers({
                     });
 
                     // return the notification text
-                    return '<a href="'+ Router.path('userProfile', {userId: item.identity}) +'">'+ item.name +'</a>';
+                    return '<a href="'+ Router.path('userProfile', {userId: item.identity}) +'">'+ _.stripTags(item.name) +'</a>';
                 }).join(', ')
             });
+        }
+
+        // TOPIC CHANGED
+        if(this.message === 'topicChanged') {
+
+            if(!_.isEmpty(this.data)) {
+                return TAPi18n.__('whisper.chat.notifications.'+ this.message, {
+                    topic: '<button class="topic">'+ _.stripTags(this.data) + '</button>'
+                });
+            } else {
+                return TAPi18n.__('whisper.chat.notifications.'+ this.message +'Empty');
+            }
         }
     }
 });

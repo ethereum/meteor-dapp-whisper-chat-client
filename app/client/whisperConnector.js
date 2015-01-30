@@ -282,8 +282,9 @@ Meteor.startup(function(){
                         if(payload.from.name)
                             payload.from.name = payload.from.name.substr(0, 100);
 
+
                         // if the chat got a message, store it as entry
-                        var messageId = Messages.insert({
+                        if(Whisper.addMessage(newDocument._id, {
                             _id: payload.id, // use the same id, as your opponen has, so we can prevent duplicates
                             type: payload.type,
                             chat: payload.chat,
@@ -293,15 +294,16 @@ Meteor.startup(function(){
                             from: payload.from,
                             message: payload.message,
                             data: payload.data
-                        });
+                        })) {
 
-                        // add the entry to the chats entry list
-                        Chats.update(newDocument._id, {
-                            $addToSet: {
-                                messages: messageId,
-                                users: payload.from.identity
-                            }
-                        });
+                            // add the entry to the chats entry list
+                            Chats.update(newDocument._id, {
+                                $addToSet: {
+                                    users: payload.from.identity
+                                }
+                            });
+                        }
+
 
                         // -> Add/UPDATE the current messages USER
                         if(!_.isEmpty(web3.toAscii(payload.from.identity))) {
