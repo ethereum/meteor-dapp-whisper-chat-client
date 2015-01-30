@@ -240,7 +240,7 @@ Template['views_chats'].events({
 
 
         var message = _.trim(e.currentTarget.value, "\n "),
-            messageId = null,
+            send = false,
             selectedTopic = template.find('input[name="topic"]').value;
 
 
@@ -277,7 +277,7 @@ Template['views_chats'].events({
 
             // EDIT current message
             if(TemplateVar.get('editMessage')) {
-                messageId = Messages.update(TemplateVar.get('editMessage'), {$set: {
+                send = Messages.update(TemplateVar.get('editMessage'), {$set: {
                         type: 'edit',
                         chat: template.data._id,
                         topic: selectedTopic,
@@ -293,7 +293,7 @@ Template['views_chats'].events({
             // INSERT new message
             } else {
 
-                if(Whisper.addMessage(template.data._id, {
+                send = Whisper.addMessage(template.data._id, {
                     type: 'message',
                     sending: true, // needed to send them, will be removed after
                     timestamp: new Date(),
@@ -305,7 +305,10 @@ Template['views_chats'].events({
                     },
                     message: message,
                     privateChat: template.data.privateChat
-                })) {
+                });
+
+                if(send) {
+
 
                     // ANIMATION
                     Meteor.setTimeout(function(){
@@ -328,7 +331,7 @@ Template['views_chats'].events({
 
 
             // clear text field
-            if(messageId) {
+            if(send) {
                 e.currentTarget.value = '';
                 $(e.currentTarget).css('height', '');
             }
