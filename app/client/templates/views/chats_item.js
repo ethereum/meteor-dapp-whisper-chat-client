@@ -43,7 +43,10 @@ Template['views_chats_item'].helpers({
     @return {Boolean}
     */
     'canEdit': function(from){
-        return (from && from.identity === Whisper.getIdentity().identity && this.type !== 'notification');
+        return (from &&
+                from.identity === Whisper.getIdentity().identity &&
+                this.type !== 'notification' &&
+                moment(this.timestamp).unix() > moment().subtract(1, 'hour').unix());
     },
     /**
     Check whether the iterated user is in your following list.

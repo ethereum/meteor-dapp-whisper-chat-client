@@ -269,10 +269,15 @@ Template['views_chats'].events({
                 type: {$ne: 'notification'
             }}, {sort: {timestamp: -1}});
 
-            template.find('input[name="topic"]').value = lastEntry.topic;
-            e.currentTarget.value = lastEntry.message;
+            // only allow if the last message is not older than 1 hour
+            if(moment(lastEntry.timestamp).unix() > moment().subtract(1, 'hour').unix()) {
 
-            TemplateVar.set('editMessage', lastEntry._id);
+                template.find('input[name="topic"]').value = lastEntry.topic;
+                e.currentTarget.value = lastEntry.message;
+
+                TemplateVar.set('editMessage', lastEntry._id);
+            }
+
         }
 
         // IF ESC, clear the form, and cancel the edit message

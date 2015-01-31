@@ -319,17 +319,21 @@ Meteor.startup(function(){
 
                     // EDIT if existing message
                     // should exist already
-                    } else if(payload.type === 'edit' &&
-                              Messages.findOne(payload.id)) {
+                    // and should not be older than 1 hour
+                    } else if(payload.type === 'edit') {
 
-                        Messages.update(payload.id, {
-                            $set: {
-                                topic: payload.topic,
-                                message: payload.message,
-                                edited: moment.unix(payload.edited).toDate()
-                            }
-                        });
+                        var oldMessage = Messages.findOne(payload.id);
+                        if(oldMessage &&
+                           moment(oldMessage.timestamp).unix() > moment().subtract(1, 'hour').unix()) {
 
+                            Messages.update(payload.id, {
+                                $set: {
+                                    topic: payload.topic,
+                                    message: payload.message,
+                                    edited: moment.unix(message.sent).toDate()
+                                }
+                            });
+                        }
                     }
 
                 }
@@ -481,6 +485,7 @@ Meteor.startup(function(){
                 delete newDocument._id;
 
                 // transform timestamp
+                newDocument.timestamp = moment(newDocument.timestamp).unix();
                 newDocument.edited = moment(newDocument.edited).unix();
 
                 var message = {
