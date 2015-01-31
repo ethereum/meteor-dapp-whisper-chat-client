@@ -464,6 +464,8 @@ Meteor.startup(function(){
         },
         /**
         Sends an edit for an message, which will patch the message on the receiver side.
+
+        Edits are only allowed withing one hour of the message creation.
         
         The whisper edit paylod should look like this:
             {
