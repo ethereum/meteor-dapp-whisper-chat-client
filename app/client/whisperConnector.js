@@ -137,7 +137,6 @@ Meteor.startup(function(){
 
                 var users = [message.from];
 
-            console.log('INVITED');
 
                 // add the identities of the users invited
                 if(!payload.privateChat && _.isArray(payload.data)) {
@@ -327,7 +326,7 @@ Meteor.startup(function(){
                             $set: {
                                 topic: payload.topic,
                                 message: payload.message,
-                                edited: moment(payload.edited).toDate()
+                                edited: moment.unix(payload.edited).toDate()
                             }
                         });
 
@@ -375,10 +374,10 @@ Meteor.startup(function(){
         The whisper message paylod should look like this:
 
             {
+                type: 'message',
                 id: '231rewf23', // the unique id of the message
                 chat: '2ff34f34f', // the parent chats id/secret-key. Can also be the identity of a user, so it will be an encrypted private chat
-                type: 'message', // or 'edit'
-                timestamp: new Date(),
+                timestamp: 142354534,
                 topic: 'my topic', // the topic set for the chat, to filter chats with many participants
                 from: {
                     identity: '0x4324234..', // the users identity, later we use the protocols native "from"
@@ -393,7 +392,7 @@ Meteor.startup(function(){
                 type: 'notification',
                 message: 'invitation',
                 chat: '234sdfasdasd',
-                timestamp: new Date(),
+                timestamp: 14445345,
                 from: {
                     identity: Whisper.getIdentity().identity,
                     name: Whisper.getIdentity().name
@@ -424,6 +423,8 @@ Meteor.startup(function(){
                 newDocument.id = newDocument._id;
                 delete newDocument._id;
 
+                // transform timestamp
+                newDocument.timestamp = moment(newDocument.timestamp).unix();
 
                 var message = {
                     "from": Whisper.getIdentity().identity,
@@ -466,7 +467,7 @@ Meteor.startup(function(){
                 id: 'fsdf32sdfs',
                 topic: 'my new topic',
                 message: 'my edited message',
-                edited: new Date() // some iso date
+                edited: 12354566 // timestamp
             }
             
         @method changed
@@ -478,6 +479,9 @@ Meteor.startup(function(){
                 // change _id to id
                 newDocument.id = newDocument._id;
                 delete newDocument._id;
+
+                // transform timestamp
+                newDocument.edited = moment(newDocument.edited).unix();
 
                 var message = {
                     "from": newDocument.from.identity,
@@ -529,7 +533,7 @@ Meteor.startup(function(){
             {
                 type: 'invite',
                 chat: '234sdfasdasd',
-                timestamp: new Date(),
+                timestamp: 12334455,
                 from: {
                     identity: Whisper.getIdentity().identity,
                     name: Whisper.getIdentity().name
@@ -556,6 +560,9 @@ Meteor.startup(function(){
             if(chat &&
                newDocument.type === 'invite' &&
                newDocument.from.identity === Whisper.getIdentity().identity) {
+
+                // transform timestamp
+                newDocument.timestamp = moment(newDocument.timestamp).unix();
 
                 var message = {
                     "from": Whisper.getIdentity().identity,
