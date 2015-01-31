@@ -33,10 +33,57 @@
 @colorMainBackgroundDark: #064A80;
 
 
+// add the invitation state
+.dapp-aside {
+    nav {
+        li.invitation {
+
+            + li a {
+                border-color: transparent; 
+            }
+
+            a {
+                background-color: fadeout(#fff, 60%);
+                border-color: transparent; 
+
+                i.invited {
+                    position: absolute;
+                    top: 4px;
+                    left: 4px;
+                    font-size: 0.6em;
+                }
+            }
+        }
+    }
+}
+
 // style the content of the dapp-content-header
 .dapp-content-header {
-    textarea, input[type="text"] {
-        // position: absolute;
+
+    // ANIMATION
+    .transition(opacity @animationSpeed*2);
+    &.animate {
+        .opacity(0);
+    }
+
+    .whisper-user-chat-header {
+        float: left;
+
+
+        input {
+            width: 3 * @gridWidth;
+            text-align: center;
+            border-bottom: @colorLink 1px dashed;
+            font-size: 0.8em;
+        }
+
+        .dapp-profile-image {
+            float: left;
+            margin-right: @defaultMargin;
+        }
+    }
+    textarea, input {
+        position: relative;
         padding: 0;
         margin: 0;
         border: 0;
@@ -50,40 +97,71 @@
         clear: left;
         float: left;
         margin-top: 0;
-        padding-top: 1.5 * @gridHeight;
+        padding-top: 0.4 * @gridHeight;
+        padding-left: 1.5 * @gridWidth;
         width: 60%;
         height: @gridHeight * 5;
-    }
-    a,
-    input.message-topic {
-        float: left;
-    }
-    input.message-topic {
-        width: 4 * @gridWidth;
-        text-align: center;
-        margin-left: @defaultMargin;
-        border-bottom: @colorLink 1px dashed;
+        // word-break: break-all;
+        // word-wrap: break-word;
     }
 
-    .dapp-profile-image {
-        float: left;
-        margin-right: @defaultMargin;
+}
+.dapp-modal-header {
+    .whisper-username {
+        .dapp-shorten-text;
+        line-height: 1.2em;
     }
+    .whisper-identity-string {
+        word-wrap: break-word;
+        margin: 0 20px;
+        .opacity(0.5);
+    }
+}
 
+.whisper-username {
+    // text-transform: uppercase;
+}
+.whisper-unauthenticated {
+    font-style: italic;
 }
 
 
 .whisper-user-list {
-    .horizontal-menu;
+    .dapp-horizontal-menu;
 
     li {
         width: @gridWidth * 2;
         margin-bottom: @gridHeight;
 
         button {
+            padding: 5px;
             color: @colorTextPrimary;
             font-size: 0.8em;
+            .border-radius(4px);
+
+            &.invited {
+                background-color: @colorMainBackground;
+                color: @colorWhite;
+            }
+
+            span.whisper-username {
+                display: inline-block;
+                margin-top: @gridHeight/4;
+            }
         }
+    }
+
+    .whisper-username {
+        // .dapp-shorten-text;
+        max-width: @gridWidth*2;
+        max-height: @gridHeight*1.4;
+        // line-height: 1.2em;
+        display: inline-block;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .dapp-profile-image {
@@ -97,7 +175,16 @@
     // .display(flex);
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;//@defaultPaddingHorizontal;
     padding-left: @gridWidth * 2;
+    margin-left: -@defaultPaddingHorizontal; // we reduce the padding
+    margin-right: @defaultPaddingHorizontal;
     border-top: 1px solid @colorGray;
+
+    // ANIMATION
+    .transition(margin @animationSpeed, transform @animationSpeed);
+    &.animate {
+        margin-bottom: -5 * @gridHeight;
+        .translateY(-11 * @gridHeight);
+    }
 
     &:first-of-type {
         border-top: 0;
@@ -105,15 +192,75 @@
 
     &.you {
         background-color: @colorGrayLight;
+
+        .whisper-chat-message:hover {
+            background-color: fadeout(@colorBlack, 98%);
+        }
     }
 
+    .whisper-chat-header,
+    .whisper-chat-message-header {
+        font-size: 0.8em;
+
+        a i {
+            position: relative;
+            top: 2px;
+            .opacity(0.8);
+        }
+    }
+    .whisper-chat-message {
+        position: relative;
+        max-width: 600px;
+        margin-left: -@defaultPaddingHorizontal;
+        padding: @defaultPaddingVertical @defaultPaddingHorizontal;
+        border-bottom: 1px dotted @colorGray;
+        
+        &.notification {
+            p {
+                i {
+                    position: relative;
+                    top: 1px;
+                    .opacity(0.1);
+                }
+
+                font-style: italic;
+            }
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+        // show edit button only in hover
+        &:hover {
+            button.edit-message {
+                display: inline-block;
+            }
+        }
+        button.edit-message {
+            display: none;
+        }
+
+        .whisper-chat-message-header {
+            position: absolute;
+            // float: right;
+            right: 4px;
+            top: 2px;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
+
     .whisper-user-info {
+        z-index: 2;
         position: absolute;
         left: @gridWidth/2;
-        // .flex(0 0 @gridWidth * 1.5);
     } 
 
-    .whisper-user-notification {
-        font-style: italic;
+
+    code {
+        font-size: 0.9em;
     }
 }

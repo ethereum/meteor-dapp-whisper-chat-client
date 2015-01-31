@@ -16,17 +16,19 @@
     }
 }
 
-.dapp-block-button {
+.dapp-block-button,
+.dapp-block-button:visited {
     .dapp-button-reset;
     height: @gridHeight * 2;
-    padding: @gridHeight/4 @gridWidth;
+    padding: @gridHeight/4 @gridWidth/4;
     background: @colorLink;
     color: @colorWhite;
     border-bottom: solid 2px darken(@colorLink, 5%);
     .border-radius(2px);
+    .dapp-shorten-text;
 
     font-family: @fontFamily;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: 400;
     text-transform: uppercase;
 }

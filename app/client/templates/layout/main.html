@@ -5,14 +5,12 @@
 		<div class="dapp-grid"></div>
 
 		<!-- aside -->
-		<aside class="dapp-main">
+		<aside class="dapp-aside">
 			{{> yield region="aside"}}
 		</aside>
 
-		<!-- content -->
-		<main class="dapp-content dapp-has-header">
-			{{> yield}}
-		</main>
+		<!-- content, the <main class="dapp-content">...</main> is inside the template-->
+		{{> yield}}
 
 		<!-- actions -->
 		<aside class="dapp-actions">
@@ -22,7 +20,7 @@
 	</div>
 	
 	<!-- footer -->
-	<footer class="dapp-main">
+	<footer class="dapp-footer">
 		
 	</footer>
 

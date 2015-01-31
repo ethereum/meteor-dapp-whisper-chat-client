@@ -1,106 +1,110 @@
 <template name="views_chats_aside">
     <nav>
         <ul>
-            <li><a href="" class="dapp-main-button">{{i18n 'whisper.app.buttons.newChat'}} <i class="icon-pencil"></i></a></li>
-            <li><a href="">Public</a></li>
-            <li><a href="">Alice Wonderland, Bob Burnsquit</a></li>
-            <li><a href="">Chat room #1</a></li>
-            <li class="active"><a href="">Alice Wonderland, Bob Burnsquit and Eve Walliston Marriot</a></li>
-            <li><a href="">Chat room #1</a></li>
-            <li><a href="">Chat room #1</a></li>
+            <li><button class="add-chat dapp-main-button">{{i18n 'whisper.app.buttons.newChat'}} <i class="icon-chat"></i></button></li>
+            <!-- <li class="{{isActivePath regex='public$'}}">
+                <a href="{{pathFor route='chat' sessionKey='public'}}">{{i18n 'whisper.chat.texts.publicChat'}}</a>
+            </li> -->
+            {{#each chats}}
+                <li class="{{isActivePath regex=_id}} {{#if invitation}}invitation{{/if}}">
+                    <a href="{{pathFor route='chat' sessionKey=_id}}" title="{{generatedName}}">
+                        {{#if privateChat}}
+                            <i class="icon-lock"></i>
+                        {{else}}
+                            <i class="icon-users"></i>
+                        {{/if}}
+
+
+                        <!-- the span is in here to make multiline text ellipsis possible -->
+                        <span>
+                            {{#if name}}
+                                {{name}}
+                            {{else}}
+                                {{generatedName}}
+                            {{/if}}
+
+                            {{#if $gt unreadCount 0}}
+                                <span class="dapp-count">{{unreadCount}}</span>
+                            {{/if}}
+                        </span>
+
+
+                        {{#if invitation}}
+                            <i class="invited icon-bell"></i>
+                        {{/if}}
+                    </a>
+                </li>
+            {{/each}}
         </ul>
     </nav>
 </template>
 
 
 <template name="views_chats">
+    <main class="dapp-content dapp-has-header">
 
-    <header class="dapp-content-header">
-        <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-        
-        <a href="{{pathFor route='userProfile' userId='1323423'}}">Random Username</a>
-        
-        <input type="text" placeholder="{{i18n 'whisper.chat.placeholder.addTopic'}}" class="message-topic">
-        <textarea placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
-    </header>
+        {{#with currentIdentity}}
+            <header class="dapp-content-header">
+                <div class="whisper-user-chat-header">
+                    {{> elements_profileImage identity=identity class="dapp-small"}}
+                    
+                    <a href="{{pathFor route='userProfile' userId=identity}}" class="whisper-username">{{name}}</a> {{i18n 'whisper.chat.texts.talksAbout'}}
+                    <input type="text" value="{{myTopic}}" name="topic">
+                </div>
 
-    <!-- <div class="dapp-message">
-        {{i18n 'whisper.chat.texts.invitePeople1'}}
-        <a href="{{pathFor route='addUser'}}"><i class="icon-user-add"></i> {{i18n 'whisper.app.buttons.addUser'}}</a>
-        {{i18n 'whisper.chat.texts.invitePeople2'}}
-        <input type="text" value="whisperchat.eth/9183k1sd/" disabled>
-    </div> -->
+                <textarea name="write-message" placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
+            </header>
+        {{/with}}
 
-    <div class="whisper-chat-item">
+
+        {{#each groupedMessages}}
+            {{> views_chats_item}}
+
+        {{else}}
+            <p>{{i18n 'whisper.chat.texts.noChats'}}</p>
+        {{/each}}
+
+    </main>
+</template>
+
+
+<template name="views_chats_item">
+    <div class="whisper-chat-item {{#if isYou from}}you{{/if}} animate">
         <div class="whisper-user-info">
-            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
+            {{> elements_profileImage identity=from.identity class="dapp-small"}}
         </div>
-        <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
-        </small>
+        <div class="whisper-chat-header">
+            <a href="{{pathFor route='userProfile' userId=from.identity}}" class="whisper-username">
+                {{username from.identity}}
+                {{#if inContacts}}<i class="icon-book" title="{{i18n 'whisper.users.texts.youreFollowing'}}"></i>{{/if}}
+            </a>
+            {{formatTime timestamp 'fromnow'}}
+        </div>
 
-        <p>
-            Lorem ipsum Sit labore velit voluptate dolore eiusmod cillum sunt occaecat et nisi id cillum aliquip laboris tempor sint.
-        </p>   
+        {{#each messages}}
+            <div class="whisper-chat-message {{#if $eq type 'notification'}}notification{{/if}}">
+                <div class="whisper-chat-message-header">
+                    {{#if canEdit ../from}}
+                        <button class="edit-message">{{i18n 'buttons.edit'}}</button>
+                    {{/if}}
+                    {{#if topic}}{{i18n 'commonWords.on'}} <button class="topic">{{topic}}</button>{{/if}}
+                    {{#if edited}}
+                        <i class="icon-pencil" title="{{i18n 'whisper.chat.texts.edited'}} {{formatTime edited 'fromnow'}}"></i>
+                    {{/if}}
+                </div>
+
+                {{#if $eq type 'notification'}}
+                    <p>
+                        <i class="icon-info2"></i>
+                        {{{notificationType}}}
+                    </p>
+                {{else}}
+                    {{#markdown}}{{{message}}}{{/markdown}}
+                {{/if}}
+            </div>
+        {{/each}}
 
     </div>
-
-    <div class="whisper-chat-item you">
-        <div class="whisper-user-info">
-            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-        </div>
-        <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}">YOU</a> on <span class="topic">Courses</span> 12 minutes ago
-        </small>
-
-        <p>
-            Lorem ipsum Sit labore velit voluptate dolore eiusmod cillum sunt occaecat et nisi id cillum aliquip laboris tempor sint.
-        </p>   
-
-    </div>
-
-    <div class="whisper-chat-item">
-        <div class="whisper-user-info">
-            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-        </div>
-        <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
-        </small>
-
-        <p>
-            Lorem ipsum Sit labore velit voluptate dolore eiusmod cillum sunt occaecat et nisi id cillum aliquip laboris tempor sint.
-        </p>   
-
-    </div>
-
-    <div class="whisper-chat-item">
-        <div class="whisper-user-info">
-            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d410234c84d466debf7fec50c73db6f3?d=retro&s=60')"></div>
-        </div>
-        <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}">JOHN WAYNE</a> on <span class="topic">Courses</span> 12 minutes ago
-        </small>
-
-        <p class="whisper-user-notification">
-            John Wayne rode by on a Horse.
-        </p>
-
-    </div>
-
-    <div class="whisper-chat-item">
-        <div class="whisper-user-info">
-            <div class="dapp-profile-image dapp-small" style="background-image: url('http://www.gravatar.com/avatar/30d41046c84d466cebf7fec50c73db61?d=retro&s=60')"></div>
-        </div>
-        <small>
-            <a href="{{pathFor route='userProfile' userId='1323423'}}">BETTY COLE</a> on <span class="topic">Courses</span> 12 minutes ago
-        </small>
-
-        <p>
-            Lorem ipsum Sit labore velit voluptate dolore eiusmod cillum sunt occaecat et nisi id cillum aliquip laboris tempor sint.
-        </p>
-
-    </div>
-   
 </template>
 
 
@@ -108,15 +112,21 @@
     <nav>
         <ul>
             <li>
-                <a href="{{pathFor route='addUser'}}">
+                <a href="{{pathFor route='addUser' sessionKey=_id}}">
                     <i class="icon-user-add"></i>
                     Add Users
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <button>
                     <i class="icon-bolt"></i>
                     Connect
+                </button>
+            </li> -->
+            <li>
+                <button class="leave-chat">
+                    <i class="icon-logout"></i>
+                    Leave Chat
                 </button>
             </li>
         </ul>
