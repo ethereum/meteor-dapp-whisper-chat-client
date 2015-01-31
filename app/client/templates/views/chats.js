@@ -153,7 +153,7 @@ Template['views_chats'].helpers({
     */
     'showMoreButton': function(){
         if(_.isArray(this.messages))
-            return Messages.find({_id: {$in: this.messages}}).count() > TemplateVar.get('limitMessages');
+            return Messages.find({_id: {$in: this.messages}}).count() >= TemplateVar.get('limitMessages');
     }
 });
 

@@ -94,3 +94,18 @@ Template['views_chats_item'].helpers({
         }
     }
 });
+
+
+Template['views_chats_item'].events({
+    /**
+    Set unread to FALSE for all messages in this group if the mouse was over it.
+
+    @event mouseenter .whisper-chat-item
+    */
+    'mouseenter .whisper-chat-item': function() {
+        _.each(this.messages, function(item) {
+            if(item.unread)
+                Messages.update(item._id, {$set: {unread: false}});
+        });
+    }
+});
