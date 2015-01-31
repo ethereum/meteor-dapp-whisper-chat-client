@@ -11,17 +11,24 @@ The chats template
 @constructor
 */
 
-Template['views_chats'].rendered = function(){
-    // add autogrow
-    // console.log(this.$('textarea[name="write-message"]'));
-    // this.$('textarea[name="write-message"]').autogrow({
-    //     context: $('main.dapp-content.dapp-has-header'), //what to wire events to
-    //     animate: false, //if you want the size change to animate
-    //     speed: 200, //speed of animation
-    //     fixMinHeight: true, //if you don't want the box to shrink below its initial size
-    //     // cloneClass: 'autogrowclone', //helper CSS class for clone if you need to add special rules
-    //     // onInitialize: false, //resizes the textareas when the plugin is initialized
-    // });
+/**
+The default number of messages and by which the show more will increase the list of messages.
+
+@property messageLimit
+*/
+var messageLimit = 30;
+
+
+
+Template['views_chats'].created = function(){
+    // set the start limit
+    this.autorun(function() {
+        
+        // make reactive to the route, so the messageLimit gets reset
+        Router.current();
+
+        TemplateVar.set('limitMessages', messageLimit);
+    });
 };
 
 
@@ -51,7 +58,7 @@ Template['views_chats'].helpers({
     */
     'groupedMessages': function(){
         if(_.isArray(this.messages)) {
-            var messages = Messages.find({_id: {$in: this.messages}}, {sort: {timestamp: -1, privateChat: 1}}).fetch();
+            var messages = Messages.find({_id: {$in: this.messages}}, {limit: TemplateVar.get('limitMessages'),sort: {timestamp: -1, privateChat: 1}}).fetch();
 
             var messageBlocks = [],
                 lastTopic = null;
@@ -139,19 +146,28 @@ Template['views_chats'].helpers({
         }
     },
     /**
-    Gets the last stored topic.
+    Show "more messages" button, if there are more than the current visible ones;
 
-    @method (myTopic)
-    @return {String}
+    @method (showMoreButton)
+    @return {Boolean}
     */
-    'myTopic': function(){
-        return amplify.store('whisper-last-topic');
+    'showMoreButton': function(){
+        if(_.isArray(this.messages))
+            return Messages.find({_id: {$in: this.messages}}).count() > TemplateVar.get('limitMessages');
     }
 });
 
 
 
 Template['views_chats'].events({
+    /**
+    Show more messages
+    
+    @event click button.show-more
+    */
+    'click button.show-more': function() {
+        TemplateVar.set('limitMessages', TemplateVar.get('limitMessages') + messageLimit);
+    },
     /**
     Sets the clicked topic, as the current topic
 
@@ -187,7 +203,7 @@ Template['views_chats'].events({
     @event blur input[name="topic"]
     */
     'blur input[name="topic"]': function(e, template){
-        if(e.currentTarget.value !== amplify.store('whisper-last-topic')) {
+        if(e.currentTarget.value !== template.data.myTopic) {
             // SEND the INVITATION NOTIFICATION
             Whisper.addMessage(template.data._id,{
                 type: 'notification',
@@ -204,7 +220,7 @@ Template['views_chats'].events({
             });
 
             // store the new topic
-            amplify.store('whisper-last-topic', e.currentTarget.value);
+            Chats.update(template.data._id, {$set: {myTopic: e.currentTarget.value}});
         }
 
     },
