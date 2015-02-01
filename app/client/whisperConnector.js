@@ -286,7 +286,7 @@ Meteor.startup(function(){
                         if(Whisper.addMessage(newDocument._id, {
                             _id: payload.id, // use the same id, as your opponen has, so we can prevent duplicates
                             type: payload.type,
-                            chat: payload.chat,
+                            chat: (payload.privateChat) ? payload.chat : message.from,
                             timestamp: moment.unix(message.sent).toDate(),
                             topic: payload.topic,
                             unread: true,
