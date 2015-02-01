@@ -181,14 +181,16 @@ There are currently three types of notifications implemented:
  - `invitation` will list all the users the user has invited into the group chat
     The `data` property should contain the identities and usernames:
 
-    `[{
+    ```js
+    [{
         identity: '0x345345345..',
         name: 'user x'
     },
     {
         identity: '0x67554345..',
         name: 'user y'
-    }]`
+    }]
+    ```
 
 - `topicChanged` will tell the other participants about a change of the users personal (non-whisper) topic
     The `data` property should contain the new topic name e.g. `my new topic`
