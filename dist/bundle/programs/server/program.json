@@ -312,24 +312,9 @@
       "path": "packages/frozeman_animation-helper.js"
     },
     {
-      "sourceMap": "packages/frozeman_global-notifications.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/frozeman_global-notifications.js"
-    },
-    {
       "sourceMap": "packages/frozeman_template-var.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/frozeman_template-var.js"
-    },
-    {
-      "sourceMap": "packages/wizonesolutions_underscore-string.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/wizonesolutions_underscore-string.js"
-    },
-    {
-      "sourceMap": "packages/zimme_iron-router-active.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/zimme_iron-router-active.js"
     },
     {
       "sourceMap": "packages/frozeman_persistent-minimongo.js.map",
@@ -340,6 +325,16 @@
       "sourceMap": "packages/frozeman_reactive-timer.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/frozeman_reactive-timer.js"
+    },
+    {
+      "sourceMap": "packages/wizonesolutions_underscore-string.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/wizonesolutions_underscore-string.js"
+    },
+    {
+      "sourceMap": "packages/zimme_iron-router-active.js.map",
+      "sourceMapRoot": "packages",
+      "path": "packages/zimme_iron-router-active.js"
     },
     {
       "sourceMap": "packages/3stack_bignumber.js.map",
@@ -355,11 +350,6 @@
       "sourceMap": "packages/markdown.js.map",
       "sourceMapRoot": "packages",
       "path": "packages/markdown.js"
-    },
-    {
-      "sourceMap": "packages/mrt_jquery-visible.js.map",
-      "sourceMapRoot": "packages",
-      "path": "packages/mrt_jquery-visible.js"
     },
     {
       "sourceMap": "packages/session.js.map",

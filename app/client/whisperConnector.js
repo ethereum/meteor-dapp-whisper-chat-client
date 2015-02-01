@@ -159,6 +159,7 @@ Meteor.startup(function(){
                 Chats.insert({
                     _id: chatId,
                     name: (!payload.privateChat) ? payload.name : undefined,
+                    filteredTopics: null,
                     lastActivity: new Date(),
                     messages: [],
                     users: users,
@@ -600,7 +601,6 @@ Meteor.startup(function(){
 
 
                 try {
-
                     // SEND
                     web3.shh.post(message);
 

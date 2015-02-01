@@ -1,6 +1,6 @@
 
 // disconnect any meteor server
-if(location.hostname !== 'localhost' && location.hostname !== '127.0.0.1')
+if(location.host !== 'localhost:3000' && location.host !== '127.0.0.1:3000')
     Meteor.disconnect();
 
 

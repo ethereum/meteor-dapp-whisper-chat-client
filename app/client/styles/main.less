@@ -1,6 +1,5 @@
 // libs
-// @import 'lib/dapp-styles/dapp-main.import.less';
-@import 'packages/meteor-dapp-styles/dapp-main.import.less';
+@import 'public/dapp-styles/dapp-styles.less';
 
 
 
@@ -121,7 +120,6 @@
         font-weight: 300;
         color: @colorTextSecondary;
     }
-
     textarea {
         clear: left;
         float: left;
@@ -132,6 +130,13 @@
         height: @gridHeight * 5;
         // word-break: break-all;
         // word-wrap: break-word;
+    }
+
+
+    .whisper-topic-list {
+        .dapp-horizontal-menu;
+        clear: left;
+        float: left;
     }
 
 }

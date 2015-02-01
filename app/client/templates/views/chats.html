@@ -71,6 +71,19 @@
                 </div>
 
                 <textarea name="write-message" placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
+
+                {{#if topics ../messages}}
+                    <ul class="whisper-topic-list">
+                        <li>
+                            <button class="dapp-tag-button show-all-topics {{#if showAllTopics ../filteredTopics}}active{{/if}}">{{i18n 'whisper.chat.buttons.showAllTopics'}}</button>
+                        </li>
+                        {{#each topics ../messages}}
+                            <li>
+                                <button class="dapp-tag-button filter-by-topic {{#if isSelectedTopic ../../filteredTopics}}active{{/if}}">{{this}}</button>
+                            </li>
+                        {{/each}}
+                    </ul>
+                {{/if}}
             </header>
         {{/with}}
 

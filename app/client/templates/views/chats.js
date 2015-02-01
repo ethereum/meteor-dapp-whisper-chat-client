@@ -34,6 +34,36 @@ Template['views_chats'].created = function(){
 
 Template['views_chats'].helpers({
     /**
+    Returns all topics, available in this chat
+
+    @method (topics)
+    @return {Array}
+    */
+    'topics': function(messages){
+        if(_.isArray(messages)) {
+            var messages = Messages.find({_id: {$in: messages}}).fetch();
+            return _.uniq(_.compact(_.pluck(messages, 'topic')));
+        }
+    },
+    /**
+    If no topic is filtered it will return TRUE.
+
+    @method (showAllTopics)
+    @return {Boolean}
+    */
+    'showAllTopics': function(filteredTopics){
+        return _.isEmpty(filteredTopics);
+    },
+    /**
+    Returns true if the current topic is filtered by.
+
+    @method (isSelectedTopic)
+    @return {Boolean}
+    */
+    'isSelectedTopic': function(filteredTopics){
+        return _.contains(filteredTopics, String(this));
+    },
+    /**
     Get the messages for this chat, group them by user e.g.:
 
         {
@@ -58,7 +88,13 @@ Template['views_chats'].helpers({
     */
     'groupedMessages': function(){
         if(_.isArray(this.messages)) {
-            var messages = Messages.find({_id: {$in: this.messages}}, {limit: TemplateVar.get('limitMessages'),sort: {timestamp: -1, privateChat: 1}}).fetch();
+            var query = {_id: {$in: this.messages}};
+
+            // filter by topic
+            if(this.filteredTopics)
+                query['$or'] = [{topic: {$in: this.filteredTopics}}, {type: 'notification'}];
+
+            var messages = Messages.find(query, {limit: TemplateVar.get('limitMessages'),sort: {timestamp: -1, privateChat: 1}}).fetch();
 
             var messageBlocks = [],
                 lastTopic = null;
@@ -152,14 +188,52 @@ Template['views_chats'].helpers({
     @return {Boolean}
     */
     'showMoreButton': function(){
-        if(_.isArray(this.messages))
-            return Messages.find({_id: {$in: this.messages}}).count() >= TemplateVar.get('limitMessages');
+        if(_.isArray(this.messages)) {
+            var query = {_id: {$in: this.messages}};
+
+            // filter by topic
+            if(this.filteredTopics)
+                query['$or'] = [{topic: {$in: this.filteredTopics}}, {type: 'notification'}];
+
+            return Messages.find(query).count() >= TemplateVar.get('limitMessages');
+        }
     }
 });
 
 
 
 Template['views_chats'].events({
+    /**
+    Clear the filter and show all topics.
+    
+    @event click button.show-all-topics
+    */
+    'click button.show-all-topics': function(e, template) {
+        Chats.update(template.data._id, {$set: {
+            filteredTopics: null
+        }});
+    },
+    /**
+    Add the clicked topic to the filter.
+    
+    @event click button.filter-by-topic
+    */
+    'click button.filter-by-topic': function(e, template) {
+        var topics = template.data.filteredTopics,
+            topic = String(this);
+
+        if(!_.isArray(topics))
+            topics = [];
+
+        if(_.contains(template.data.filteredTopics, topic))
+            topics = _.without(topics, topic);
+        else
+            topics.push(topic);
+
+        Chats.update(template.data._id, {$set: {
+            filteredTopics: topics
+        }});
+    },
     /**
     Show more messages
     

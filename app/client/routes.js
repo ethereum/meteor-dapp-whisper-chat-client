@@ -169,6 +169,7 @@ Router.route('/chat/:sessionKey', function () {
             Chats.insert({
                 _id: this.params.sessionKey,
                 name: null,
+                filteredTopics: null,
                 lastActivity: new Date(),
                 messages: [],
                 privateChat: this.params.sessionKey,
@@ -196,6 +197,7 @@ Router.route('/chat/:sessionKey', function () {
             Chats.insert({
                 _id: this.params.sessionKey,
                 name: null,
+                filteredTopics: null,
                 lastActivity: new Date(),
                 messages: [],
                 users: [] // should i add myself? Whisper.getIdentity().identity
