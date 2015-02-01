@@ -95,6 +95,17 @@ Template['views_chats_item'].helpers({
                 return TAPi18n.__('whisper.chat.notifications.'+ this.message +'Empty');
             }
         }
+
+        // CHAT NAME CHANGED 
+        if(this.message === 'chatNameChanged') {
+            if(!_.isEmpty(this.data)) {
+                return TAPi18n.__('whisper.chat.notifications.'+ this.message, {
+                    name: _.stripTags(this.data)
+                });
+            } else {
+                return TAPi18n.__('whisper.chat.notifications.'+ this.message +'Empty');
+            }
+        }
     }
 });
 

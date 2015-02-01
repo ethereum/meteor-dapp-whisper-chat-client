@@ -52,8 +52,53 @@
                     left: 4px;
                     font-size: 0.6em;
                 }
+
             }
         }
+
+        li {
+
+            &:hover {
+                button.edit-name {
+                    display: inline-block;
+                }
+            }
+
+            // remove the scaling on click, when the name is edited
+            > a.editing {
+                &:active {
+                    .scale(1);
+                }
+            }
+
+            input.chat-name {
+                padding: 0;
+                margin: 0;
+                background-color: transparent;
+                border: 0;
+                color: inherit;
+                font-size: inherit;
+                font-weight: inherit;
+                font-family: inherit;
+            }
+
+
+            button.edit-name,
+            button.save-name {
+                position: absolute;
+                display: inline-block;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                border: 0;
+                color: inherit;
+            }
+
+            button.edit-name {
+                display: none;
+            }
+        }
+
     }
 }
 

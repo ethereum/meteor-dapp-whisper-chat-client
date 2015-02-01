@@ -20,7 +20,9 @@
             "notifications": {
                 "invitation": "invited __users__ into the chat.",
                 "topicChanged": "is now talking about __topic__.",
-                "topicChangedEmpty": "is now talking about everything"
+                "topicChangedEmpty": "is now talking about everything",
+                "chatNameChanged": "changed the chats name to \"__name__.\"",
+                "chatNameChangedEmpty": "removed the chats name"
             },
             "texts": {
                 "home": "Click \"New chat\" to start a private or group chat.",

@@ -158,7 +158,7 @@ Meteor.startup(function(){
                 // add invited chat, if its not already existing
                 Chats.insert({
                     _id: chatId,
-                    name: null,
+                    name: (!payload.privateChat) ? payload.name : undefined,
                     lastActivity: new Date(),
                     messages: [],
                     users: users,
@@ -312,6 +312,18 @@ Meteor.startup(function(){
                                 name: payload.from.name
                             });
                         }
+
+
+                        // CHANGE the current CHATS NAME
+                        if(payload.type === 'notification' &&
+                           payload.message === 'chatNameChanged') {
+                            Chats.update(newDocument._id, {
+                                $set: {
+                                    name: payload.data
+                                }
+                            });
+                        }
+
 
                         // SOUND
                         $('#sound-message')[0].play();
@@ -540,6 +552,7 @@ Meteor.startup(function(){
             {
                 type: 'invite',
                 chat: '234sdfasdasd',
+                name: 'My Chatroom',
                 timestamp: 12334455,
                 from: {
                     identity: Whisper.getIdentity().identity,

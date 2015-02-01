@@ -206,8 +206,8 @@ Template['views_chats'].events({
         if(e.currentTarget.value !== template.data.myTopic) {
             // SEND the INVITATION NOTIFICATION
             Whisper.addMessage(template.data._id,{
-                type: 'notification',
                 sending: true,
+                type: 'notification',
                 message: 'topicChanged',
                 chat: template.data._id,
                 timestamp: new Date(),

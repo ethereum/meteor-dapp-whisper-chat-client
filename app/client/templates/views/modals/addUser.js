@@ -128,6 +128,7 @@ Template['view_modals_addUser'].events({
                     Invitations.insert({
                         type: 'invite',
                         chat: template.data._id,
+                        name: template.data.name,
                         timestamp: new Date(),
                         from: {
                             identity: Whisper.getIdentity().identity,
@@ -147,8 +148,8 @@ Template['view_modals_addUser'].events({
 
                 // SEND the INVITATION NOTIFICATION
                 if(Whisper.addMessage(template.data._id, {
-                    type: 'notification',
                     sending: true,
+                    type: 'notification',
                     message: 'invitation',
                     timestamp: new Date(),
                     from: {
