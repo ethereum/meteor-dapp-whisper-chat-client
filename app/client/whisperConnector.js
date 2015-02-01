@@ -160,7 +160,7 @@ Meteor.startup(function(){
                     _id: chatId,
                     name: (!payload.privateChat) ? payload.name : undefined,
                     filteredTopics: null,
-                    lastActivity: new Date(),
+                    lastActivity: moment().unix(),
                     messages: [],
                     users: users,
                     privateChat: (payload.privateChat) ? message.from : undefined,
@@ -245,6 +245,9 @@ Meteor.startup(function(){
 
                 // build anonymous message
                 } catch(error) {
+
+                    console.warn('Couldn\'t parse message', error);
+
                     payload = {
                         id: Random.id(),
                         // put it to this chat TODO: bad idea! waiting for callback issue to be fixed. https://github.com/ethereum/cpp-ethereum/issues/884
@@ -259,7 +262,7 @@ Meteor.startup(function(){
 
                 // IF PRIVATECHAT, USE the OTHER USERS IDENTITY AS CHAT ID
                 if(newDocument.privateChat)
-                    payload.chat = payload.from.identity;
+                    payload.chat = message.from || payload.from.identity;
 
 
                 // DONT add/edit messages, if its from myself, or is from another chat
@@ -267,8 +270,8 @@ Meteor.startup(function(){
                    payload.chat === newDocument._id &&
                    Chats.findOne(newDocument._id)) { 
 
-                    // console.log('Chat message');
-                    // console.log(message, payload);
+                    console.log('Chat message');
+                    console.log(message, payload);
 
                     // INSERT IF its a NEW MESSAGE or NOTIFICATIONs
                     if((payload.type === 'message' ||
@@ -287,8 +290,8 @@ Meteor.startup(function(){
                         if(Whisper.addMessage(newDocument._id, {
                             _id: payload.id, // use the same id, as your opponen has, so we can prevent duplicates
                             type: payload.type,
-                            chat: (payload.privateChat) ? payload.chat : message.from,
-                            timestamp: moment.unix(message.sent).toDate(),
+                            chat: payload.chat,
+                            timestamp: message.sent || payload.timestamp,
                             topic: payload.topic,
                             unread: true,
                             from: payload.from,
@@ -337,13 +340,13 @@ Meteor.startup(function(){
 
                         var oldMessage = Messages.findOne(payload.id);
                         if(oldMessage &&
-                           moment(oldMessage.timestamp).unix() > moment().subtract(1, 'hour').unix()) {
+                           oldMessage.timestamp > moment().subtract(1, 'hour').unix()) {
 
                             Messages.update(payload.id, {
                                 $set: {
                                     topic: payload.topic,
                                     message: payload.message,
-                                    edited: moment.unix(message.sent).toDate()
+                                    edited: message.sent || payload.timestamp
                                 }
                             });
                         }
@@ -440,9 +443,6 @@ Meteor.startup(function(){
                 newDocument.id = newDocument._id;
                 delete newDocument._id;
 
-                // transform timestamp
-                newDocument.timestamp = moment(newDocument.timestamp).unix();
-
                 var message = {
                     "from": Whisper.getIdentity().identity,
                     "topic": [
@@ -498,10 +498,6 @@ Meteor.startup(function(){
                 // change _id to id
                 newDocument.id = newDocument._id;
                 delete newDocument._id;
-
-                // transform timestamp
-                newDocument.timestamp = moment(newDocument.timestamp).unix();
-                newDocument.edited = moment(newDocument.edited).unix();
 
                 var message = {
                     "from": newDocument.from.identity,
@@ -581,9 +577,6 @@ Meteor.startup(function(){
             if(chat &&
                newDocument.type === 'invite' &&
                newDocument.from.identity === Whisper.getIdentity().identity) {
-
-                // transform timestamp
-                newDocument.timestamp = moment(newDocument.timestamp).unix();
 
                 var message = {
                     "from": Whisper.getIdentity().identity,

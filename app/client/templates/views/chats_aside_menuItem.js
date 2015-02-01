@@ -90,7 +90,7 @@ Template['views_chats_aside_menuItem'].events({
                     type: 'notification',
                     message: 'chatNameChanged',
                     chat: template.data._id,
-                    timestamp: new Date(),
+                    timestamp: moment().unix(),
                     from: {
                         identity: Whisper.getIdentity().identity,
                         name: Whisper.getIdentity().name

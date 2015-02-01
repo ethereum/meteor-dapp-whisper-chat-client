@@ -46,7 +46,7 @@ Template['views_chats_item'].helpers({
         return (from &&
                 from.identity === Whisper.getIdentity().identity &&
                 this.type !== 'notification' &&
-                moment(this.timestamp).unix() > moment().subtract(1, 'hour').unix());
+                this.timestamp > moment().subtract(1, 'hour').unix());
     },
     /**
     Check whether the iterated user is in your following list.

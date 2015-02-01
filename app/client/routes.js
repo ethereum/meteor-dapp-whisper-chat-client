@@ -23,7 +23,7 @@ var currentSelectedChat = null;
 
 
 // Change the URLS to use #! instead of real paths
-Iron.Location.configure({useHashPaths: true});
+// Iron.Location.configure({useHashPaths: true});
 
 
 // Router defaults
@@ -170,7 +170,7 @@ Router.route('/chat/:sessionKey', function () {
                 _id: this.params.sessionKey,
                 name: null,
                 filteredTopics: null,
-                lastActivity: new Date(),
+                lastActivity: moment().unix(),
                 messages: [],
                 privateChat: this.params.sessionKey,
                 users: [this.params.sessionKey]
@@ -181,7 +181,7 @@ Router.route('/chat/:sessionKey', function () {
             Invitations.insert({
                 type: 'invite',
                 chat: this.params.sessionKey,
-                timestamp: new Date(),
+                timestamp: moment().unix(),
                 from: {
                     identity: Whisper.getIdentity().identity,
                     name: Whisper.getIdentity().name
@@ -198,7 +198,7 @@ Router.route('/chat/:sessionKey', function () {
                 _id: this.params.sessionKey,
                 name: null,
                 filteredTopics: null,
-                lastActivity: new Date(),
+                lastActivity: moment().unix(),
                 messages: [],
                 users: [] // should i add myself? Whisper.getIdentity().identity
             });

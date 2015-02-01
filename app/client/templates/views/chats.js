@@ -76,7 +76,7 @@ Template['views_chats'].helpers({
                 _id: '432334',
                 topic: 'my topic',
                 message: 'Hi!',
-                edited: some Date
+                edited: 123456777 // unix timestamp
             },{
                 _id: 'as2342',
                 topic: null,
@@ -94,7 +94,7 @@ Template['views_chats'].helpers({
             if(this.filteredTopics)
                 query['$or'] = [{topic: {$in: this.filteredTopics}}, {type: 'notification'}];
 
-            var messages = Messages.find(query, {limit: TemplateVar.get('limitMessages'),sort: {timestamp: -1, privateChat: 1}}).fetch();
+            var messages = Messages.find(query, {limit: TemplateVar.get('limitMessages'), sort: {timestamp: -1}}).fetch();
 
             var messageBlocks = [],
                 lastTopic = null;
@@ -284,7 +284,7 @@ Template['views_chats'].events({
                 type: 'notification',
                 message: 'topicChanged',
                 chat: template.data._id,
-                timestamp: new Date(),
+                timestamp: moment().unix(),
                 from: {
                     identity: Whisper.getIdentity().identity,
                     name: Whisper.getIdentity().name
@@ -344,7 +344,7 @@ Template['views_chats'].events({
             }}, {sort: {timestamp: -1}});
 
             // only allow if the last message is not older than 1 hour
-            if(moment(lastEntry.timestamp).unix() > moment().subtract(1, 'hour').unix()) {
+            if(lastEntry.timestamp > moment().subtract(1, 'hour').unix()) {
 
                 template.find('input[name="topic"]').value = lastEntry.topic;
                 e.currentTarget.value = lastEntry.message;
@@ -377,7 +377,7 @@ Template['views_chats'].events({
                         chat: template.data._id,
                         topic: selectedTopic,
                         message: message,
-                        edited: new Date()
+                        edited: moment().unix()
                     }
                 })
 
@@ -391,7 +391,7 @@ Template['views_chats'].events({
                 send = Whisper.addMessage(template.data._id, {
                     type: 'message',
                     sending: true, // needed to send them, will be removed after
-                    timestamp: new Date(),
+                    timestamp: moment().unix(),
                     topic: selectedTopic,
                     // unread: true,
                     from: {
@@ -402,25 +402,13 @@ Template['views_chats'].events({
                     privateChat: template.data.privateChat
                 });
 
+                // ANIMATION
                 if(send) {
-
-
-                    // ANIMATION
-                    Meteor.setTimeout(function(){
-                        $(".dapp-content-header").addClass("animate").hide();
-                    }, 100);
-                    Meteor.setTimeout(function(){
-                        $(".dapp-content-header").show();
-                    }, 200);                
-                    Meteor.setTimeout(function(){
-                        $(".dapp-content-header")
-                            .removeClass("animate")
-                            .find("textarea")
-                            .focus();
-                    }, 400);
+                    template.$(".dapp-content-header").addClass("animate").width();
+                    // Meteor.setTimeout(function(){
+                        template.$(".dapp-content-header").removeClass("animate");
+                    // }, 200);
                 }
-
-
 
             }
 

@@ -56,7 +56,7 @@ Whisper.addMessage = function(chatId, doc) {
         // add the entry to the chats entry list
         Chats.update(chatId, {
             $addToSet: {messages: messageId},
-            $set: {lastActivity: new Date()}
+            $set: {lastActivity: moment().unix()}
         });
         
         return true;

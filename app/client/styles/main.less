@@ -100,8 +100,10 @@
 .dapp-content-header {
 
     // ANIMATION
-    .transition(opacity @animationSpeed*2);
+    .transition-property(opacity);
+    .transition-duration(@animationSpeed*3);
     &.animate {
+        .transition-duration(0);
         .opacity(0);
     }
 
