@@ -51,7 +51,7 @@ from: '0x12344...'
 // Payload
 {
     type: 'invite',
-    chat: '234sdfasdasd', // chat topic
+    chat: 'ethereum', // chat topic
     name: 'My Chatroom',
     from: {
         identity: '0x12344...', // the current user identity, if you set a from in the whisper `shh.post()` it will be used instead
@@ -110,7 +110,7 @@ from: '0x12344...'
 {
     type: 'message',
     id: '231rewf23', // the unique id of the message
-    chat: '2ff34f34f', // the parent chats topic. For private chats the identity of the user
+    chat: 'ethereum', // the parent chats topic. For private chats the identity of the user
     topic: 'my topic', // the topic set for the chat, to filter chats with many participants. Has nothing to do with whisper topics
     from: {
         identity: '0x4324234..', // the current user identity, if you set a from in the whisper `shh.post()` it will be used instead
@@ -139,7 +139,7 @@ from: '0x12344...'
 {
     type: 'edit',
     id: '231rewf23', // the unique id of the message
-    chat: '2ff34f34f', // the parent chats topic. For private chats the identity of the user
+    chat: 'ethereum', // the parent chats topic. For private chats the identity of the user
     from: {
         identity: '0x4324234..', // the current user identity, if you set a from in the whisper `shh.post()` it will be used instead
         name: 'my username'
@@ -167,7 +167,7 @@ from: '0x12344...'
     type: 'notification',
     message: 'invitation',
     id: '231rewf23', // the unique id of the message
-    chat: '2ff34f34f', // the parent chats topic. For private chats the identity of the user
+    chat: 'ethereum', // the parent chats topic. For private chats the identity of the user
     from: {
         identity: Whisper.getIdentity().identity,
         name: Whisper.getIdentity().name
