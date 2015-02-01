@@ -43,7 +43,11 @@
 
             &:hover {
                 button.edit-name {
-                    display: inline-block;
+                    .transition-delay(1000ms);
+
+                    // display: inline-block;
+                    .opacity(1);
+                    pointer-events: auto;
                 }
             }
 
@@ -77,8 +81,15 @@
                 color: inherit;
             }
 
+
             button.edit-name {
-                display: none;
+                // Delay the showing
+                .transition(opacity 100ms);
+                
+
+                // display: none;
+                .opacity(0);
+                pointer-events: none;
             }
         }
 
