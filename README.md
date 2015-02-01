@@ -2,11 +2,12 @@
 
 ## Development
 
-Start an eth node using:
+Start an eth node using the following,
+or open the http://localhost:3000 in *mist*, *mix* or *alethzero*
 
     $ eth -j -b // for a mining node: $ eth -j -b -f -n no -m yes
 
-Start your app
+Start your app using meteor
 
     $ cd ethereum-dapp-whisper-client/app
     $ meteor
