@@ -17,11 +17,38 @@ Go to http://localhost:3000
 
 ## Deployment
 
-...
+To create a build version of your app run:
 
-## The Whisper chat app protocol
+    $ meteor build ../dist
+    $ cd ../dist
+    $ tar zxvf app.tar.gz
 
-You can send messages to a chatroom by simply providing the correct chatroom topic including the `whisper-chat-client` topic:
+Copy the `app` folder, *.js and *.css from `bundle/programs/web.browser/`
+to your dist folder and ad
+
+## The Whisper chat app
+
+The collections used are:
+
+- `User` - contains the users identities (persistet via localStorage)
+- `Users` - contains collected identities and usernames (persistet via localStorage)
+- `Chats` - contains the chats (persistet via localStorage)
+- `Messages` - contains the messages, which belong to chats (persistet via localStorage)
+- `Invitations` - contains temporarily store inviations
+
+The `web3` object is created in `client/lib/thirdpartyConfig.js`.
+
+The whole whisper protocol integration can be found in the `client/whisperConnection.js`.
+Removing it won't break app, just cut the connection to whisper.
+Some helper functions for whisper can be found at `client/WhisperHelperFunctions.js`.
+
+
+### Protocol specs
+
+The following specs need to be transfered as stringified JSON in the payload.
+
+You can also send messages to a chatroom by simply providing the correct chatroom topic including the `whisper-chat-client` topic.
+The user will then appear as anonymous:
 
     web3.shh.post({
         "topic": [web3.fromAscii('whisper-chat-client'), web3.fromAscii('ethereum')],
@@ -30,10 +57,6 @@ You can send messages to a chatroom by simply providing the correct chatroom top
         "priority": 1000
     });
 
-
-### Protocol specs
-
-The following specs need to be transfered as stringified JSON in the payload:
 
 #### Invite to a group chat
 

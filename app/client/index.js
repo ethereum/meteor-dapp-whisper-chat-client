@@ -1,9 +1,10 @@
+
+// disconnect any meteor server
+if(location.hostname !== 'localhost' && location.hostname !== '127.0.0.1')
+    Meteor.disconnect();
+
+
 Meteor.startup(function() {
-
-
-    // ENABLE FASTCLICK
-    // new FastClick(document.body);
-
 
     // SET default language
     if(Cookie.get('TAPi18next')) {
@@ -28,7 +29,5 @@ Meteor.startup(function() {
     Tracker.autorun(function(){
         moment.locale(TAPi18n.getLanguage());
     });
-
-
 
 });

@@ -1,0 +1,7 @@
+{
+  "version": "0.0.1",
+  "repository": "https://github.com/frozeman/ethereum-dapp-whisper-client",
+  "devDependencies": {
+    "packmeteor": "git+https://github.com/SpaceCapsule/packmeteor.git"
+  }
+}

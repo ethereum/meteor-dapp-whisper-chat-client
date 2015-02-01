@@ -21,6 +21,11 @@ so we can show it in the background when e.g. the user profile is loaded.
 var currentSelectedChat = null;
 
 
+
+// Change the URLS to use #! instead of real paths
+Iron.Location.configure({useHashPaths: true});
+
+
 // Router defaults
 Router.configure({
     layoutTemplate: 'layout_main',
