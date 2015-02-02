@@ -1,4 +1,5 @@
 # Ðapp styles
+*Version 0.1*
 
 These styles give a simple basic layout for your Ðapps.
 

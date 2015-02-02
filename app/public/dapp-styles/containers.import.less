@@ -132,9 +132,8 @@ body:hover .dapp-grid {
 .dapp-content,
 .dapp-footer {
     position: relative;
-    .box-sizing(border-box);
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
-    // .blur(10px);
+    .box-sizing(border-box);
     .dapp-overflow;
 }
 
@@ -143,7 +142,7 @@ body:hover .dapp-grid {
     .display(flex);
     // .flex-direction(column);
     .flex(1);
-    max-height: 85vh;
+    max-height: 100vh;//85vh;
 }
 
 .dapp-header {
@@ -155,7 +154,6 @@ body:hover .dapp-grid {
             .dapp-horizontal-menu;
         }
     }
-
 }
 
 .dapp-aside {

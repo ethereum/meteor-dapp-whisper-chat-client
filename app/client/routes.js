@@ -163,7 +163,7 @@ Router.route('/chat/:sessionKey', function () {
        !chat) {
         
         // ADD new PRIVATE CHAT
-        if(Users.findOne(this.params.sessionKey) ||
+        if(Users.findOne(this.params.sessionKey, {reactive: false}) ||
            (this.params.sessionKey.length === 130 && this.params.sessionKey.indexOf('0x') === 0)) {
 
             Chats.insert({
@@ -208,6 +208,18 @@ Router.route('/chat/:sessionKey', function () {
     // IF existing, check if its has the invitation property and remove it
     } else if(chat && chat.invitation) {
         Chats.update(chat._id, {$unset: {invitation: ''}});
+    }
+
+
+    // MARK messages and READ after 2s
+    // TODO: make add unread count to the chat itself?
+    if(chat && _.isArray(chat.messages)) {
+        Meteor.setTimeout(function(){
+            _.each(Messages.find({_id: {$in: chat.messages}},{reactive: false}).fetch(), function(item) {
+                if(item.unread)
+                    Messages.update(item._id, {$set: {unread: false}});
+            });
+        }, 2000);
     }
 
     this.render();
