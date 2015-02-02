@@ -9,8 +9,7 @@
 /**********************************/
 
 
-// Change Default constants
-
+// Overwrite Default constants
 @colorLink: #02A8F3;
 @colorMainBackground: #05669A;
 @colorMainBackgroundDark: #064A80;
@@ -93,6 +92,22 @@
             }
         }
 
+    }
+}
+
+.dapp-actions {
+    .whisper-participant-list {
+        .dapp-vertical-menu;
+
+        li {
+            text-align: center;
+            margin-bottom: @gridHeight/2;
+
+            span {
+                display: block;
+                font-size: 0.8em;
+            }
+        }
     }
 }
 
@@ -223,7 +238,7 @@
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;//@defaultPaddingHorizontal;
     padding-left: @gridWidth * 2;
     margin-left: -@defaultPaddingHorizontal; // we reduce the padding
-    margin-right: @defaultPaddingHorizontal;
+    margin-right: -@defaultPaddingHorizontal;
     border-top: 1px solid @colorGray;
 
     // ANIMATION
@@ -244,6 +259,7 @@
             background-color: fadeout(@colorBlack, 98%);
         }
     }
+
 
     .whisper-chat-header,
     .whisper-chat-message-header {
@@ -272,6 +288,13 @@
 
                 font-style: italic;
             }
+        }
+
+        p {
+            color: @colorTextSecondary;//@colorTextSecondary;
+        }
+        &.unread p {
+            color: @colorTextPrimary;
         }
 
         &:last-child {

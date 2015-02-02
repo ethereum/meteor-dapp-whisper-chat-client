@@ -52,6 +52,12 @@
     color: @colorWhite;
     font-weight: 100;
     .opacity(0.7);
+
+    // ANIMATION
+    .transition(opacity @animationSpeed);
+    &.animate {
+        .opacity(0);
+    }
 }
 
 .active .dapp-count {
@@ -105,6 +111,13 @@ button {
     font-weight: inherit;
 }
 
+hr {
+    border: 0;
+    height: 0;
+    background-color: transparent;
+    border-bottom: 1px solid @colorGray; 
+}
+
 
 h1 {
     font-weight: 100;
@@ -112,10 +125,11 @@ h1 {
 }
 
 h2 {
-    font-weight: 600;
-    text-transform: uppercase;
-    background: @colorLink;
-    color: @colorWhite;
+    font-weight: 300;
+    font-size: 1.8em;
+    // text-transform: uppercase;
+    // background: @colorLink;
+    // color: @colorWhite;
 }
 
 

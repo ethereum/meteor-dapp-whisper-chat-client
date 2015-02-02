@@ -55,7 +55,7 @@ body:hover .dapp-grid {
     .display(flex);
     .align-items(flex-start);
     .justify-content(center);
-    .overflow;
+    .dapp-overflow;
 
     background: fadeout(@colorMainBackgroundDark, 50%);
 
@@ -132,10 +132,9 @@ body:hover .dapp-grid {
 .dapp-content,
 .dapp-footer {
     position: relative;
-    .box-sizing(border-box);
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
-    // .blur(10px);
-    overflow: scroll;
+    .box-sizing(border-box);
+    .dapp-overflow;
 }
 
 
@@ -143,7 +142,7 @@ body:hover .dapp-grid {
     .display(flex);
     // .flex-direction(column);
     .flex(1);
-    max-height: 85vh;
+    max-height: 100vh;//85vh;
 }
 
 .dapp-header {
@@ -155,7 +154,6 @@ body:hover .dapp-grid {
             .dapp-horizontal-menu;
         }
     }
-
 }
 
 .dapp-aside {
@@ -253,11 +251,14 @@ body:hover .dapp-grid {
 
 .dapp-actions {
     z-index: 20;
-    position: fixed;
-    width: @widthToolbar;
-    top: 0;
-    right: 0;
+    .flex(0 0 @widthToolbar);
+    // position: fixed;
+    // width: @widthToolbar;
+    // top: 0;
+    // right: 0;
+    // bottom: 0;
     background: @colorWhite;
+    .dapp-overflow;
 
     nav {
         ul {
@@ -296,7 +297,7 @@ body:hover .dapp-grid {
     background: @colorWhite;
 
     &.dapp-has-header {
-        padding-top: 150px + 3 * @defaultPaddingVertical;
+        padding-top: 180px + 3 * @defaultPaddingVertical;
     }
 
 
