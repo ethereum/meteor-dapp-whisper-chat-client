@@ -9,7 +9,7 @@ or open the http://localhost:3000 in *mist*, *mix* or *alethzero*
 
 Start your app using meteor
 
-    $ cd ethereum-dapp-whisper-client/app
+    $ cd meteor-dapp-whisper-chat-client/app
     $ meteor
 
 Go to http://localhost:3000
