@@ -11,6 +11,19 @@ The chats action bar template
 @constructor
 */
 
+Template['views_chats_actionbar'].helpers({
+    /**
+    Show the participants of the current chat
+    
+    @method (participants)
+    @return {Object}
+    */
+    'participants': function(){
+        if(_.isArray(this.users))
+            return Users.find({_id: {$in: this.users}});
+    }
+});
+
 
 Template['views_chats_actionbar'].events({
     /**

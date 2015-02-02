@@ -55,7 +55,7 @@ body:hover .dapp-grid {
     .display(flex);
     .align-items(flex-start);
     .justify-content(center);
-    .overflow;
+    .dapp-overflow;
 
     background: fadeout(@colorMainBackgroundDark, 50%);
 
@@ -135,7 +135,7 @@ body:hover .dapp-grid {
     .box-sizing(border-box);
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
     // .blur(10px);
-    overflow: scroll;
+    .dapp-overflow;
 }
 
 
@@ -253,11 +253,14 @@ body:hover .dapp-grid {
 
 .dapp-actions {
     z-index: 20;
-    position: fixed;
-    width: @widthToolbar;
-    top: 0;
-    right: 0;
+    .flex(0 0 @widthToolbar);
+    // position: fixed;
+    // width: @widthToolbar;
+    // top: 0;
+    // right: 0;
+    // bottom: 0;
     background: @colorWhite;
+    .dapp-overflow;
 
     nav {
         ul {

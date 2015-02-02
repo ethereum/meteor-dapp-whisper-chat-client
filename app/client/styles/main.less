@@ -96,6 +96,22 @@
     }
 }
 
+.dapp-actions {
+    .whisper-participant-list {
+        .dapp-vertical-menu;
+
+        li {
+            text-align: center;
+            margin-bottom: @gridHeight/2;
+
+            span {
+                display: block;
+                font-size: 0.8em;
+            }
+        }
+    }
+}
+
 // style the content of the dapp-content-header
 .dapp-content-header {
 
@@ -223,7 +239,7 @@
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;//@defaultPaddingHorizontal;
     padding-left: @gridWidth * 2;
     margin-left: -@defaultPaddingHorizontal; // we reduce the padding
-    margin-right: @defaultPaddingHorizontal;
+    margin-right: -@defaultPaddingHorizontal;
     border-top: 1px solid @colorGray;
 
     // ANIMATION
