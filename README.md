@@ -1,4 +1,4 @@
-# ethereum-dapp-whisper-client
+# Whisper Chat Client Ðapp
 
 ## Development
 
@@ -24,7 +24,7 @@ To create a build version of your app run:
     $ tar zxvf app.tar.gz
 
 Copy the `app` folder, *.js and *.css from `bundle/programs/web.browser/`
-to your dist folder and ad
+to your dist folder and ... The rest has to figured out yet, depending on the Mist/Swarm hosting
 
 ## The Whisper chat app
 
