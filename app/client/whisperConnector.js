@@ -328,9 +328,9 @@ Meteor.startup(function(){
                             });
                         }
 
-
                         // SOUND
-                        $('#sound-message')[0].play();
+                        if(payload.type === 'message')
+                            $('#sound-message')[0].play();
 
 
                     // EDIT if existing message

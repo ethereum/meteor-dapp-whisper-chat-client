@@ -245,6 +245,7 @@
         }
     }
 
+
     .whisper-chat-header,
     .whisper-chat-message-header {
         font-size: 0.8em;
@@ -272,6 +273,13 @@
 
                 font-style: italic;
             }
+        }
+
+        p {
+            color: @colorTextSecondary;//@colorTextSecondary;
+        }
+        &.unread p {
+            color: @colorTextPrimary;
         }
 
         &:last-child {

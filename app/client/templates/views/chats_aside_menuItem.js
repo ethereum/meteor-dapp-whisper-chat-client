@@ -44,8 +44,15 @@ Template['views_chats_aside_menuItem'].helpers({
     @method (chats)
     */
     'unreadCount': function(){
-        if(_.isArray(this.messages))
-            return Messages.find({_id: {$in: this.messages}, unread: true}).count();
+        if(_.isArray(this.messages)) {
+            var query = {_id: {$in: this.messages}, unread: true};
+
+            // filter by topic
+            if(this.filteredTopics)
+                query['topic'] = {$in: this.filteredTopics};
+
+            return Messages.find(query).count();
+        }
     }
 });
 

@@ -136,6 +136,7 @@ from: '0x12344...'
     id: '231rewf23', // the unique id of the message
     chat: 'ethereum', // the parent chats topic. For private chats the identity of the user
     topic: 'my topic', // the topic set for the chat, to filter chats with many participants. Has nothing to do with whisper topics
+    timestamp: 145788999,
     from: {
         identity: '0x4324234..', // the current user identity, if you set a from in the whisper `shh.post()` it will be used instead
         name: 'my username'
@@ -164,6 +165,7 @@ from: '0x12344...'
     type: 'edit',
     id: '231rewf23', // the unique id of the message
     chat: 'ethereum', // the parent chats topic. For private chats the identity of the user
+    timestamp: 145788999,
     from: {
         identity: '0x4324234..', // the current user identity, if you set a from in the whisper `shh.post()` it will be used instead
         name: 'my username'
@@ -192,6 +194,7 @@ from: '0x12344...'
     message: 'invitation',
     id: '231rewf23', // the unique id of the message
     chat: 'ethereum', // the parent chats topic. For private chats the identity of the user
+    timestamp: 145788999,
     from: {
         identity: Whisper.getIdentity().identity,
         name: Whisper.getIdentity().name
