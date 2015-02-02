@@ -21,6 +21,11 @@ so we can show it in the background when e.g. the user profile is loaded.
 var currentSelectedChat = null;
 
 
+
+// Change the URLS to use #! instead of real paths
+// Iron.Location.configure({useHashPaths: true});
+
+
 // Router defaults
 Router.configure({
     layoutTemplate: 'layout_main',
@@ -164,7 +169,8 @@ Router.route('/chat/:sessionKey', function () {
             Chats.insert({
                 _id: this.params.sessionKey,
                 name: null,
-                lastActivity: new Date(),
+                filteredTopics: null,
+                lastActivity: moment().unix(),
                 messages: [],
                 privateChat: this.params.sessionKey,
                 users: [this.params.sessionKey]
@@ -175,7 +181,7 @@ Router.route('/chat/:sessionKey', function () {
             Invitations.insert({
                 type: 'invite',
                 chat: this.params.sessionKey,
-                timestamp: new Date(),
+                timestamp: moment().unix(),
                 from: {
                     identity: Whisper.getIdentity().identity,
                     name: Whisper.getIdentity().name
@@ -191,7 +197,8 @@ Router.route('/chat/:sessionKey', function () {
             Chats.insert({
                 _id: this.params.sessionKey,
                 name: null,
-                lastActivity: new Date(),
+                filteredTopics: null,
+                lastActivity: moment().unix(),
                 messages: [],
                 users: [] // should i add myself? Whisper.getIdentity().identity
             });

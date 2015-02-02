@@ -1,22 +1,5 @@
 // libs
-@import 'lib/dapp-styles/dapp-main.import.less';
-
-// constants
-// @import 'constants.import.less';
-// @import 'mixins.import.less';
-
-// layout
-// @import 'layout/elements.import.less';
-// @import 'layout/buttons.import.less';
-// @import 'layout/containers.import.less';
-
-// elements
-
-// views
-// @import 'views/sign-up.import.less';
-
-// responsive
-// @import 'responsive.import.less';
+@import 'public/dapp-styles/dapp-styles.less';
 
 
 
@@ -26,7 +9,7 @@
 /**********************************/
 
 
-// Change Defaults
+// Change Default constants
 
 @colorLink: #02A8F3;
 @colorMainBackground: #05669A;
@@ -52,8 +35,64 @@
                     left: 4px;
                     font-size: 0.6em;
                 }
+
             }
         }
+
+        li {
+
+            &:hover {
+                button.edit-name {
+                    .transition-delay(1000ms);
+
+                    // display: inline-block;
+                    .opacity(1);
+                    pointer-events: auto;
+                }
+            }
+
+            // remove the scaling on click, when the name is edited
+            > a.editing {
+                &:active {
+                    .scale(1);
+                }
+            }
+
+            input.chat-name {
+                padding: 0;
+                margin: 0;
+                background-color: transparent;
+                border: 0;
+                color: inherit;
+                font-size: inherit;
+                font-weight: inherit;
+                font-family: inherit;
+            }
+
+
+            button.edit-name,
+            button.save-name {
+                position: absolute;
+                display: inline-block;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                border: 0;
+                color: inherit;
+            }
+
+
+            button.edit-name {
+                // Delay the showing
+                .transition(opacity 100ms);
+                
+
+                // display: none;
+                .opacity(0);
+                pointer-events: none;
+            }
+        }
+
     }
 }
 
@@ -61,8 +100,10 @@
 .dapp-content-header {
 
     // ANIMATION
-    .transition(opacity @animationSpeed*2);
+    .transition-property(opacity);
+    .transition-duration(@animationSpeed*3);
     &.animate {
+        .transition-duration(0);
         .opacity(0);
     }
 
@@ -92,7 +133,6 @@
         font-weight: 300;
         color: @colorTextSecondary;
     }
-
     textarea {
         clear: left;
         float: left;
@@ -103,6 +143,13 @@
         height: @gridHeight * 5;
         // word-break: break-all;
         // word-wrap: break-word;
+    }
+
+
+    .whisper-topic-list {
+        .dapp-horizontal-menu;
+        clear: left;
+        float: left;
     }
 
 }

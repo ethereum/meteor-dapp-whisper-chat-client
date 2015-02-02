@@ -14,16 +14,22 @@
                 "writeHere": "Write your message here",
                 "unnamedChat": "Unnamed chat"
             },
+            "buttons": {
+                "showMore": "Show more messages",
+                "showAllTopics": "Show all topics"
+            },
             "notifications": {
                 "invitation": "invited __users__ into the chat.",
-                "topicChanged": "changed topic to __topic__.",
-                "topicChangedEmpty": "has no topic anymore."
+                "topicChanged": "is now talking about __topic__.",
+                "topicChangedEmpty": "is now talking about everything",
+                "chatNameChanged": "changed the channels name to \"__name__.\"",
+                "chatNameChangedEmpty": "removed the channels name"
             },
             "texts": {
                 "home": "Click \"New chat\" to start a private or group chat.",
                 "addUserTitle": "Add users",
                 "publicChat": "Public",
-                "talksAbout": "talks about",
+                "talksAbout": "is talking about",
                 "noChats": "Nothing here, yet...",
                 "leaveChat": "Do you really want to leave this chat?",
                 "edited": "edited",

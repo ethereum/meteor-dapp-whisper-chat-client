@@ -12,13 +12,10 @@ jeeeyul:moment-with-langs
 tap:i18n
 raix:handlebar-helpers
 frozeman:animation-helper
-frozeman:global-notifications
 frozeman:template-var
-
-zimme:iron-router-active
 frozeman:persistent-minimongo
 frozeman:reactive-timer
+zimme:iron-router-active
 3stack:bignumber
 mistereo:identicon
 markdown
-mrt:jquery-visible

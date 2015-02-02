@@ -1,0 +1,16 @@
+{
+	"manifest_version": 1,
+	"name": "dist",
+	"version": "0.0.1",
+	"permissions": [
+		"http://192.168.0.181:3000/"
+	],
+	"app": {
+		"background": {
+			"scripts": [
+				"main.js"
+			]
+		}
+	},
+	"minimum_chrome_version": "23"
+}

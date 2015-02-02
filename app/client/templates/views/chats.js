@@ -11,21 +11,58 @@ The chats template
 @constructor
 */
 
-Template['views_chats'].rendered = function(){
-    // add autogrow
-    // console.log(this.$('textarea[name="write-message"]'));
-    // this.$('textarea[name="write-message"]').autogrow({
-    //     context: $('main.dapp-content.dapp-has-header'), //what to wire events to
-    //     animate: false, //if you want the size change to animate
-    //     speed: 200, //speed of animation
-    //     fixMinHeight: true, //if you don't want the box to shrink below its initial size
-    //     // cloneClass: 'autogrowclone', //helper CSS class for clone if you need to add special rules
-    //     // onInitialize: false, //resizes the textareas when the plugin is initialized
-    // });
+/**
+The default number of messages and by which the show more will increase the list of messages.
+
+@property messageLimit
+*/
+var messageLimit = 30;
+
+
+
+Template['views_chats'].created = function(){
+    // set the start limit
+    this.autorun(function() {
+        
+        // make reactive to the route, so the messageLimit gets reset
+        Router.current();
+
+        TemplateVar.set('limitMessages', messageLimit);
+    });
 };
 
 
 Template['views_chats'].helpers({
+    /**
+    Returns all topics, available in this chat
+
+    @method (topics)
+    @return {Array}
+    */
+    'topics': function(messages){
+        if(_.isArray(messages)) {
+            var messages = Messages.find({_id: {$in: messages}}).fetch();
+            return _.uniq(_.compact(_.pluck(messages, 'topic')));
+        }
+    },
+    /**
+    If no topic is filtered it will return TRUE.
+
+    @method (showAllTopics)
+    @return {Boolean}
+    */
+    'showAllTopics': function(filteredTopics){
+        return _.isEmpty(filteredTopics);
+    },
+    /**
+    Returns true if the current topic is filtered by.
+
+    @method (isSelectedTopic)
+    @return {Boolean}
+    */
+    'isSelectedTopic': function(filteredTopics){
+        return _.contains(filteredTopics, String(this));
+    },
     /**
     Get the messages for this chat, group them by user e.g.:
 
@@ -39,7 +76,7 @@ Template['views_chats'].helpers({
                 _id: '432334',
                 topic: 'my topic',
                 message: 'Hi!',
-                edited: some Date
+                edited: 123456777 // unix timestamp
             },{
                 _id: 'as2342',
                 topic: null,
@@ -51,7 +88,13 @@ Template['views_chats'].helpers({
     */
     'groupedMessages': function(){
         if(_.isArray(this.messages)) {
-            var messages = Messages.find({_id: {$in: this.messages}}, {sort: {timestamp: -1, privateChat: 1}}).fetch();
+            var query = {_id: {$in: this.messages}};
+
+            // filter by topic
+            if(this.filteredTopics)
+                query['$or'] = [{topic: {$in: this.filteredTopics}}, {type: 'notification'}];
+
+            var messages = Messages.find(query, {limit: TemplateVar.get('limitMessages'), sort: {timestamp: -1}}).fetch();
 
             var messageBlocks = [],
                 lastTopic = null;
@@ -139,19 +182,66 @@ Template['views_chats'].helpers({
         }
     },
     /**
-    Gets the last stored topic.
+    Show "more messages" button, if there are more than the current visible ones;
 
-    @method (myTopic)
-    @return {String}
+    @method (showMoreButton)
+    @return {Boolean}
     */
-    'myTopic': function(){
-        return amplify.store('whisper-last-topic');
+    'showMoreButton': function(){
+        if(_.isArray(this.messages)) {
+            var query = {_id: {$in: this.messages}};
+
+            // filter by topic
+            if(this.filteredTopics)
+                query['$or'] = [{topic: {$in: this.filteredTopics}}, {type: 'notification'}];
+
+            return Messages.find(query).count() >= TemplateVar.get('limitMessages');
+        }
     }
 });
 
 
 
 Template['views_chats'].events({
+    /**
+    Clear the filter and show all topics.
+    
+    @event click button.show-all-topics
+    */
+    'click button.show-all-topics': function(e, template) {
+        Chats.update(template.data._id, {$set: {
+            filteredTopics: null
+        }});
+    },
+    /**
+    Add the clicked topic to the filter.
+    
+    @event click button.filter-by-topic
+    */
+    'click button.filter-by-topic': function(e, template) {
+        var topics = template.data.filteredTopics,
+            topic = String(this);
+
+        if(!_.isArray(topics))
+            topics = [];
+
+        if(_.contains(template.data.filteredTopics, topic))
+            topics = _.without(topics, topic);
+        else
+            topics.push(topic);
+
+        Chats.update(template.data._id, {$set: {
+            filteredTopics: topics
+        }});
+    },
+    /**
+    Show more messages
+    
+    @event click button.show-more
+    */
+    'click button.show-more': function() {
+        TemplateVar.set('limitMessages', TemplateVar.get('limitMessages') + messageLimit);
+    },
     /**
     Sets the clicked topic, as the current topic
 
@@ -187,14 +277,14 @@ Template['views_chats'].events({
     @event blur input[name="topic"]
     */
     'blur input[name="topic"]': function(e, template){
-        if(e.currentTarget.value !== amplify.store('whisper-last-topic')) {
+        if(e.currentTarget.value !== template.data.myTopic) {
             // SEND the INVITATION NOTIFICATION
             Whisper.addMessage(template.data._id,{
-                type: 'notification',
                 sending: true,
+                type: 'notification',
                 message: 'topicChanged',
                 chat: template.data._id,
-                timestamp: new Date(),
+                timestamp: moment().unix(),
                 from: {
                     identity: Whisper.getIdentity().identity,
                     name: Whisper.getIdentity().name
@@ -204,7 +294,7 @@ Template['views_chats'].events({
             });
 
             // store the new topic
-            amplify.store('whisper-last-topic', e.currentTarget.value);
+            Chats.update(template.data._id, {$set: {myTopic: e.currentTarget.value}});
         }
 
     },
@@ -253,10 +343,15 @@ Template['views_chats'].events({
                 type: {$ne: 'notification'
             }}, {sort: {timestamp: -1}});
 
-            template.find('input[name="topic"]').value = lastEntry.topic;
-            e.currentTarget.value = lastEntry.message;
+            // only allow if the last message is not older than 1 hour
+            if(lastEntry.timestamp > moment().subtract(1, 'hour').unix()) {
 
-            TemplateVar.set('editMessage', lastEntry._id);
+                template.find('input[name="topic"]').value = lastEntry.topic;
+                e.currentTarget.value = lastEntry.message;
+
+                TemplateVar.set('editMessage', lastEntry._id);
+            }
+
         }
 
         // IF ESC, clear the form, and cancel the edit message
@@ -282,7 +377,7 @@ Template['views_chats'].events({
                         chat: template.data._id,
                         topic: selectedTopic,
                         message: message,
-                        edited: new Date()
+                        edited: moment().unix()
                     }
                 })
 
@@ -296,7 +391,7 @@ Template['views_chats'].events({
                 send = Whisper.addMessage(template.data._id, {
                     type: 'message',
                     sending: true, // needed to send them, will be removed after
-                    timestamp: new Date(),
+                    timestamp: moment().unix(),
                     topic: selectedTopic,
                     // unread: true,
                     from: {
@@ -307,25 +402,13 @@ Template['views_chats'].events({
                     privateChat: template.data.privateChat
                 });
 
+                // ANIMATION
                 if(send) {
-
-
-                    // ANIMATION
-                    Meteor.setTimeout(function(){
-                        $(".dapp-content-header").addClass("animate").hide();
-                    }, 100);
-                    Meteor.setTimeout(function(){
-                        $(".dapp-content-header").show();
-                    }, 200);                
-                    Meteor.setTimeout(function(){
-                        $(".dapp-content-header")
-                            .removeClass("animate")
-                            .find("textarea")
-                            .focus();
-                    }, 400);
+                    template.$(".dapp-content-header").addClass("animate").width();
+                    // Meteor.setTimeout(function(){
+                        template.$(".dapp-content-header").removeClass("animate");
+                    // }, 200);
                 }
-
-
 
             }
 

@@ -1,0 +1,1 @@
+// Cordova Firefox OS API

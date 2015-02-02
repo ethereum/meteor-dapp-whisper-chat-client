@@ -137,7 +137,6 @@ Meteor.startup(function(){
 
                 var users = [message.from];
 
-            console.log('INVITED');
 
                 // add the identities of the users invited
                 if(!payload.privateChat && _.isArray(payload.data)) {
@@ -159,8 +158,9 @@ Meteor.startup(function(){
                 // add invited chat, if its not already existing
                 Chats.insert({
                     _id: chatId,
-                    name: null,
-                    lastActivity: new Date(),
+                    name: (!payload.privateChat) ? payload.name : undefined,
+                    filteredTopics: null,
+                    lastActivity: moment().unix(),
                     messages: [],
                     users: users,
                     privateChat: (payload.privateChat) ? message.from : undefined,
@@ -245,6 +245,9 @@ Meteor.startup(function(){
 
                 // build anonymous message
                 } catch(error) {
+
+                    console.warn('Couldn\'t parse message', error);
+
                     payload = {
                         id: Random.id(),
                         // put it to this chat TODO: bad idea! waiting for callback issue to be fixed. https://github.com/ethereum/cpp-ethereum/issues/884
@@ -259,7 +262,7 @@ Meteor.startup(function(){
 
                 // IF PRIVATECHAT, USE the OTHER USERS IDENTITY AS CHAT ID
                 if(newDocument.privateChat)
-                    payload.chat = payload.from.identity;
+                    payload.chat = message.from || payload.from.identity;
 
 
                 // DONT add/edit messages, if its from myself, or is from another chat
@@ -267,8 +270,8 @@ Meteor.startup(function(){
                    payload.chat === newDocument._id &&
                    Chats.findOne(newDocument._id)) { 
 
-                    // console.log('Chat message');
-                    // console.log(message, payload);
+                    console.log('Chat message');
+                    console.log(message, payload);
 
                     // INSERT IF its a NEW MESSAGE or NOTIFICATIONs
                     if((payload.type === 'message' ||
@@ -288,7 +291,7 @@ Meteor.startup(function(){
                             _id: payload.id, // use the same id, as your opponen has, so we can prevent duplicates
                             type: payload.type,
                             chat: payload.chat,
-                            timestamp: moment.unix(message.sent).toDate(),
+                            timestamp: message.sent || payload.timestamp,
                             topic: payload.topic,
                             unread: true,
                             from: payload.from,
@@ -314,23 +317,39 @@ Meteor.startup(function(){
                             });
                         }
 
+
+                        // CHANGE the current CHATS NAME
+                        if(payload.type === 'notification' &&
+                           payload.message === 'chatNameChanged') {
+                            Chats.update(newDocument._id, {
+                                $set: {
+                                    name: payload.data
+                                }
+                            });
+                        }
+
+
                         // SOUND
                         $('#sound-message')[0].play();
 
 
                     // EDIT if existing message
                     // should exist already
-                    } else if(payload.type === 'edit' &&
-                              Messages.findOne(payload.id)) {
+                    // and should not be older than 1 hour
+                    } else if(payload.type === 'edit') {
 
-                        Messages.update(payload.id, {
-                            $set: {
-                                topic: payload.topic,
-                                message: payload.message,
-                                edited: moment(payload.edited).toDate()
-                            }
-                        });
+                        var oldMessage = Messages.findOne(payload.id);
+                        if(oldMessage &&
+                           oldMessage.timestamp > moment().subtract(1, 'hour').unix()) {
 
+                            Messages.update(payload.id, {
+                                $set: {
+                                    topic: payload.topic,
+                                    message: payload.message,
+                                    edited: message.sent || payload.timestamp
+                                }
+                            });
+                        }
                     }
 
                 }
@@ -375,10 +394,10 @@ Meteor.startup(function(){
         The whisper message paylod should look like this:
 
             {
+                type: 'message',
                 id: '231rewf23', // the unique id of the message
                 chat: '2ff34f34f', // the parent chats id/secret-key. Can also be the identity of a user, so it will be an encrypted private chat
-                type: 'message', // or 'edit'
-                timestamp: new Date(),
+                timestamp: 142354534,
                 topic: 'my topic', // the topic set for the chat, to filter chats with many participants
                 from: {
                     identity: '0x4324234..', // the users identity, later we use the protocols native "from"
@@ -393,7 +412,7 @@ Meteor.startup(function(){
                 type: 'notification',
                 message: 'invitation',
                 chat: '234sdfasdasd',
-                timestamp: new Date(),
+                timestamp: 14445345,
                 from: {
                     identity: Whisper.getIdentity().identity,
                     name: Whisper.getIdentity().name
@@ -423,7 +442,6 @@ Meteor.startup(function(){
                 // change _id to id
                 newDocument.id = newDocument._id;
                 delete newDocument._id;
-
 
                 var message = {
                     "from": Whisper.getIdentity().identity,
@@ -459,6 +477,8 @@ Meteor.startup(function(){
         },
         /**
         Sends an edit for an message, which will patch the message on the receiver side.
+
+        Edits are only allowed withing one hour of the message creation.
         
         The whisper edit paylod should look like this:
             {
@@ -466,7 +486,7 @@ Meteor.startup(function(){
                 id: 'fsdf32sdfs',
                 topic: 'my new topic',
                 message: 'my edited message',
-                edited: new Date() // some iso date
+                edited: 12354566 // timestamp
             }
             
         @method changed
@@ -529,7 +549,8 @@ Meteor.startup(function(){
             {
                 type: 'invite',
                 chat: '234sdfasdasd',
-                timestamp: new Date(),
+                name: 'My Chatroom',
+                timestamp: 12334455,
                 from: {
                     identity: Whisper.getIdentity().identity,
                     name: Whisper.getIdentity().name
@@ -573,7 +594,6 @@ Meteor.startup(function(){
 
 
                 try {
-
                     // SEND
                     web3.shh.post(message);
 

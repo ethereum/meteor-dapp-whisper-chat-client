@@ -43,7 +43,10 @@ Template['views_chats_item'].helpers({
     @return {Boolean}
     */
     'canEdit': function(from){
-        return (from && from.identity === Whisper.getIdentity().identity && this.type !== 'notification');
+        return (from &&
+                from.identity === Whisper.getIdentity().identity &&
+                this.type !== 'notification' &&
+                this.timestamp > moment().subtract(1, 'hour').unix());
     },
     /**
     Check whether the iterated user is in your following list.
@@ -92,5 +95,31 @@ Template['views_chats_item'].helpers({
                 return TAPi18n.__('whisper.chat.notifications.'+ this.message +'Empty');
             }
         }
+
+        // CHAT NAME CHANGED 
+        if(this.message === 'chatNameChanged') {
+            if(!_.isEmpty(this.data)) {
+                return TAPi18n.__('whisper.chat.notifications.'+ this.message, {
+                    name: _.stripTags(this.data)
+                });
+            } else {
+                return TAPi18n.__('whisper.chat.notifications.'+ this.message +'Empty');
+            }
+        }
+    }
+});
+
+
+Template['views_chats_item'].events({
+    /**
+    Set unread to FALSE for all messages in this group if the mouse was over it.
+
+    @event mouseenter .whisper-chat-item
+    */
+    'mouseenter .whisper-chat-item': function() {
+        _.each(this.messages, function(item) {
+            if(item.unread)
+                Messages.update(item._id, {$set: {unread: false}});
+        });
     }
 });

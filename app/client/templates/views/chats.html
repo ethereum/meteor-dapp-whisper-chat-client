@@ -6,37 +6,55 @@
                 <a href="{{pathFor route='chat' sessionKey='public'}}">{{i18n 'whisper.chat.texts.publicChat'}}</a>
             </li> -->
             {{#each chats}}
-                <li class="{{isActivePath regex=_id}} {{#if invitation}}invitation{{/if}}">
-                    <a href="{{pathFor route='chat' sessionKey=_id}}" title="{{generatedName}}">
-                        {{#if privateChat}}
-                            <i class="icon-lock"></i>
-                        {{else}}
-                            <i class="icon-users"></i>
-                        {{/if}}
-
-
-                        <!-- the span is in here to make multiline text ellipsis possible -->
-                        <span>
-                            {{#if name}}
-                                {{name}}
-                            {{else}}
-                                {{generatedName}}
-                            {{/if}}
-
-                            {{#if $gt unreadCount 0}}
-                                <span class="dapp-count">{{unreadCount}}</span>
-                            {{/if}}
-                        </span>
-
-
-                        {{#if invitation}}
-                            <i class="invited icon-bell"></i>
-                        {{/if}}
-                    </a>
-                </li>
+                {{> views_chats_aside_menuItem}}
             {{/each}}
         </ul>
     </nav>
+</template>
+
+
+<template name="views_chats_aside_menuItem">
+    <li class="{{isActivePath regex=_id}} {{#if invitation}}invitation{{/if}}">
+        <a href="{{pathFor route='chat' sessionKey=_id}}" title="{{generatedName}}" class="{{#if editName}}editing{{/if}}">
+            {{#if privateChat}}
+                <i class="icon-lock"></i>
+            {{else}}
+                <i class="icon-users"></i>
+            {{/if}}
+
+
+            <!-- the span is in here to make multiline text ellipsis possible -->
+            <span>
+                {{#if editName}}
+                    <!-- <span class="chat-name" contenteditable="true">{{name}}</span> -->
+                    <input class="chat-name" value="{{name}}">
+                {{else}}
+                    {{#if name}}
+                        {{name}}
+                    {{else}}
+                        {{generatedName}}
+                    {{/if}}
+                {{/if}}
+                
+                {{#unless privateChat}}
+                    {{#if editName}}
+                        <button class="save-name icon-checkmark"></button>
+                    {{else}}
+                        <button class="edit-name icon-pencil"></button>
+                    {{/if}}
+                {{/unless}}
+
+                {{#if $gt unreadCount 0}}
+                    <span class="dapp-count">{{unreadCount}}</span>
+                {{/if}}
+            </span>
+
+
+            {{#if invitation}}
+                <i class="invited icon-bell"></i>
+            {{/if}}
+        </a>
+    </li>
 </template>
 
 
@@ -49,10 +67,23 @@
                     {{> elements_profileImage identity=identity class="dapp-small"}}
                     
                     <a href="{{pathFor route='userProfile' userId=identity}}" class="whisper-username">{{name}}</a> {{i18n 'whisper.chat.texts.talksAbout'}}
-                    <input type="text" value="{{myTopic}}" name="topic">
+                    <input type="text" value="{{../myTopic}}" name="topic">
                 </div>
 
                 <textarea name="write-message" placeholder="{{i18n 'whisper.chat.placeholder.writeHere'}}"></textarea>
+
+                {{#if topics ../messages}}
+                    <ul class="whisper-topic-list">
+                        <li>
+                            <button class="dapp-tag-button show-all-topics {{#if showAllTopics ../filteredTopics}}active{{/if}}">{{i18n 'whisper.chat.buttons.showAllTopics'}}</button>
+                        </li>
+                        {{#each topics ../messages}}
+                            <li>
+                                <button class="dapp-tag-button filter-by-topic {{#if isSelectedTopic ../../filteredTopics}}active{{/if}}">{{this}}</button>
+                            </li>
+                        {{/each}}
+                    </ul>
+                {{/if}}
             </header>
         {{/with}}
 
@@ -63,6 +94,11 @@
         {{else}}
             <p>{{i18n 'whisper.chat.texts.noChats'}}</p>
         {{/each}}
+
+
+        {{#if showMoreButton}}
+            <button class="show-more dapp-block-button">{{i18n 'whisper.chat.buttons.showMore'}}</button>
+        {{/if}}
 
     </main>
 </template>
