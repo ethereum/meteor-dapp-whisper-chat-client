@@ -9,6 +9,7 @@ iron:router
 less
 jeeeyul:moment-with-langs
 tap:i18n
+chuangbo:cookie
 raix:handlebar-helpers
 frozeman:animation-helper
 frozeman:template-var
