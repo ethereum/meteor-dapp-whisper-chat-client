@@ -40,7 +40,7 @@ The `web3` object is created in `client/lib/thirdpartyConfig.js`.
 
 The whole whisper protocol integration can be found in the `client/whisperConnection.js`.
 Removing it won't break app, just cut the connection to whisper.
-Some helper functions for whisper can be found at `client/WhisperHelperFunctions.js`.
+Some helper functions for whisper can be found at `client/lib/helpers/WhisperHelperFunctions.js`.
 
 
 ### Protocol specs

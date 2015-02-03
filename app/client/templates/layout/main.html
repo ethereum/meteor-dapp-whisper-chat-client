@@ -1,11 +1,9 @@
 <template name="layout_main">
 
 	<div class="dapp-flex-content">
-		
-		<div class="dapp-grid"></div>
 
 		<!-- aside -->
-		<aside class="dapp-aside">
+		<aside class="dapp-aside dapp-overflow">
 			{{> yield region="aside"}}
 		</aside>
 
@@ -13,16 +11,11 @@
 		{{> yield}}
 
 		<!-- actions -->
-		<aside class="dapp-actions">
+		<aside class="dapp-actions dapp-overflow">
 			{{> yield region="actionbar"}}
 		</aside>
 
 	</div>
-	
-	<!-- footer -->
-	<!-- <footer class="dapp-footer">
-		
-	</footer> -->
 
 	{{> yield region="modal"}}
 </template>

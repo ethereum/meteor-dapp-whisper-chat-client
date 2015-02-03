@@ -24,10 +24,64 @@ Get the current selected identity e.g.
     }
 
 @method getIdentity
+@return {Object}
 */
 Whisper.getIdentity = function(){
-    var identities = User.findOne().identities;
-    return identity = _.find(identities, function(item){
-        return item.selected;
+    var user = User.findOne();
+
+    if(user && _.isArray(user.identities)) {
+        return identity = _.find(user.identities, function(item){
+            return item.selected;
+        });
+    } else {
+        return {};
+    }
+};
+
+
+/**
+Inserts a message to the message colleciton and adds itself to the parent chat.
+
+@method addMessage
+@return {Boolean}
+*/
+Whisper.addMessage = function(chatId, doc) {
+
+    // set the parent chat id if not given
+    doc.chat = doc.chat || chatId;
+
+    if(Chats.findOne(chatId)) {
+        messageId = Messages.insert(doc);
+
+        // add the entry to the chats entry list
+        Chats.update(chatId, {
+            $addToSet: {messages: messageId},
+            $set: {lastActivity: moment().unix()}
+        });
+        
+        return true;
+    } else
+        return false;
+};
+
+
+/**
+Shows a modal, saying that the identity couldn't be retrieved.
+
+@method showIdentityErrorModal
+*/
+Whisper.showIdentityErrorModal = function(){
+    Meteor.startup(function(){
+        // make sure the modal is rendered after all routes are executed
+        Tracker.afterFlush(function(){
+            Router.current().render('elements_modal', {to: 'modal'});
+            Router.current().render('elements_modal_question', {
+                to: 'modalContent',
+                data: {
+                    text: TAPi18n.__('whisper.chat.texts.identityError'),
+                    ok: true
+                }
+            });
+        });
     });
 };

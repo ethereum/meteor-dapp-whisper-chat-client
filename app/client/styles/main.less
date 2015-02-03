@@ -14,6 +14,10 @@
 @colorMainBackground: #05669A;
 @colorMainBackgroundDark: #064A80;
 
+// needed to make the dapp-overflow on the containers work
+html, body {
+    height: 100%;
+}
 
 // add the invitation state
 .dapp-aside {
@@ -155,7 +159,6 @@
         padding-top: 0.4 * @gridHeight;
         padding-left: 1.5 * @gridWidth;
         width: 60%;
-        height: @gridHeight * 5;
         // word-break: break-all;
         // word-wrap: break-word;
     }
