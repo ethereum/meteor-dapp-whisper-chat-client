@@ -23,6 +23,7 @@ body {
 
 }
 
+
 // DEBUG GRID
 .dapp-grid {
     display: none;
@@ -134,16 +135,8 @@ body:hover .dapp-grid {
     position: relative;
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
     .box-sizing(border-box);
-    .dapp-overflow;
 }
 
-
-.dapp-flex-content {
-    .display(flex);
-    // .flex-direction(column);
-    .flex(1);
-    max-height: 100vh;//85vh;
-}
 
 .dapp-header {
     height: @heightHeader;
@@ -155,6 +148,44 @@ body:hover .dapp-grid {
         }
     }
 }
+
+.dapp-footer {
+    height: 100px;
+    background-color: @colorBlack;
+}
+
+// Makes the content with asides align in rows
+.dapp-flex-content {
+    .display(flex);
+    // .flex-direction(column);
+    .flex(1);
+    // max-height: 100vh;//85vh;
+}
+
+.dapp-content {
+    .flex(1);
+    background: @colorWhite;
+
+    &.dapp-has-header {
+        padding-top: 120px + 3 * @defaultPaddingVertical;
+    }
+
+
+    .dapp-content-header {
+        position: fixed;
+        top: 0;
+        width: 80%;
+        min-height: @gridHeight * 2;
+        padding: @defaultPaddingVertical @gridWidth / 2;
+        margin-left: -@defaultPaddingHorizontal;
+        background: fadeout(@colorGrayLight, 20%);
+        z-index: 10;
+        line-height: @gridHeight * 2;
+        .dapp-shadow-medium;
+        .box-sizing(border-box);
+    }
+}
+
 
 .dapp-aside {
     .flex(0 0 @widthSidebar);
@@ -258,7 +289,6 @@ body:hover .dapp-grid {
     // right: 0;
     // bottom: 0;
     background: @colorWhite;
-    .dapp-overflow;
 
     nav {
         ul {
@@ -290,35 +320,5 @@ body:hover .dapp-grid {
         	}
         }
     }
-}
-
-.dapp-content {
-    .flex(1);
-    background: @colorWhite;
-
-    &.dapp-has-header {
-        padding-top: 120px + 3 * @defaultPaddingVertical;
-    }
-
-
-    .dapp-content-header {
-        position: fixed;
-        top: 0;
-        width: 80%;
-        min-height: @gridHeight * 2;
-        padding: @defaultPaddingVertical @gridWidth / 2;
-        margin-left: -@defaultPaddingHorizontal;
-        background: fadeout(@colorGrayLight, 20%);
-        z-index: 10;
-        line-height: @gridHeight * 2;
-        .dapp-shadow-medium;
-        .box-sizing(border-box);
-    }
-}
-
-
-.dapp-footer {
-    height: 15vh;
-    background-color: @colorBlack;
 }
 
