@@ -297,27 +297,22 @@ body:hover .dapp-grid {
     background: @colorWhite;
 
     &.dapp-has-header {
-        padding-top: 180px + 3 * @defaultPaddingVertical;
+        padding-top: 120px + 3 * @defaultPaddingVertical;
     }
 
 
     .dapp-content-header {
         position: fixed;
         top: 0;
-        width: 100%;
+        width: 80%;
         min-height: @gridHeight * 2;
         padding: @defaultPaddingVertical @gridWidth / 2;
         margin-left: -@defaultPaddingHorizontal;
         background: fadeout(@colorGrayLight, 20%);
         z-index: 10;
-        line-height: 30px;
+        line-height: @gridHeight * 2;
         .dapp-shadow-medium;
-        
-        // ANIMATION
-        // .transition(opacity @animationSpeed);
-        // &.animate {
-        //     .opacity(0);
-        // }
+        .box-sizing(border-box);
     }
 }
 
