@@ -325,8 +325,8 @@ Template['views_chats'].events({
     'keyup textarea[name="write-message"]': function(e, template){
         // AUTOGROW THE TEXTAREA
         var newlines = e.currentTarget.value.match(/^/mg).length;
-        if(newlines > 3)
-            $(e.currentTarget).css('height', 100 + ((newlines - 4) * 20));
+        if(newlines > 1)
+            $(e.currentTarget).css('height', 60 + ((newlines - 2) * 20));
 
 
         var message = _.trim(e.currentTarget.value, "\n "),
