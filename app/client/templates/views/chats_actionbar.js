@@ -19,7 +19,7 @@ Template['views_chats_actionbar'].helpers({
     @return {Object}
     */
     'participants': function(){
-        if(_.isArray(this.users))
+        if(_.isArray(this.users) && !_.isEmpty(this.users))
             return Users.find({_id: {$in: this.users}});
     }
 });

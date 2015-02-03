@@ -170,16 +170,18 @@
         </ul>
     </nav>
 
-    <hr>
+    {{#if participants}}
+        <hr>
 
-    <ul class="whisper-participant-list">
-        {{#each participants}}
-        <li>
-            {{> elements_profileImage identity=identity class="dapp-small"}}
-            
-            <span class="whisper-username">{{name}}</span>
-        </li>
-        {{/each}}
-    </ul>
+        <ul class="whisper-participant-list">
+            {{#each participants}}
+            <li>
+                {{> elements_profileImage identity=identity class="dapp-small"}}
+                
+                <span class="whisper-username">{{name}}</span>
+            </li>
+            {{/each}}
+        </ul>
+    {{/if}}
 
 </template>
