@@ -30,7 +30,7 @@ body {
     background: #FFF url('dapp-styles/hex-grid-tile.png');
     background-size: 64px 111px;
     position: absolute;
-    height: 200%;
+    min-height: 100%;
     left: 0;
     right: 0;
     opacity: 0.05;
@@ -62,9 +62,38 @@ body {
     .background-image(linear-gradient(to bottom,  lighten(@colorBackgroundHeader, 15%) 0, @colorBackgroundHeader 100px));
 
     nav {
+        position: absolute;
+        bottom: 0;
+
 
         ul {
             .dapp-horizontal-menu;
+
+            a {
+                display: inline-block;
+                padding: @defaultPaddingVertical/2 @defaultPaddingHorizontal;
+                text-align: center;
+
+                &.active {
+                    color: darken(@colorBackgroundHeader, 20%);
+
+                    border-bottom: 5px solid @colorWhite;
+                }
+                &.active {
+                    .transform-origin(50% 100%);
+                }
+
+                i {
+                    font-size: 1.5em;
+                }
+
+                span {
+                    display: block;
+                    text-transform: uppercase;
+                    font-weight: 400;
+                }
+
+            }
         }
     }
 }
@@ -199,7 +228,7 @@ body {
     }
 }
 
-.dapp-actions {
+.dapp-actionbar {
     z-index: 20;
     .flex(0 0 @widthToolbar);
     // position: fixed;

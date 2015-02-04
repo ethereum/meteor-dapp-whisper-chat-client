@@ -41,8 +41,8 @@
         },
         "users": {
             "buttons": {
-                "follow": "Add to contacts",
-                "unfollow": "Remove from contacts",
+                "follow": "Add contact",
+                "unfollow": "Remove contact",
                 "sendMessage": "Send private message",
                 "changeUsername": "Change name"
             },
