@@ -6,7 +6,7 @@
 
     <p>
         {{i18n 'whisper.chat.texts.invitePeople3'}}    
-        <input type="text" value="whisperchat.eth/chat/{{_id}}">
+        <input type="text" value="{{pathFor route='chat' sessionKey=_id}}">
     </p>
 
     <ul class="whisper-user-list">
