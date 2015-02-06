@@ -18,8 +18,21 @@ html, body {
     height: 100%;
 }
 
+.ethereum-dapp-url-bar-style-transparent {
+    .dapp-aside, .dapp-actions {
+        padding-top: 4*@gridHeight;
+    }
+
+    .dapp-content-header {
+        top: 4*@gridHeight;
+    } 
+}
 // add the invitation state
 .dapp-aside {
+    &.ethereum-dapp-url-bar-style-transparent {
+        padding-top: 4*@gridHeight;
+    }
+
     nav {
         li.invitation {
 
@@ -115,7 +128,7 @@ html, body {
 }
 
 // style the content of the dapp-content-header
-.dapp-content-header {
+.dapp-content-header {   
 
     // ANIMATION
     .transition-property(opacity);
