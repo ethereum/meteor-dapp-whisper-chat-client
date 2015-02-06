@@ -19,14 +19,15 @@ html, body {
 }
 
 .ethereum-dapp-url-bar-style-transparent {
-    .dapp-aside, .dapp-actions {
-        padding-top: 4*@gridHeight;
+    .dapp-aside, .dapp-actionbar, .dapp-content-header{
+        padding-top: @gridHeight * 4;
     }
 
-    .dapp-content-header {
-        top: 4*@gridHeight;
-    } 
+    .dapp-content.dapp-has-header {
+        padding-top: 120px + 5 * @gridHeight;
+    }
 }
+
 // add the invitation state
 .dapp-aside {
     &.ethereum-dapp-url-bar-style-transparent {
