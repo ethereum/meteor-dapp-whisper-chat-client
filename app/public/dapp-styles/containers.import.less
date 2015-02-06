@@ -58,7 +58,7 @@ body:hover .dapp-grid {
     .justify-content(center);
     .dapp-overflow;
 
-    background: fadeout(@colorMainBackgroundDark, 50%);
+    background: fadeout(@colorBackgroundOverlay, 50%);
 
 
     // ANIMATION
@@ -140,6 +140,7 @@ body:hover .dapp-grid {
 
 .dapp-header {
     height: @heightHeader;
+    .background-image(linear-gradient(to bottom,  lighten(@colorBackgroundHeader, 15%) 0, @colorBackgroundHeader 100px));
 
     nav {
 
@@ -150,7 +151,7 @@ body:hover .dapp-grid {
 }
 
 .dapp-footer {
-    height: 100px;
+    height: @heightFooter;
     background-color: @colorBlack;
 }
 
@@ -190,8 +191,7 @@ body:hover .dapp-grid {
 .dapp-aside {
     .flex(0 0 @widthSidebar);
     padding-right: 0;
-
-    .background-image(linear-gradient(to bottom,  lighten(@colorMainBackground, 15%) 0, @colorMainBackground 100px));
+    .background-image(linear-gradient(to bottom,  lighten(@colorBackgroundAside, 15%) 0, @colorBackgroundAside 100px));
 
 
 
@@ -215,7 +215,7 @@ body:hover .dapp-grid {
                     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
                     padding-left: @gridWidth / 3;
                     overflow: hidden;
-                    border-top: @colorMainBackgroundDark solid 1px;
+                    border-top: darken(@colorBackgroundAside, 8%) solid 1px;
                     .border-radius(3px 0 0 3px);
                     .box-sizing(border-box); // align button and links properties
                     color: @colorWhite;
@@ -252,7 +252,7 @@ body:hover .dapp-grid {
                     // width: 6 * @gridWidth;
                     margin-bottom: 4*@gridHeight;
                     .border-radius(3px 0 0 3px);
-                    background: @colorMainBackgroundDark;
+                    background: darken(@colorBackgroundAside, 8%);
                     border-top: none;
                     
                     i {
@@ -265,7 +265,7 @@ body:hover .dapp-grid {
                 &.active a {
                     background: #FFF;
                     border-top: none;        
-                    color: @colorMainBackgroundDark; 
+                    color: darken(@colorBackgroundAside, 8%); 
                     font-weight: 500;       
                 }
 
