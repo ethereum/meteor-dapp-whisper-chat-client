@@ -66,7 +66,7 @@
         {{#with currentIdentity}}
             <header class="dapp-content-header">
                 <div class="whisper-user-chat-header">
-                    {{> elements_profileImage identity=identity class="dapp-small"}}
+                    {{> elements_identicon identity=identity class="dapp-small"}}
                     
                     <a href="{{pathFor route='userProfile' userId=identity}}" class="whisper-username">{{name}}</a> {{i18n 'whisper.chat.texts.talksAbout'}}
                     <input type="text" value="{{../myTopic}}" name="topic">
@@ -109,7 +109,7 @@
 <template name="views_chats_item">
     <div class="whisper-chat-item {{#if isYou from}}you{{/if}} animate">
         <div class="whisper-user-info">
-            {{> elements_profileImage identity=from.identity class="dapp-small"}}
+            {{> elements_identicon identity=from.identity class="dapp-small"}}
         </div>
         <div class="whisper-chat-header">
             <a href="{{pathFor route='userProfile' userId=from.identity}}" class="whisper-username">
@@ -176,7 +176,7 @@
         <ul class="whisper-participant-list">
             {{#each participants}}
             <li>
-                {{> elements_profileImage identity=identity class="dapp-small"}}
+                {{> elements_identicon identity=identity class="dapp-small"}}
                 
                 <span class="whisper-username">{{name}}</span>
             </li>

@@ -23,6 +23,13 @@ body {
 
 }
 
+// Special cases on a full screen dapp in mist
+.ethereum-dapp-url-bar-style-transparent {
+    .dapp-header {
+        padding-top: 4 * @gridHeight;
+    }
+}
+
 
 // DEBUG GRID
 .dapp-grid {
@@ -44,6 +51,12 @@ body {
 
 // CONTAINERS
 
+.dapp-container {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    max-width: @widthContainer;
+}
 
 // MAIN APP
 
@@ -55,7 +68,6 @@ body {
     padding: @defaultPaddingVertical @defaultPaddingHorizontal;
     .box-sizing(border-box);
 }
-
 
 .dapp-header {
     height: @heightHeader;
@@ -336,9 +348,9 @@ body {
             margin: 0;
         }
 
-        .dapp-profile-image {
+        .dapp-identicon {
             position: absolute;
-            top: -@gridHeight * 2;
+            top: -@gridHeight * 1.9;
             left: 50%;
             margin-left: -@gridWidth;
         }
