@@ -42,6 +42,8 @@ The whole whisper protocol integration can be found in the `client/whisperConnec
 Removing it won't break app, just cut the connection to whisper.
 Some helper functions for whisper can be found at `client/lib/helpers/WhisperHelperFunctions.js`.
 
+This dapp uses the `ethereum:elements` package.
+
 
 ### Protocol specs
 

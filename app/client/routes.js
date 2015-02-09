@@ -58,7 +58,7 @@ Shows the modal with a users profile
 */
 Router.route('/user/:userId', function () {
 
-    this.render('elements_modal', {
+    this.render('dapp_modal', {
         to: 'modal',
         data: {
             closePath: Router.routes.chat.path({sessionKey: currentSelectedChat})
@@ -123,7 +123,7 @@ Shows the modal with the user invitation screen.
 */
 Router.route('/chat/create/:sessionKey', function () {
     this.render();
-    this.render('elements_modal', {
+    this.render('dapp_modal', {
         to: 'modal',
         data: {
             closePath: Router.routes.chat.path(this.params)
@@ -236,7 +236,7 @@ Shows the modal with the user invitation screen.
 */
 Router.route('/chat/:sessionKey/add-user', function () {
     this.render();
-    this.render('elements_modal', {
+    this.render('dapp_modal', {
         to: 'modal',
         data: {
             closePath: Router.routes.chat.path(this.params)

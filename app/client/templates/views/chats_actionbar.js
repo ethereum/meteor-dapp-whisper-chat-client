@@ -33,8 +33,8 @@ Template['views_chats_actionbar'].events({
     */
     'click button.leave-chat': function(e, template){
 
-        Router.current().render('elements_modal', {to: 'modal'});
-        Router.current().render('elements_modal_question', {
+        Router.current().render('dapp_modal', {to: 'modal'});
+        Router.current().render('dapp_modal_question', {
             to: 'modalContent',
             data: {
                 text: TAPi18n.__('whisper.chat.texts.leaveChat'),
