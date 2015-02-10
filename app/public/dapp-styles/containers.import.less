@@ -179,7 +179,7 @@ body {
                     border-top: darken(@colorBackgroundAside, 8%) solid 1px;
                     .border-radius(3px 0 0 3px);
                     .box-sizing(border-box); // align button and links properties
-                    color: @colorWhite;
+                    color: @colorForegroundAside;
 
 
                     // .dapp-shorten-text;
@@ -213,8 +213,10 @@ body {
                     // width: 6 * @gridWidth;
                     margin-bottom: 4*@gridHeight;
                     .border-radius(3px 0 0 3px);
-                    background: darken(@colorBackgroundAside, 8%);
+                    background: @colorBackgroundMainButton;
+                    color: @colorForegroundMainButton;
                     border-top: none;
+
                     
                     i {
                         position: absolute;
@@ -224,9 +226,9 @@ body {
                 }
 
                 &.active a {
-                    background: #FFF;
+                    background: @colorWhite;
                     border-top: none;        
-                    color: darken(@colorBackgroundAside, 8%); 
+                    color: @colorBlack; 
                     font-weight: 500;       
                 }
 
