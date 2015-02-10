@@ -66,6 +66,12 @@ html, body {
                 }
             }
 
+            &.active {
+                button.edit-name {
+                    display: inline-block;
+                }
+            }
+
             // remove the scaling on click, when the name is edited
             > a.editing {
                 &:active {
@@ -88,7 +94,7 @@ html, body {
             button.edit-name,
             button.save-name {
                 position: absolute;
-                display: inline-block;
+                display: none; // is display: inline-block; above in the &.active {}
                 right: 0;
                 top: 0;
                 bottom: 0;
@@ -298,7 +304,7 @@ html, body {
                 i {
                     position: relative;
                     top: 1px;
-                    .opacity(0.1);
+                    .opacity(0.6);
                 }
                 font-size: 80%;
                 font-style: italic;
