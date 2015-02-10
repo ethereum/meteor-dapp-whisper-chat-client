@@ -299,6 +299,15 @@ Template['views_chats'].events({
 
     },
     /**
+    Move to the textarea on enter
+
+    @event keyup input[name="topic"]
+    */
+    'keyup input[name="topic"]': function(e, template){
+        if(e.keyCode === 13)
+            template.$('textarea[name="write-message"]').focus();
+    },
+    /**
     Prevent ENTER in the text area, if no shift is pressed
 
     @event keydown textarea[name="write-message"]
