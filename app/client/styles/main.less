@@ -94,7 +94,7 @@ html, body {
             button.edit-name,
             button.save-name {
                 position: absolute;
-                display: none; // is display: inline-block; above in the &.active {}
+                display: inline-block;
                 right: 0;
                 top: 0;
                 bottom: 0;
@@ -104,6 +104,7 @@ html, body {
 
 
             button.edit-name {
+                display: none; // is display: inline-block; above in the &.active {}
                 // Delay the showing
                 .transition(opacity 100ms);
                 
