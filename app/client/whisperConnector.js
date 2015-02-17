@@ -169,7 +169,6 @@ Meteor.startup(function(){
 
                 // SOUND
                 $('#sound-invite')[0].play();
-
             }
         }
     });
@@ -331,6 +330,11 @@ Meteor.startup(function(){
                         // SOUND
                         if(payload.type === 'message')
                             $('#sound-message')[0].play();
+                        
+                        // update also badge
+                        $('meta[name="ethereum-dapp-badge"]').prop('content', Math.floor(Math.random()*999));
+
+                        
 
 
                     // EDIT if existing message

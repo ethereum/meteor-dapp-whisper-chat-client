@@ -30,4 +30,14 @@ Meteor.startup(function() {
         moment.locale(TAPi18n.getLanguage());
     });
 
+
+    // Watch for the unread count
+    Tracker.autorun(function(){
+        var unreadMesssagesCount = Messages.find({unread: true}).count();
+
+        // update also badge
+        $('meta[name="ethereum-dapp-badge"]').prop('content', unreadMesssagesCount);
+
+    });
+
 });
