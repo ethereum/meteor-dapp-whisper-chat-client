@@ -199,7 +199,7 @@ Meteor.startup(function(){
         Also works when send plain messages e.g.:
 
             web3.shh.post({    
-                "topics": [web3.fromAscii('whisper-chat-client') , web3.fromAscii('6SCuCN4X4eSoQNSK7')],
+                "topic": [web3.fromAscii('whisper-chat-client') , web3.fromAscii('6SCuCN4X4eSoQNSK7')],
                 "payload": web3.fromAscii('hello'),
                 "ttl": 100,
                 "priority": 1000
