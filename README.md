@@ -53,8 +53,8 @@ You can also send messages to a chatroom by simply providing the correct chatroo
 The user will then appear as anonymous:
 
     web3.shh.post({
-        "topic": [web3.fromAscii('whisper-chat-client'), web3.fromAscii('ethereum')],
-        "payload": web3.fromAscii('Hello world'),
+        "topic": ['whisper-chat-client', 'ethereum'],
+        "payload": 'Hello world',
         "ttl": 100,
         "priority": 1000
     });
@@ -65,7 +65,7 @@ The user will then appear as anonymous:
 ```js
 // Topics
 [
-    web3.fromAscii('whisper-chat-client'),
+    'whisper-chat-client',
     '0x34556456..' // the user to invite
 ]
 
@@ -100,7 +100,7 @@ from: '0x12344...'
 ```js
 // Topics
 [
-    web3.fromAscii('whisper-chat-client'),
+    'whisper-chat-client',
     '0x34556456..' // the user to invite
 ]
 
@@ -124,8 +124,8 @@ from: '0x12344...' // required
 ```js
 // Topics
 [
-    web3.fromAscii('whisper-chat-client'),
-    web3.fromAscii('ethereum') // the chats topic or HEX user identity for private chats
+    'whisper-chat-client',
+    'ethereum' // the chats topic or HEX user identity for private chats
 ]
 
 // TO and FROM parameters
@@ -154,8 +154,8 @@ Will only be allowed for messages which are less than 1 hour old.
 ```js
 // Topics
 [
-    web3.fromAscii('whisper-chat-client'),
-    web3.fromAscii('ethereum') // the chats topic or HEX user identity for private chats
+    'whisper-chat-client',
+    'ethereum' // the chats topic or HEX user identity for private chats
 ]
 
 // TO and FROM parameters
@@ -182,8 +182,8 @@ from: '0x12344...'
 ```js
 // Topics
 [
-    web3.fromAscii('whisper-chat-client'),
-    web3.fromAscii('ethereum') // the chats topic or HEX user identity for private chats
+    'whisper-chat-client',
+    'ethereum' // the chats topic or HEX user identity for private chats
 ]
 
 // TO and FROM parameters

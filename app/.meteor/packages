@@ -16,6 +16,6 @@ frozeman:template-var
 frozeman:persistent-minimongo
 frozeman:reactive-timer
 zimme:iron-router-active
-3stack:bignumber
 markdown
 ethereum:elements
+ethereum:js@0.0.15-rc7

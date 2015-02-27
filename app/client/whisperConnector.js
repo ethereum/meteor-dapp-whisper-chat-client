@@ -5,7 +5,7 @@ Template Controllers
 */
 
 Meteor.startup(function(){
-    var appName = web3.fromAscii('whisper-chat-client'),
+    var appName = 'whisper-chat-client',
         user = User.findOne();
 
 
@@ -44,7 +44,7 @@ Meteor.startup(function(){
     // CHECK if the IDENTITY IS still VALID, if not create a new one
     } else {
         try {
-            if(!web3.shh.haveIdentity(Whisper.getIdentity().identity)) {
+            if(!web3.shh.hasIdentity(Whisper.getIdentity().identity)) {
                 var identity = web3.shh.newIdentity();
 
                 // random username!
@@ -81,9 +81,9 @@ Meteor.startup(function(){
     
 
     // TEST encryption watcher
-    // web3.shh.watch({
+    // web3.shh.filter({
     //     "topic": [ appName, Whisper.getIdentity().identity ]
-    // }).arrived(function(message){
+    // }).watch(function(message){
     //     console.log(web3.toAscii(message.payload));
     // });
 
@@ -94,10 +94,10 @@ Meteor.startup(function(){
         
     @method personalMessageArrived
     */
-    web3.shh.watch({
+    web3.shh.filter({
         "topic": [ appName, Whisper.getIdentity().identity ],
         "to": Whisper.getIdentity().identity
-    }).arrived(function(message){
+    }).watch(function(message){
 
         // if i got a message, create a new chat, if none exists already
         // console.log('Personal message', message);
@@ -107,8 +107,9 @@ Meteor.startup(function(){
 
             var payload = {};
 
+            // check if it was a json
             try {
-                payload = EJSON.parse(web3.toAscii(message.payload));
+                EJSON.parse(web3.toAscii(message.payloadRaw));
 
             } catch(error) {
                 return;
@@ -199,8 +200,8 @@ Meteor.startup(function(){
         Also works when send plain messages e.g.:
 
             web3.shh.post({    
-                "topic": [web3.fromAscii('whisper-chat-client') , web3.fromAscii('6SCuCN4X4eSoQNSK7')],
-                "payload": web3.fromAscii('hello'),
+                "topic": ['whisper-chat-client' , '6SCuCN4X4eSoQNSK7'],
+                "payload": 'hello',
                 "ttl": 100,
                 "priority": 1000
             })
@@ -212,7 +213,7 @@ Meteor.startup(function(){
             var chatOptions = {
                 "topic": [
                     appName,
-                    (newDocument.privateChat) ? Whisper.getIdentity().identity : web3.fromAscii(newDocument._id)
+                    (newDocument.privateChat) ? Whisper.getIdentity().identity : newDocument._id
                 ]
             };
 
@@ -223,26 +224,26 @@ Meteor.startup(function(){
             }
 
             // start watching
-            watchers[newDocument._id] = web3.shh.watch(chatOptions);
+            watchers[newDocument._id] = web3.shh.filter(chatOptions);
 
  
             // IF a MESSAGE ARRIVED
-            watchers[newDocument._id].arrived(function(message){
+            watchers[newDocument._id].watch(function(message){
                 var payload = {};
 
                 // try to decode
                 try {
-                    payload = EJSON.parse(web3.toAscii(message.payload));
+                    EJSON.parse(web3.toAscii(message.payloadRaw));
 
                     if(!_.isObject(payload.from))
-                        payload.from = {};
+                        message.payload.from = {};
 
                     // SET the GIVEN IDENTITY, if not empty (overwriting the one from the payload.from.identity)
                     if(!_.isEmpty(web3.toAscii(message.from)))
-                        payload.from.identity = message.from;
+                        message.payload.from.identity = message.from;
 
 
-                // build anonymous message
+                // build message from anonymous
                 } catch(error) {
 
                     console.warn('Couldn\'t parse message', error);
@@ -254,48 +255,48 @@ Meteor.startup(function(){
                         from: {
                             identity: message.from
                         },
-                        message: web3.toAscii(message.payload)
+                        message: message.payload
                     };
                 }
 
 
                 // IF PRIVATECHAT, USE the OTHER USERS IDENTITY AS CHAT ID
                 if(newDocument.privateChat)
-                    payload.chat = message.from || payload.from.identity;
+                    message.payload.chat = message.from || message.payload.from.identity;
 
 
                 // DONT add/edit messages, if its from myself, or is from another chat
-                if(payload.from.identity !== Whisper.getIdentity().identity && //  TODO: later change to message.from
-                   payload.chat === newDocument._id &&
+                if(message.payload.from.identity !== Whisper.getIdentity().identity && //  TODO: later change to message.from
+                   message.payload.chat === newDocument._id &&
                    Chats.findOne(newDocument._id)) { 
 
                     console.log('Chat message');
-                    console.log(message, payload);
+                    console.log(message, message.payload);
 
                     // INSERT IF its a NEW MESSAGE or NOTIFICATIONs
-                    if((payload.type === 'message' ||
-                        payload.type === 'notification' ||
-                        !payload.type) &&
-                       !Messages.findOne(payload.id)) {
+                    if((message.payload.type === 'message' ||
+                        message.payload.type === 'notification' ||
+                        !message.payload.type) &&
+                       !Messages.findOne(message.payload.id)) {
 
                         // cut to long messages and username
-                        if(payload.message)
-                            payload.message = payload.message.substr(0, 50000);
-                        if(payload.from.name)
-                            payload.from.name = payload.from.name.substr(0, 100);
+                        if(message.payload.message)
+                            message.payload.message = message.payload.message.substr(0, 50000);
+                        if(message.payload.from.name)
+                            message.payload.from.name = message.payload.from.name.substr(0, 100);
 
 
                         // if the chat got a message, store it as entry
                         if(Whisper.addMessage(newDocument._id, {
-                            _id: payload.id, // use the same id, as your opponen has, so we can prevent duplicates
-                            type: payload.type,
-                            chat: payload.chat,
-                            timestamp: message.sent || payload.timestamp,
-                            topic: payload.topic,
+                            _id: message.payload.id, // use the same id, as your opponen has, so we can prevent duplicates
+                            type: message.payload.type,
+                            chat: message.payload.chat,
+                            timestamp: message.sent || message.payload.timestamp,
+                            topic: message.payload.topic,
                             unread: true,
-                            from: payload.from,
-                            message: payload.message,
-                            data: payload.data
+                            from: message.payload.from,
+                            message: message.payload.message,
+                            data: message.payload.data
                         })) {
 
                             // add the entry to the chats entry list
@@ -308,27 +309,27 @@ Meteor.startup(function(){
 
 
                         // -> Add/UPDATE the current messages USER
-                        if(!_.isEmpty(web3.toAscii(payload.from.identity))) {
-                            Users.upsert(payload.from.identity, {
-                                _id: payload.from.identity,
-                                identity: payload.from.identity,
-                                name: payload.from.name
+                        if(!_.isEmpty(web3.toAscii(message.payload.from.identity))) {
+                            Users.upsert(message.payload.from.identity, {
+                                _id: message.payload.from.identity,
+                                identity: message.payload.from.identity,
+                                name: message.payload.from.name
                             });
                         }
 
 
                         // CHANGE the current CHATS NAME
-                        if(payload.type === 'notification' &&
-                           payload.message === 'chatNameChanged') {
+                        if(message.payload.type === 'notification' &&
+                           message.payload.message === 'chatNameChanged') {
                             Chats.update(newDocument._id, {
                                 $set: {
-                                    name: payload.data
+                                    name: message.payload.data
                                 }
                             });
                         }
 
                         // SOUND
-                        if(payload.type === 'message')
+                        if(message.payload.type === 'message')
                             $('#sound-message')[0].play();
                         
                         // update also badge
@@ -340,17 +341,17 @@ Meteor.startup(function(){
                     // EDIT if existing message
                     // should exist already
                     // and should not be older than 1 hour
-                    } else if(payload.type === 'edit') {
+                    } else if(message.payload.type === 'edit') {
 
-                        var oldMessage = Messages.findOne(payload.id);
+                        var oldMessage = Messages.findOne(message.payload.id);
                         if(oldMessage &&
                            oldMessage.timestamp > moment().subtract(1, 'hour').unix()) {
 
-                            Messages.update(payload.id, {
+                            Messages.update(message.payload.id, {
                                 $set: {
-                                    topic: payload.topic,
-                                    message: payload.message,
-                                    edited: message.sent || payload.timestamp
+                                    topic: message.payload.topic,
+                                    message: message.payload.message,
+                                    edited: message.sent || message.payload.timestamp
                                 }
                             });
                         }
@@ -451,9 +452,9 @@ Meteor.startup(function(){
                     "from": Whisper.getIdentity().identity,
                     "topic": [
                         appName,
-                        chat.privateChat || web3.fromAscii(newDocument.chat)
+                        chat.privateChat || newDocument.chat
                     ],
-                    "payload": web3.fromAscii(EJSON.stringify(newDocument)),
+                    "payload": newDocument,
                     "ttl": 100,
                     "priority": 1000
                 };
@@ -507,9 +508,9 @@ Meteor.startup(function(){
                     "from": newDocument.from.identity,
                     "topic": [
                         appName,
-                        chat.privateChat || web3.fromAscii(newDocument.chat)
+                        chat.privateChat || newDocument.chat
                     ],
-                    "payload": web3.fromAscii(EJSON.stringify(newDocument)),
+                    "payload": newDocument,
                     "ttl": 100,
                     "priority": 1000
                 };
@@ -589,7 +590,7 @@ Meteor.startup(function(){
                         appName,
                         newDocument.to
                     ],
-                    "payload": web3.fromAscii(EJSON.stringify(newDocument)),
+                    "payload": newDocument,
                     "ttl": 100,
                     "priority": 1000
                 };
