@@ -15,10 +15,12 @@ Template['views_chats_aside'].onCreated(function(){
     this.autorun(function(){
 
         var unreadCount = Messages.find({unread: true}).count();
-        if(unreadCount)
-            mist.menu.setBadge(unreadCount + ' unread messages');
-        else
-            mist.menu.setBadge('');
+        if(typeof mist !== 'undefined') {
+            if(unreadCount)
+                mist.menu.setBadge(unreadCount + ' unread messages');
+            else
+                mist.menu.setBadge('');
+        }
     });
 });
 
