@@ -111,7 +111,18 @@ ChatController = RouteController.extend({
         this.next();
     },
     data: function(){
-        return Chats.findOne(currentSelectedChat);
+        var chat = Chats.findOne(currentSelectedChat);
+
+        // MIST
+        // if(typeof mist !== 'undefined') {
+        //     Tracker.afterFlush(function(){
+        //         mist.menu.update(chat._id, {
+        //             selected: true,
+        //         });
+        //     });
+        // }
+
+        return chat;
     }
 });
 

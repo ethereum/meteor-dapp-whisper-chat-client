@@ -11,6 +11,18 @@ The chats aside template
 @constructor
 */
 
+Template['views_chats_aside'].onCreated(function(){
+    this.autorun(function(){
+
+        var unreadCount = Messages.find({unread: true}).count();
+        if(unreadCount)
+            mist.menu.setBadge(unreadCount + ' unread messages');
+        else
+            mist.menu.setBadge('');
+    });
+});
+
+
 
 Template['views_chats_aside'].helpers({
     /**
@@ -19,7 +31,29 @@ Template['views_chats_aside'].helpers({
     @method (chats)
     */
     'chats': function(){
-        return Chats.find({}, {sort: {lastActivity: -1}});
+        var chats = Chats.find({}, {sort: {lastActivity: -1}});
+
+        // Add mist custom menu
+        if(typeof mist !== 'undefined') {
+            Tracker.afterFlush(function(){
+                // clear the menu before re-creating it
+                mist.menu.clear();
+
+                _.each(chats.fetch(), function(chat, index){
+                    mist.menu.add(chat._id, {
+                        position: index,
+                        selected: (location.pathname.indexOf(chat._id) !== -1),
+                        name: chat.name || chat._id,
+                        badge: chat.messages.length
+                    }, function(){
+                        Router.go('/chat/'+ chat._id);
+                    });
+                });
+            });
+        }
+
+        chats.rewind();
+        return chats;
     }
 });
 
