@@ -18,5 +18,5 @@ frozeman:reactive-timer
 zimme:iron-router-active
 markdown
 ethereum:elements
-ethereum:js@0.0.15-rc7
+ethereum:web3
 underscorestring:underscore.string
