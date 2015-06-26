@@ -15,11 +15,12 @@ ddp@1.1.0
 deps@1.0.7
 ejson@1.0.6
 ethereum:elements@0.2.0
+ethereum:web3@0.7.0
 fastclick@1.0.3
 frozeman:animation-helper@0.2.6
 frozeman:persistent-minimongo@0.1.3
 frozeman:reactive-timer@0.1.7
-frozeman:template-var@1.1.2
+frozeman:template-var@1.1.6
 geojson-utils@1.0.3
 html-tools@1.0.4
 htmljs@1.0.4
@@ -33,7 +34,7 @@ iron:location@1.0.9
 iron:middleware-stack@1.0.9
 iron:router@1.0.9
 iron:url@1.0.9
-jeeeyul:moment-with-langs@2.8.3
+jeeeyul:moment-with-langs@2.10.3
 jquery@1.11.3_2
 json@1.0.3
 launch-screen@1.0.2
@@ -67,7 +68,7 @@ templating@1.1.1
 tracker@1.0.7
 ui@1.0.6
 underscore@1.0.3
-underscorestring:underscore.string@3.0.3_1
+underscorestring:underscore.string@3.1.1
 url@1.0.4
 webapp@1.2.0
 webapp-hashing@1.0.3
