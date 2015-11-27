@@ -78,7 +78,7 @@ Meteor.startup(function(){
 
 
     // COMMUNICATE with WHISPER ---------------------------------------------------------------------
-    
+
 
     // TEST encryption watcher
     // web3.shh.filter({
@@ -91,13 +91,13 @@ Meteor.startup(function(){
     // WATCH for personal messages
     /**
     When a personal message arrives. Create a new private chat.
-        
+
     @method personalMessageArrived
     */
     web3.shh.filter({
         "topic": [ appName, Whisper.getIdentity().identity ],
         "to": Whisper.getIdentity().identity
-    }).watch(function(message){
+    }).watch(function(error,message){
 
         // if i got a message, create a new chat, if none exists already
         // console.log('Personal message', message);
@@ -105,7 +105,7 @@ Meteor.startup(function(){
         // Makes sure it comes from somebody and is ment for me, and doesn't already exists
         if(message.to === Whisper.getIdentity().identity) {
 
-            var payload = {};
+            var payload = message.payload;
 
             // check if it was a json
             try {
@@ -131,9 +131,9 @@ Meteor.startup(function(){
 
 
             // IF INVITE add group or private chat
-            if(chatId && 
+            if(chatId &&
                (payload.type === 'invite' || payload.type === 'message') &&
-               !Chats.findOne(chatId) && 
+               !Chats.findOne(chatId) &&
                (!_.isEmpty(web3.toAscii(message.from)) || !payload.privateChat)) {
 
                 var users = [message.from];
@@ -142,7 +142,7 @@ Meteor.startup(function(){
                 // add the identities of the users invited
                 if(!payload.privateChat && _.isArray(payload.data)) {
                     _.each(payload.data, function(item) {
-                        
+
                         users.push(item.identity);
 
                         Users.upsert(item.identity, {
@@ -199,7 +199,7 @@ Meteor.startup(function(){
 
         Also works when send plain messages e.g.:
 
-            web3.shh.post({    
+            web3.shh.post({
                 "topic": ['whisper-chat-client' , '6SCuCN4X4eSoQNSK7'],
                 "payload": 'hello',
                 "ttl": 100,
@@ -226,10 +226,10 @@ Meteor.startup(function(){
             // start watching
             watchers[newDocument._id] = web3.shh.filter(chatOptions);
 
- 
+
             // IF a MESSAGE ARRIVED
-            watchers[newDocument._id].watch(function(message){
-                var payload = {};
+            watchers[newDocument._id].watch(function(error,message){
+                var payload = message.payload;
 
                 // try to decode
                 try {
@@ -268,7 +268,7 @@ Meteor.startup(function(){
                 // DONT add/edit messages, if its from myself, or is from another chat
                 if(message.payload.from.identity !== Whisper.getIdentity().identity && //  TODO: later change to message.from
                    message.payload.chat === newDocument._id &&
-                   Chats.findOne(newDocument._id)) { 
+                   Chats.findOne(newDocument._id)) {
 
                     console.log('Chat message');
                     console.log(message, message.payload);
@@ -331,11 +331,10 @@ Meteor.startup(function(){
                         // SOUND
                         if(message.payload.type === 'message')
                             $('#sound-message')[0].play();
-                        
+
                         // update also badge
                         $('meta[name="ethereum-dapp-badge"]').prop('content', Math.floor(Math.random()*999));
 
-                        
 
 
                     // EDIT if existing message
@@ -443,7 +442,7 @@ Meteor.startup(function(){
             if(chat &&
                newDocument.sending &&
                newDocument.from.identity === Whisper.getIdentity().identity) {
-                
+
                 // change _id to id
                 newDocument.id = newDocument._id;
                 delete newDocument._id;
@@ -484,7 +483,7 @@ Meteor.startup(function(){
         Sends an edit for an message, which will patch the message on the receiver side.
 
         Edits are only allowed withing one hour of the message creation.
-        
+
         The whisper edit paylod should look like this:
             {
                 type: 'edit',
@@ -493,7 +492,7 @@ Meteor.startup(function(){
                 message: 'my edited message',
                 edited: 12354566 // timestamp
             }
-            
+
         @method changed
         */
         changed: function (newDocument, oldDocument) {
@@ -594,7 +593,7 @@ Meteor.startup(function(){
                     "ttl": 100,
                     "priority": 1000
                 };
-                
+
                 console.log('Send invite', newDocument);
 
 
